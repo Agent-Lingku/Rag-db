@@ -1,0 +1,548 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 自定义触发字符 向上展开 自定义状态 异步加载 无效或只读 配合 Form 使用 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Mentions 提及提及组件。
+何时使用 
+          #
+        
+
+用于在输入中提及某人或某事，常用于发布、聊天或评论功能。
+
+代码演示基本用法基本用法TS<template>
+  <a-mentions v-model:value="value" autofocus :options="options" @select="onSelect"></a-mentions>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+const value = ref<string>('@afc163');
+watch(value, () => {
+  console.log('value', value);
+});
+const onSelect = (option: { value: string }) => {
+  console.log('select', option);
+};
+
+const options = [
+  {
+    value: 'afc163',
+    label: 'afc163',
+  },
+  {
+    value: 'zombieJ',
+    label: 'zombieJ',
+  },
+  {
+    value: 'yesmeck',
+    label: 'yesmeck',
+  },
+];
+</script>
+自定义触发字符通过 prefix 属性自定义触发字符。默认为 @, 可以定义为数组。TS<template>
+  <a-mentions
+    v-model:value="value"
+    placeholder="input @ to mention people, # to mention tag"
+    :prefix="['@', '#']"
+    :options="options"
+    @search="onSearch"
+  ></a-mentions>
+</template>
+<script lang="ts" setup>
+import { computed, ref } from 'vue';
+const MOCK_DATA: Record<string, string[]> = {
+  '@': ['afc163', 'zombiej', 'yesmeck'],
+  '#': ['1.0', '2.0', '3.0'],
+};
+const prefix = ref<string>('@');
+const value = ref<string>('');
+const options = computed(() => {
+  return (MOCK_DATA[prefix.value] || []).map(value => ({
+    key: value,
+    value,
+    label: value,
+  }));
+});
+
+const onSearch = (_: string, val: string) => {
+  console.log(_, val);
+  prefix.value = val;
+};
+</script>
+向上展开向上展开建议。TS<template>
+  <a-mentions v-model:value="value" placement="top" :options="options"></a-mentions>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<string>('');
+const options = [
+  {
+    value: 'afc163',
+    label: 'afc163',
+  },
+  {
+    value: 'zombieJ',
+    label: 'zombieJ',
+  },
+  {
+    value: 'yesmeck',
+    label: 'yesmeck',
+  },
+];
+</script>
+自定义状态使用 status 为 Mentions 添加状态。可选 error 或者 warning。TS<template>
+  <a-space direction="vertical">
+    <a-mentions
+      v-model:value="value"
+      :options="options"
+      autofocus
+      status="error"
+      @select="onSelect"
+    ></a-mentions>
+    <a-mentions
+      v-model:value="value"
+      :options="options"
+      autofocus
+      status="warning"
+      @select="onSelect"
+    ></a-mentions>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+const value = ref<string>('@afc163');
+watch(value, () => {
+  console.log('value', value);
+});
+const onSelect = (option: { value: string }) => {
+  console.log('select', option);
+};
+
+const options = [
+  {
+    value: 'afc163',
+    label: 'afc163',
+  },
+  {
+    value: 'zombieJ',
+    label: 'zombieJ',
+  },
+  {
+    value: 'yesmeck',
+    label: 'yesmeck',
+  },
+];
+</script>
+异步加载匹配内容列表为异步返回时。TS<template>
+  <a-mentions v-model:value="value" :options="options" :loading="loading" @search="onSearch">
+    <template #option="{ payload }">
+      <img :src="payload.avatar_url" :alt="payload.login" />
+      <span>{{ payload.login }}</span>
+    </template>
+  </a-mentions>
+</template>
+<script lang="ts" setup>
+import { debounce } from 'lodash-es';
+import { computed, ref } from 'vue';
+import { MentionsProps } from '..';
+const value = ref<string>('');
+const loading = ref<boolean>(false);
+const users = ref<{ login: string; avatar_url: string }[]>([]);
+const search = ref<string>('');
+const loadGithubUsers = debounce((key: string) => {
+  if (!key) {
+    users.value = [];
+    return;
+  }
+
+  fetch(`https://api.github.com/search/users?q=${key}`)
+    .then(res => res.json())
+    .then(({ items = [] }) => {
+      if (search.value !== key) return;
+      users.value = items.slice(0, 10);
+      loading.value = false;
+    });
+}, 800);
+
+const onSearch = (searchValue: string) => {
+  search.value = searchValue;
+  loading.value = !!searchValue;
+  console.log(!!searchValue);
+  users.value = [];
+  console.log('Search:', searchValue);
+  loadGithubUsers(searchValue);
+};
+const options = computed<MentionsProps['options']>(() =>
+  users.value.map(user => ({
+    key: user.login,
+    value: user.login,
+    class: 'antd-demo-dynamic-option',
+    payload: user,
+  })),
+);
+</script>
+<style scoped>
+.antd-demo-dynamic-option img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+</style>
+无效或只读通过 disabled 属性设置是否生效。通过 readonly 属性设置是否只读。TS<template>
+  <div>
+    <div style="margin-bottom: 10px">
+      <a-mentions
+        v-model:value="value1"
+        :options="options"
+        placeholder="this is disabled Mentions"
+        disabled
+      ></a-mentions>
+    </div>
+    <a-mentions
+      v-model:value="value2"
+      :options="options"
+      placeholder="this is readOnly a-mentions"
+      readonly
+    ></a-mentions>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<string>('');
+const value2 = ref<string>('');
+const options = [
+  {
+    value: 'afc163',
+    label: 'afc163',
+  },
+  {
+    value: 'zombieJ',
+    label: 'zombieJ',
+  },
+  {
+    value: 'yesmeck',
+    label: 'yesmeck',
+  },
+];
+</script>
+Top codersBioSubmitReset配合 Form 使用配合 Form 使用。TS<template>
+  <a-form layout="horizontal">
+    <a-form-item
+      label="Top coders"
+      :label-col="{ span: 6 }"
+      :wrapper-col="{ span: 18 }"
+      name="coders"
+      v-bind="validateInfos.coders"
+    >
+      <a-mentions v-model:value="modelRef.coders" rows="1" :options="options"></a-mentions>
+    </a-form-item>
+    <a-form-item
+      label="Bio"
+      :label-col="{ span: 6 }"
+      :wrapper-col="{ span: 18 }"
+      name="bio"
+      v-bind="validateInfos.bio"
+    >
+      <a-mentions
+        v-model:value="modelRef.bio"
+        rows="3"
+        placeholder="You can use @ to ref user here"
+        :options="options"
+      ></a-mentions>
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+      <a-button type="primary" @click="handleSubmit">Submit</a-button>
+      <a-button style="margin-left: 8px" @click="resetFields">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { Mentions, Form } from 'ant-design-vue';
+import { reactive } from 'vue';
+
+const useForm = Form.useForm;
+const { getMentions } = Mentions;
+const checkMention = async (_, value) => {
+  const mentions = getMentions(value);
+  if (mentions.length < 2) {
+    return Promise.reject('More than one must be selected!');
+  } else {
+    return Promise.resolve();
+  }
+};
+const modelRef = reactive({
+  bio: '',
+  coders: '',
+});
+const rulesRef = reactive({
+  bio: [{ required: true, message: 'Must input bio' }],
+  coders: [{ required: true, validator: checkMention }],
+});
+const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+const handleSubmit = e => {
+  e.preventDefault();
+  validate()
+    .then(() => {
+      console.log('Submit!!!', modelRef);
+    })
+    .catch(errors => {
+      console.log('Errors in the form!!!', errors);
+    });
+};
+const options = [
+  {
+    value: 'afc163',
+    label: 'afc163',
+  },
+  {
+    value: 'zombieJ',
+    label: 'zombieJ',
+  },
+  {
+    value: 'yesmeck',
+    label: 'yesmeck',
+  },
+];
+</script>
+
+      API#
+      
+          #
+        
+Mentions 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+autofocus
+自动获得焦点
+boolean
+false
+
+
+defaultValue
+默认值
+string
+
+
+
+filterOption
+自定义过滤逻辑
+false | (input: string, option: OptionProps) => boolean
+
+
+
+getPopupContainer
+指定建议框挂载的 HTML 节点
+() => HTMLElement
+
+
+
+notFoundContent
+当下拉列表为空时显示的内容
+string | slot
+'Not Found'
+
+
+placement
+弹出层展示位置
+top | bottom
+bottom
+
+
+prefix
+设置触发关键字
+string | string[]
+'@'
+
+
+split
+设置选中项前后分隔符
+string
+' '
+
+
+status
+设置校验状态
+'error' | 'warning'
+-
+
+
+validateSearch
+自定义触发验证逻辑
+(text: string, props: MentionsProps) => void
+
+
+
+value(v-model)
+设置值
+string
+
+
+
+options
+选项配置
+Options
+[]
+
+
+option
+通过 option 插槽，自定义节点
+v-slot:option="option"
+-
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+blur
+失去焦点的时回调
+function
+
+
+change
+值改变时触发
+function(value: string)
+
+
+focus
+获得焦点时回调
+function
+
+
+search
+文本框值变化时回调
+function(value: string, prefix: string)
+
+
+select
+选择选项时触发
+function(option: OptionProps, prefix: string)
+
+
+
+Mentions 方法 
+          #
+        
+
+
+
+名称
+描述
+
+
+
+
+blur()
+移除焦点
+
+
+focus()
+获取焦点
+
+
+
+Mention.Option (< 4.0) 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+value
+选择时填充的值
+string
+''
+
+
+
+Option 
+          #
+        
+Support from v4.0
+
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+value
+选择时填充的值
+string
+number
+
+
+label
+选项的标题
+VueNode
+(o: Option)=> VueNode
+
+
+disabled
+是否可选
+boolean
+-
+
+
+class
+css 类名
+string
+-
+
+
+style
+选项样式
+CSSProperties
+-
+
+
+payload
+其它数据
+object
+-
+
+
+
+
+      最后更新 : 2023/07/14列表导航菜单Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

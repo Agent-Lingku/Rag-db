@@ -1,0 +1,447 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 典型卡片 更灵活的内容展示 栅格卡片 预加载的卡片 简洁卡片 无边框 网格型内嵌卡片 内部卡片 支持更多内容配置 带页签的卡片 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Card 卡片通用卡片容器
+何时使用 
+          #
+        
+最基础的卡片容器，可承载文字、列表、图片、段落，常用于后台概览页面。
+代码演示Default size cardmorecard contentcard contentcard contentSmall size cardmorecard contentcard contentcard content典型卡片包含标题、内容、操作区域。
+可通过设置size为default或者small，控制尺寸TS<template>
+  <a-card title="Default size card" style="width: 300px">
+    <template #extra><a href="#">more</a></template>
+    <p>card content</p>
+    <p>card content</p>
+    <p>card content</p>
+  </a-card>
+  <br />
+  <a-card size="small" title="Small size card" style="width: 300px">
+    <template #extra><a href="#">more</a></template>
+    <p>card content</p>
+    <p>card content</p>
+    <p>card content</p>
+  </a-card>
+</template>
+Europe Street beatwww.instagram.com更灵活的内容展示可以利用 Card.Meta 支持更灵活的内容TS<template>
+  <a-card hoverable style="width: 240px">
+    <template #cover>
+      <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
+    </template>
+    <a-card-meta title="Europe Street beat">
+      <template #description>www.instagram.com</template>
+    </a-card-meta>
+  </a-card>
+</template>
+Card titlecard contentCard titlecard contentCard titlecard content栅格卡片在系统概览页面常常和栅格进行配合。TS<template>
+  <div style="background-color: #ececec; padding: 20px">
+    <a-row :gutter="16">
+      <a-col :span="8">
+        <a-card title="Card title" :bordered="false">
+          <p>card content</p>
+        </a-card>
+      </a-col>
+      <a-col :span="8">
+        <a-card title="Card title" :bordered="false">
+          <p>card content</p>
+        </a-card>
+      </a-col>
+      <a-col :span="8">
+        <a-card title="Card title" :bordered="false">
+          <p>card content</p>
+        </a-card>
+      </a-col>
+    </a-row>
+  </div>
+</template>
+Card titleToggle loading预加载的卡片数据读入前会有文本块样式TS<template>
+  <a-card :loading="loading" title="Card title">whatever content</a-card>
+  <a-button style="margin-top: 16px" @click="handleClick">Toggle loading</a-button>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const loading = ref(true);
+
+const handleClick = () => {
+  loading.value = !loading.value;
+};
+</script>
+Card contentCard contentCard content简洁卡片只包含内容区域。TS<template>
+  <a-card style="width: 300px">
+    <p>Card content</p>
+    <p>Card content</p>
+    <p>Card content</p>
+  </a-card>
+</template>
+Card titleCard contentCard contentCard content无边框在灰色背景上使用无边框的卡片TS<template>
+  <div style="background: #ececec; padding: 30px">
+    <a-card title="Card title" :bordered="false" style="width: 300px">
+      <p>Card content</p>
+      <p>Card content</p>
+      <p>Card content</p>
+    </a-card>
+  </div>
+</template>
+Card TitleContentContentContentContentContentContentContentContent网格型内嵌卡片一种常见的卡片内容区隔模式。TS<template>
+  <a-card title="Card Title">
+    <a-card-grid style="width: 25%; text-align: center">Content</a-card-grid>
+    <a-card-grid style="width: 25%; text-align: center" :hoverable="false">Content</a-card-grid>
+    <a-card-grid style="width: 25%; text-align: center">Content</a-card-grid>
+    <a-card-grid style="width: 25%; text-align: center">Content</a-card-grid>
+    <a-card-grid style="width: 25%; text-align: center">Content</a-card-grid>
+    <a-card-grid style="width: 25%; text-align: center">Content</a-card-grid>
+    <a-card-grid style="width: 25%; text-align: center">Content</a-card-grid>
+    <a-card-grid style="width: 25%; text-align: center">Content</a-card-grid>
+  </a-card>
+</template>
+Card title Group title Inner card titleMore Inner Card content Inner card titleMore Inner Card content 内部卡片可以放在普通卡片内部，展示多层级结构的信息TS<template>
+  <a-card title="Card title">
+    <p style="font-size: 14px; color: rgba(0, 0, 0, 0.85); margin-bottom: 16px; font-weight: 500">
+      Group title
+    </p>
+    <a-card title="Inner card title">
+      <template #extra>
+        <a href="#">More</a>
+      </template>
+      Inner Card content
+    </a-card>
+    <a-card title="Inner card title" :style="{ marginTop: '16px' }">
+      <template #extra>
+        <a href="#">More</a>
+      </template>
+      Inner Card content
+    </a-card>
+  </a-card>
+</template>
+Card titleThis is the description支持更多内容配置一种支持封面、头像、标题和描述信息的卡片。TS<template>
+  <a-card hoverable style="width: 300px">
+    <template #cover>
+      <img
+        alt="example"
+        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+      />
+    </template>
+    <template #actions>
+      <setting-outlined key="setting" />
+      <edit-outlined key="edit" />
+      <ellipsis-outlined key="ellipsis" />
+    </template>
+    <a-card-meta title="Card title" description="This is the description">
+      <template #avatar>
+        <a-avatar src="https://joeschmoe.io/api/v1/random" />
+      </template>
+    </a-card-meta>
+  </a-card>
+</template>
+<script lang="ts" setup>
+import { SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons-vue';
+</script>
+Card titleMore tab1tab2 content1articleappprojectMoreapp content带页签的卡片可承载更多内容TS<template>
+  <a-card
+    style="width: 100%"
+    title="Card title"
+    :tab-list="tabList"
+    :active-tab-key="key"
+    @tabChange="key => onTabChange(key, 'key')"
+  >
+    <template #customTab="item">
+      <span v-if="item.key === 'tab1'">
+        <home-outlined />
+        {{ item.key }}
+      </span>
+    </template>
+    <template #extra>
+      <a href="#">More</a>
+    </template>
+    {{ contentList[key] }}
+  </a-card>
+  <br />
+  <br />
+  <a-card
+    style="width: 100%"
+    :tab-list="tabListNoTitle"
+    :active-tab-key="noTitleKey"
+    @tabChange="key => onTabChange(key, 'noTitleKey')"
+  >
+    <p v-if="noTitleKey === 'article'">article content</p>
+    <p v-else-if="noTitleKey === 'app'">app content</p>
+    <p v-else>project content</p>
+    <template #tabBarExtraContent>
+      <a href="#">More</a>
+    </template>
+  </a-card>
+</template>
+<script lang="ts" setup>
+import { HomeOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+const tabList = [
+  {
+    key: 'tab1',
+    tab: 'tab1',
+  },
+  {
+    key: 'tab2',
+    tab: 'tab2',
+  },
+];
+const contentList = {
+  tab1: 'content1',
+  tab2: 'content2',
+};
+const tabListNoTitle = [
+  {
+    key: 'article',
+    tab: 'article',
+  },
+  {
+    key: 'app',
+    tab: 'app',
+  },
+  {
+    key: 'project',
+    tab: 'project',
+  },
+];
+const key = ref('tab1');
+const noTitleKey = ref('app');
+
+const onTabChange = (value: string, type: string) => {
+  console.log(value, type);
+  if (type === 'key') {
+    key.value = value;
+  } else if (type === 'noTitleKey') {
+    noTitleKey.value = value;
+  }
+};
+</script>
+
+      API#
+      
+          #
+        
+Card 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+activeTabKey
+当前激活页签的 key
+string
+-
+
+
+
+bodyStyle
+内容区域自定义样式
+object
+-
+
+
+
+bordered
+是否有边框
+boolean
+true
+
+
+
+defaultActiveTabKey
+初始化选中页签的 key，如果没有设置 activeTabKey
+string
+第一个页签
+
+
+
+extra
+卡片右上角的操作区域
+string|slot
+-
+
+
+
+headStyle
+自定义标题区域样式
+object
+-
+
+
+
+hoverable
+鼠标移过时可浮起
+boolean
+false
+
+
+
+loading
+当卡片内容还在加载中时，可以用 loading 展示一个占位
+boolean
+false
+
+
+
+size
+card 的尺寸
+default | small
+default
+
+
+
+tabList
+页签标题列表, 可以通过 customTab(v3.0) 插槽自定义 tab
+Array<{key: string, tab: any}>
+-
+
+
+
+title
+卡片标题
+string|slot
+-
+
+
+
+type
+卡片类型，可设置为 inner 或 不设置
+string
+-
+
+
+
+
+Card 插槽 
+          #
+        
+
+
+
+插槽名称
+说明
+参数
+
+
+
+
+
+actions
+卡片操作组，位置在卡片底部
+-
+
+
+
+cover
+卡片封面
+-
+
+
+
+customTab
+自定义 tabList tab 标签
+{ item: tabList[number] }
+
+
+
+extra
+卡片右上角的操作区域
+-
+
+
+
+tabBarExtraContent
+tab bar 上额外的元素
+-
+
+
+
+title
+卡片标题
+-
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+
+tabChange
+页签切换的回调
+(key) => void
+-
+
+
+
+
+Card.Grid 
+          #
+        
+Card.Meta 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+avatar
+头像/图标
+slot
+-
+
+
+
+description
+描述内容
+string|slot
+-
+
+
+
+title
+标题内容
+string|slot
+-
+
+
+
+
+
+      最后更新 : 2024/01/16日历锚点Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

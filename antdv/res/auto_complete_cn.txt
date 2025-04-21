@@ -1,0 +1,726 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本使用 自定义输入组件 查询模式 - 确定类目 自定义状态 自定义清除按钮 自定义选项 不区分大小写 查询模式 - 不确定类目 无边框 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中AutoComplete 自动完成输入框自动完成功能。
+何时使用 
+          #
+        
+
+需要一个输入框而不是选择器。
+需要输入建议/辅助提示。
+
+和 Select 的区别是：
+
+AutoComplete 是一个带提示的文本输入框，用户可以自由输入，关键词是辅助输入。
+Select 是在限定的可选项中进行选择，关键词是选择。
+
+代码演示input here基本使用基本使用。通过 options 设置自动完成的数据源。TS<template>
+  <a-auto-complete
+    v-model:value="value"
+    :options="options"
+    style="width: 200px"
+    placeholder="input here"
+    @select="onSelect"
+    @search="onSearch"
+  />
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+interface MockVal {
+  value: string;
+}
+const mockVal = (str: string, repeat = 1): MockVal => {
+  return {
+    value: str.repeat(repeat),
+  };
+};
+const value = ref('');
+const options = ref<MockVal[]>([]);
+const onSearch = (searchText: string) => {
+  console.log('searchText');
+  options.value = !searchText
+    ? []
+    : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
+};
+const onSelect = (value: string) => {
+  console.log('onSelect', value);
+};
+watch(value, () => {
+  console.log('value', value.value);
+});
+</script>
+自定义输入组件自定义输入组件。TS<template>
+  <a-auto-complete
+    v-model:value="value"
+    :options="options"
+    style="width: 200px"
+    @search="handleSearch"
+    @select="onSelect"
+  >
+    <a-textarea
+      placeholder="input here"
+      class="custom"
+      style="height: 50px"
+      @keypress="handleKeyPress"
+    />
+  </a-auto-complete>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref('');
+const options = ref<{ value: string }[]>([]);
+const onSelect = (value: string) => {
+  console.log('onSelect', value);
+};
+const handleSearch = (value: string) => {
+  options.value = !value
+    ? []
+    : [{ value }, { value: value + value }, { value: value + value + value }];
+};
+const handleKeyPress = (ev: KeyboardEvent) => {
+  console.log('handleKeyPress', ev);
+};
+</script>
+查询模式 - 确定类目查询模式 - 确定类目。TS<template>
+  <div class="certain-category-search-wrapper" style="width: 250px">
+    <a-auto-complete
+      v-model:value="value"
+      class="certain-category-search"
+      popup-class-name="certain-category-search-dropdown"
+      :dropdown-match-select-width="500"
+      style="width: 250px"
+      :options="dataSource"
+    >
+      <template #option="item">
+        <template v-if="item.options">
+          <span>
+            {{ item.value }}
+            <a
+              style="float: right"
+              href="https://www.google.com/search?q=antd"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              more
+            </a>
+          </span>
+        </template>
+        <template v-else-if="item.value === 'all'">
+          <a
+            href="https://www.google.com/search?q=ant-design-vue"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View all results
+          </a>
+        </template>
+        <template v-else>
+          <div style="display: flex; justify-content: space-between">
+            {{ item.value }}
+            <span>
+              <UserOutlined />
+              {{ item.count }}
+            </span>
+          </div>
+        </template>
+      </template>
+      <a-input-search placeholder="input here" size="large"></a-input-search>
+    </a-auto-complete>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UserOutlined } from '@ant-design/icons-vue';
+const dataSource = [
+  {
+    value: 'Libraries',
+    options: [
+      {
+        value: 'AntDesignVue',
+        count: 10000,
+      },
+      {
+        value: 'AntDesignVue UI',
+        count: 10600,
+      },
+    ],
+  },
+  {
+    value: 'Solutions',
+    options: [
+      {
+        value: 'AntDesignVue UI FAQ',
+        count: 60100,
+      },
+      {
+        value: 'AntDesignVue FAQ',
+        count: 30010,
+      },
+    ],
+  },
+  {
+    value: 'Articles',
+    options: [
+      {
+        value: 'AntDesignVue design language',
+        count: 100000,
+      },
+    ],
+  },
+  {
+    value: 'all',
+  },
+];
+const value = ref('');
+</script>
+<style scoped>
+.certain-category-search-dropdown .ant-select-dropdown-menu-item-group-title {
+  color: #666;
+  font-weight: bold;
+}
+
+.certain-category-search-dropdown .ant-select-dropdown-menu-item-group {
+  border-bottom: 1px solid #f6f6f6;
+}
+
+.certain-category-search-dropdown .ant-select-dropdown-menu-item {
+  padding-left: 16px;
+}
+
+.certain-category-search-dropdown .ant-select-dropdown-menu-item.show-all {
+  text-align: center;
+  cursor: default;
+}
+
+.certain-category-search-dropdown .ant-select-dropdown-menu {
+  max-height: 300px;
+}
+</style>
+input hereinput here自定义状态使用 status 为 AutoComplete 添加状态，可选 error 或者 warning。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-auto-complete
+      v-model:value="value"
+      :options="options"
+      style="width: 200px"
+      placeholder="input here"
+      status="error"
+      @select="onSelect"
+      @search="onSearch"
+    />
+    <a-auto-complete
+      v-model:value="value1"
+      :options="options"
+      style="width: 200px"
+      placeholder="input here"
+      status="warning"
+      allow-clear
+      @select="onSelect"
+      @search="onSearch"
+      @clear="onClear"
+    />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+interface MockVal {
+  value: string;
+}
+const mockVal = (str: string, repeat = 1): MockVal => {
+  return {
+    value: str.repeat(repeat),
+  };
+};
+const value = ref('');
+const value1 = ref('');
+const options = ref<MockVal[]>([]);
+const onSearch = (searchText: string) => {
+  console.log('searchText');
+  options.value = !searchText
+    ? []
+    : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
+};
+const onSelect = (value: string) => {
+  console.log('onSelect', value);
+};
+const onClear = () => {
+  console.log('onClear');
+};
+watch(value, () => {
+  console.log('value', value.value);
+});
+</script>
+ClearableCustomized clear icon自定义清除按钮自定义清除按钮。TS<template>
+  <a-auto-complete
+    v-model:value="value"
+    :options="options"
+    style="width: 200px"
+    placeholder="Clearable"
+    :allow-clear="true"
+    @select="onSelect"
+    @search="onSearch"
+  />
+  <br />
+  <br />
+  <a-auto-complete
+    v-model:value="value"
+    :options="options"
+    style="width: 200px"
+    placeholder="Customized clear icon"
+    :allow-clear="true"
+    @select="onSelect"
+    @search="onSearch"
+  >
+    <template #clearIcon>
+      <close-outlined />
+    </template>
+  </a-auto-complete>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { CloseOutlined } from '@ant-design/icons-vue';
+
+interface MockVal {
+  value: string;
+}
+
+const mockVal = (str: string, repeat = 1): MockVal => {
+  return {
+    value: str.repeat(repeat),
+  };
+};
+const value = ref('');
+const options = ref<MockVal[]>([]);
+const onSearch = (searchText: string) => {
+  console.log('searchText');
+  options.value = !searchText
+    ? []
+    : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
+};
+const onSelect = (value: string) => {
+  console.log('onSelect', value);
+};
+</script>
+input here自定义选项3.0 以上版本，可以传递 v-slot:option 来自定义 Option。TS<template>
+  <a-auto-complete
+    v-model:value="value"
+    style="width: 200px"
+    placeholder="input here"
+    :options="options"
+    @search="handleSearch"
+  >
+    <template #option="{ value: val }">
+      {{ val.split('@')[0] }} @
+      <span style="font-weight: bold">{{ val.split('@')[1] }}</span>
+    </template>
+  </a-auto-complete>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref('');
+const options = ref<{ value: string }[]>([]);
+const handleSearch = (val: string) => {
+  let res: { value: string }[];
+  if (!val || val.indexOf('@') >= 0) {
+    res = [];
+  } else {
+    res = ['gmail.com', '163.com', 'qq.com'].map(domain => ({ value: `${val}@${domain}` }));
+  }
+  options.value = res;
+};
+</script>
+input here不区分大小写不区分大小写的 AutoComplete。TS<template>
+  <a-auto-complete
+    v-model:value="value"
+    :options="options"
+    style="width: 200px"
+    placeholder="input here"
+    :filter-option="filterOption"
+  />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+interface Option {
+  value: string;
+}
+const filterOption = (input: string, option: Option) => {
+  return option.value.toUpperCase().indexOf(input.toUpperCase()) >= 0;
+};
+const value = ref('');
+const options = ref<Option[]>([
+  { value: 'Burns Bay Road' },
+  { value: 'Downing Street' },
+  { value: 'Wall Street' },
+]);
+</script>
+查询模式 - 不确定类目查询模式 - 不确定类目。TS<template>
+  <div class="global-search-wrapper" style="width: 300px">
+    <a-auto-complete
+      v-model:value="value"
+      :dropdown-match-select-width="252"
+      style="width: 300px"
+      :options="dataSource"
+      @select="onSelect"
+      @search="handleSearch"
+    >
+      <template #option="item">
+        <div style="display: flex; justify-content: space-between">
+          <span>
+            Found {{ item.query }} on
+            <a
+              :href="`https://s.taobao.com/search?q=${item.query}`"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ item.category }}
+            </a>
+          </span>
+          <span>{{ item.count }} results</span>
+        </div>
+      </template>
+      <a-input-search size="large" placeholder="input here" enter-button></a-input-search>
+    </a-auto-complete>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+interface Option {
+  query: string;
+  category: string;
+  value: string;
+  count: number;
+}
+const value = ref('');
+const dataSource = ref<Option[]>([]);
+const onSelect = (value: string) => {
+  console.log('onSelect', value);
+};
+
+const getRandomInt = (max: number, min = 0) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const searchResult = (query: string): Option[] => {
+  return new Array(getRandomInt(5))
+    .join('.')
+    .split('.')
+    .map((_item, idx) => ({
+      query,
+      category: `${query}${idx}`,
+      value: `${query}${idx}`,
+      count: getRandomInt(200, 100),
+    }));
+};
+const handleSearch = (val: string) => {
+  dataSource.value = val ? searchResult(val) : [];
+};
+</script>
+border less无边框没有边框。TS<template>
+  <a-auto-complete
+    v-model:value="value"
+    :options="options"
+    style="width: 200px"
+    placeholder="border less"
+    :bordered="false"
+    @select="onSelect"
+    @search="onSearch"
+  />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+interface MockVal {
+  value: string;
+}
+
+const mockVal = (str: string, repeat = 1): MockVal => {
+  return {
+    value: str.repeat(repeat),
+  };
+};
+const value = ref('');
+const options = ref<MockVal[]>([]);
+const onSearch = (searchText: string) => {
+  console.log('searchText');
+  options.value = !searchText
+    ? []
+    : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
+};
+const onSelect = (value: string) => {
+  console.log('onSelect', value);
+};
+</script>
+
+      API#
+      
+          #
+        
+<a-auto-complete v-model:value="value" :options="options" />
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+allowClear
+支持清除, 单选模式有效
+boolean
+false
+
+
+
+autofocus
+自动获取焦点
+boolean
+false
+
+
+
+backfill
+使用键盘选择选项的时候把选中项回填到输入框中
+boolean
+false
+
+
+
+bordered
+是否有边框
+boolean
+true
+4.0
+
+
+clearIcon
+使用插槽自定义清除按钮
+slot
+<CloseCircleFilled />
+4.0
+
+
+default (自定义输入框)
+自定义输入框
+slot
+<Input />
+
+
+
+defaultActiveFirstOption
+是否默认高亮第一个选项。
+boolean
+true
+
+
+
+defaultOpen
+是否默认展开下拉菜单
+boolean
+-
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+popupClassName
+下拉菜单的 className 属性
+string
+-
+4.0
+
+
+dropdownMatchSelectWidth
+下拉菜单和选择器同宽。默认将设置 min-width，当值小于选择框宽度时会被忽略。false 时会关闭虚拟滚动
+boolean | number
+true
+
+
+
+dropdownMenuStyle
+dropdown 菜单自定义样式
+object
+
+1.5.0
+
+
+filterOption
+是否根据输入项进行筛选。当其为一个函数时，会接收 inputValue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false。
+boolean or function(inputValue, option)
+true
+
+
+
+open
+是否展开下拉菜单
+boolean
+-
+
+
+
+option
+通过 option 插槽，自定义节点
+v-slot:option="{value, label, [disabled, key, title]}"
+-
+3.0
+
+
+options
+自动完成的数据源
+DataSourceItemType[]
+
+
+
+
+placeholder
+输入框提示
+string | slot
+-
+
+
+
+status
+设置校验状态
+'error' | 'warning'
+-
+3.3.0
+
+
+v-model:value
+指定当前选中的条目
+string|string[]|{ key: string, label: string|vNodes }|Array<{ key: string, label: string|vNodes }>
+无
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+blur
+失去焦点时的回调
+function()
+
+
+
+change
+选中 option，或 input 的 value 变化时，调用此函数
+function(value)
+
+
+
+dropdownVisibleChange
+展开下拉菜单的回调
+function(open)
+
+
+
+focus
+获得焦点时的回调
+function()
+
+
+
+search
+搜索补全项的时候调用
+function(value)
+
+
+
+select
+被选中时调用，参数为选中项的 value 值
+function(value, option)
+
+
+
+clear
+清除内容时回调
+function
+-
+
+
+
+方法 
+          #
+        
+
+
+
+名称
+描述
+版本
+
+
+
+
+blur()
+移除焦点
+
+
+
+focus()
+获取焦点
+
+
+
+
+FAQ 
+          #
+        
+v2 的部分属性为何在 v3 中没有了？ 
+          #
+        
+AutoComplete 组件是一个支持自动提示的 Input 组件，因而其不具有 labelInValue 等影响 value 展示的属性。在 v2 版本，AutoComplete 实现存在输入值如果遇到 value 与 label 相同时无法映射的问题。 v3 中不再支持 label 为值的输入形态。
+此外为了统一 API，dataSource 改为 options 你可以如下转换：
+v2 
+          #
+        
+dataSource = ['light', 'bamboo'];
+// or
+dataSource = [
+  { value: 'light', text: 'Light' },
+  { value: 'bamboo', text: 'Bamboo' },
+];
+
+v3 
+          #
+        
+options = [
+  { value: 'light', label: 'Light' },
+  { value: 'bamboo', label: 'Bamboo' },
+];
+
+
+      最后更新 : 2024/04/19包裹组件警告提示Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

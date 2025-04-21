@@ -1,0 +1,477 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 标准样式 带面包屑页头 多种形态的 PageHeader 组合示例 响应式 白底模式 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中PageHeader 页头页头位于页容器中，页容器顶部，起到了内容概览和引导页级操作的作用。包括由面包屑、标题、页面内容简介、页面级操作等、页面级导航组成。
+何时使用 
+          #
+        
+当需要使用户快速理解当前页是什么以及方便用户使用页面功能时使用，通常也可被用作页面间导航。
+代码演示TitleThis is a subtitle标准样式标准页头，适合使用在需要简单描述的场景。TS<template>
+  <a-page-header
+    style="border: 1px solid rgb(235, 237, 240)"
+    title="Title"
+    sub-title="This is a subtitle"
+    @back="() => null"
+  />
+</template>
+First-level Menu/Second-level Menu/Third-level Menu/TitleThis is a subtitle带面包屑页头带面包屑页头，适合层级比较深的页面，让用户可以快速导航。TS<template>
+  <a-page-header
+    style="border: 1px solid rgb(235, 237, 240)"
+    title="Title"
+    :breadcrumb="{ routes }"
+    sub-title="This is a subtitle"
+  />
+</template>
+<script lang="ts" setup>
+const routes = [
+  {
+    path: 'index',
+    breadcrumbName: 'First-level Menu',
+  },
+  {
+    path: 'first',
+    breadcrumbName: 'Second-level Menu',
+  },
+  {
+    path: 'second',
+    breadcrumbName: 'Third-level Menu',
+  },
+];
+</script>
+TitleThis is a subtitleOperationOperationPrimaryCreatedLili QuAssociation421421Creation Time2017-01-10Effective Time2017-10-10Remarks Gonghu Road, Xihu District, Hangzhou, Zhejiang, China TitleThis is a subtitleRunningOperationOperationPrimaryStatusPendingPrice$568.08Balance$3,345.08多种形态的 PageHeader使用操作区，并自定义子节点，适合使用在需要展示一些复杂的信息，帮助用户快速了解这个页面的信息和操作。TS<template>
+  <div>
+    <a-page-header
+      class="demo-page-header"
+      style="border: 1px solid rgb(235, 237, 240)"
+      title="Title"
+      sub-title="This is a subtitle"
+      @back="() => $router.go(-1)"
+    >
+      <template #extra>
+        <a-button key="3">Operation</a-button>
+        <a-button key="2">Operation</a-button>
+        <a-button key="1" type="primary">Primary</a-button>
+      </template>
+      <a-descriptions size="small" :column="3">
+        <a-descriptions-item label="Created">Lili Qu</a-descriptions-item>
+        <a-descriptions-item label="Association">
+          <a>421421</a>
+        </a-descriptions-item>
+        <a-descriptions-item label="Creation Time">2017-01-10</a-descriptions-item>
+        <a-descriptions-item label="Effective Time">2017-10-10</a-descriptions-item>
+        <a-descriptions-item label="Remarks">
+          Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
+        </a-descriptions-item>
+      </a-descriptions>
+    </a-page-header>
+    <br />
+    <a-page-header title="Title" sub-title="This is a subtitle" @back="() => $router.go(-1)">
+      <template #tags>
+        <a-tag color="blue">Running</a-tag>
+      </template>
+      <template #extra>
+        <a-button key="3">Operation</a-button>
+        <a-button key="2">Operation</a-button>
+        <a-button key="1" type="primary">Primary</a-button>
+      </template>
+      <a-row type="flex">
+        <a-statistic title="Status" value="Pending" />
+        <a-statistic
+          title="Price"
+          prefix="$"
+          :value="568.08"
+          :style="{
+            margin: '0 32px',
+          }"
+        />
+        <a-statistic title="Balance" prefix="$" :value="3345.08" />
+      </a-row>
+    </a-page-header>
+  </div>
+</template>
+
+<style scoped>
+.demo-page-header :deep(tr:last-child td) {
+  padding-bottom: 0;
+}
+</style>
+First-level Menu/Second-level Menu/Third-level Menu/TitleThis is a subtitleRunningOperationOperationPrimary Ant Design interprets the color system into two levels: a system-level color system and a product-level color system.  Ant Design's design team preferred to design with the HSB color model, which makes it easier for designers to have a clear psychological expectation of color when adjusting colors, as well as facilitate communication in teams.  Quick Start Product Info Product Doc组合示例使用了 PageHeader 提供的所有能力。TS<template>
+  <div class="components-page-header-demo-content">
+    <a-page-header
+      title="Title"
+      class="site-page-header"
+      sub-title="This is a subtitle"
+      :avatar="{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }"
+      :breadcrumb="{ routes }"
+    >
+      <template #tags>
+        <a-tag color="blue">Running</a-tag>
+      </template>
+      <template #extra>
+        <a-button key="3">Operation</a-button>
+        <a-button key="2">Operation</a-button>
+        <a-button key="1" type="primary">Primary</a-button>
+        <a-dropdown key="more">
+          <a-button :style="{ border: 'none', padding: 0 }">
+            <EllipsisOutlined :style="{ fontSize: '20px', verticalAlign: 'top' }" />
+          </a-button>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+                  1st menu item
+                </a>
+              </a-menu-item>
+              <a-menu-item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                  2nd menu item
+                </a>
+              </a-menu-item>
+              <a-menu-item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+                  3rd menu item
+                </a>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </template>
+      <a-row class="content">
+        <div style="flex: 1">
+          <p>
+            Ant Design interprets the color system into two levels: a system-level color system and
+            a product-level color system.
+          </p>
+          <p>
+            Ant Design&#x27;s design team preferred to design with the HSB color model, which makes
+            it easier for designers to have a clear psychological expectation of color when
+            adjusting colors, as well as facilitate communication in teams.
+          </p>
+          <div>
+            <template v-for="item in iconLinks" :key="item.src">
+              <a class="example-link">
+                <img class="example-link-icon" :src="item.src" :alt="item.text" />
+                {{ item.text }}
+              </a>
+            </template>
+          </div>
+        </div>
+        <div class="image">
+          <img
+            src="https://gw.alipayobjects.com/zos/antfincdn/K%24NnlsB%26hz/pageHeader.svg"
+            alt="content"
+            style="width: 100%"
+          />
+        </div>
+      </a-row>
+    </a-page-header>
+  </div>
+</template>
+<script lang="ts" setup>
+import { EllipsisOutlined } from '@ant-design/icons-vue';
+
+const routes = [
+  {
+    path: 'index',
+    breadcrumbName: 'First-level Menu',
+  },
+  {
+    path: 'first',
+    breadcrumbName: 'Second-level Menu',
+  },
+  {
+    path: 'second',
+    breadcrumbName: 'Third-level Menu',
+  },
+];
+
+interface IconLink {
+  src: string;
+  text: string;
+}
+const iconLinks: IconLink[] = [
+  {
+    src: 'https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg',
+    text: 'Quick Start',
+  },
+  {
+    src: 'https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg',
+    text: 'Product Info',
+  },
+  {
+    src: 'https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg',
+    text: 'Product Doc',
+  },
+];
+</script>
+<style scoped>
+#components-page-header-demo-content .image {
+  margin: 0 0 0 60px;
+  display: flex;
+  align-items: center;
+}
+
+#components-page-header-demo-content .ant-page-header-rtl .image {
+  margin: 0 60px 0 0;
+}
+
+#components-page-header-demo-content .example-link {
+  line-height: 24px;
+  margin-right: 16px;
+}
+[data-theme='compact'] #components-page-header-demo-content .example-link {
+  line-height: 20px;
+}
+#components-page-header-demo-content .example-link-icon {
+  margin-right: 8px;
+}
+
+[data-theme='compact'] #components-page-header-demo-content .example-link-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#components-page-header-demo-content .ant-page-header-rtl .example-link {
+  float: right;
+  margin-right: 0;
+  margin-left: 16px;
+}
+#components-page-header-demo-content .ant-page-header-rtl .example-link-icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+#components-page-header-demo-content .content p {
+  margin-bottom: 1em;
+  color: rgba(0, 0, 0, 0.85);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  #components-page-header-demo-content .image {
+    flex: 100%;
+    margin: 24px 0 0;
+  }
+}
+</style>
+TitleThis is a subtitleOperationOperationPrimaryCreatedLili QuAssociation421421Creation Time2017-01-10Effective Time2017-10-10Remarks Gonghu Road, Xihu District, Hangzhou, Zhejiang, China StatusPendingPrice$568.08DetailsRule响应式在不同大小的屏幕下，应该有不同的表现。TS<template>
+  <div class="components-page-header-demo-responsive" style="border: 1px solid rgb(235, 237, 240)">
+    <a-page-header title="Title" sub-title="This is a subtitle" @back="() => $router.go(-1)">
+      <template #extra>
+        <a-button key="3">Operation</a-button>
+        <a-button key="2">Operation</a-button>
+        <a-button key="1" type="primary">Primary</a-button>
+      </template>
+      <template #footer>
+        <a-tabs>
+          <a-tab-pane key="1" tab="Details" />
+          <a-tab-pane key="2" tab="Rule" />
+        </a-tabs>
+      </template>
+      <div class="content">
+        <div class="main">
+          <a-descriptions size="small" :column="2">
+            <a-descriptions-item label="Created">Lili Qu</a-descriptions-item>
+            <a-descriptions-item label="Association">
+              <a>421421</a>
+            </a-descriptions-item>
+            <a-descriptions-item label="Creation Time">2017-01-10</a-descriptions-item>
+            <a-descriptions-item label="Effective Time">2017-10-10</a-descriptions-item>
+            <a-descriptions-item label="Remarks">
+              Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
+            </a-descriptions-item>
+          </a-descriptions>
+        </div>
+        <div class="extra">
+          <div
+            :style="{
+              display: 'flex',
+              width: 'max-content',
+              justifyContent: 'flex-end',
+            }"
+          >
+            <a-statistic
+              title="Status"
+              value="Pending"
+              :style="{
+                marginRight: '32px',
+              }"
+            />
+            <a-statistic title="Price" prefix="$" :value="568.08" />
+          </div>
+        </div>
+      </div>
+    </a-page-header>
+  </div>
+</template>
+
+<style scoped>
+.components-page-header-demo-responsive {
+  padding-bottom: 20px;
+}
+.components-page-header-demo-responsive tr:last-child td {
+  padding-bottom: 0;
+}
+#components-page-header-demo-responsive .content {
+  display: flex;
+}
+#components-page-header-demo-responsive .ant-statistic-content {
+  font-size: 20px;
+  line-height: 28px;
+}
+@media (max-width: 576px) {
+  #components-page-header-demo-responsive .content {
+    display: block;
+  }
+
+  #components-page-header-demo-responsive .main {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  #components-page-header-demo-responsive .extra {
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+}
+</style>
+TitleThis is a subtitleOperationOperationPrimaryCreatedLili QuAssociation421421Creation Time2017-01-10Effective Time2017-10-10Remarks Gonghu Road, Xihu District, Hangzhou, Zhejiang, China toggle ghost白底模式默认 PageHeader 是透明底色的。在某些情况下，PageHeader 需要自己的背景颜色。TS<template>
+  <div class="demo-page-header" style="background-color: #f5f5f5; padding: 24px">
+    <a-page-header
+      :ghost="ghost"
+      title="Title"
+      sub-title="This is a subtitle"
+      @back="() => $router.go(-1)"
+    >
+      <template #extra>
+        <a-button key="3">Operation</a-button>
+        <a-button key="2">Operation</a-button>
+        <a-button key="1" type="primary">Primary</a-button>
+      </template>
+      <a-descriptions size="small" :column="3">
+        <a-descriptions-item label="Created">Lili Qu</a-descriptions-item>
+        <a-descriptions-item label="Association">
+          <a>421421</a>
+        </a-descriptions-item>
+        <a-descriptions-item label="Creation Time">2017-01-10</a-descriptions-item>
+        <a-descriptions-item label="Effective Time">2017-10-10</a-descriptions-item>
+        <a-descriptions-item label="Remarks">
+          Gonghu Road, Xihu District, Hangzhou, Zhejiang, China
+        </a-descriptions-item>
+      </a-descriptions>
+    </a-page-header>
+  </div>
+  <a-checkbox v-model:checked="ghost" style="margin-top: 0.5rem">toggle ghost</a-checkbox>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const ghost = ref(false);
+</script>
+<style scoped>
+.demo-page-header :deep(tr:last-child td) {
+  padding-bottom: 0;
+}
+</style>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+avatar
+标题栏旁的头像
+avatar props
+-
+
+
+backIcon
+自定义 back icon ，如果为 false 不渲染 back icon
+string|slot
+<ArrowLeft />
+
+
+breadcrumb
+面包屑的配置
+breadcrumb
+-
+
+
+extra
+操作区，位于 title 行的行尾
+string|slot
+-
+
+
+footer
+PageHeader 的页脚，一般用于渲染 TabBar
+string|slot
+-
+
+
+ghost
+pageHeader 的类型，将会改变背景颜色
+boolean
+true
+
+
+subTitle
+自定义的二级标题文字
+string|slot
+-
+
+
+tags
+title 旁的 tag 列表
+Tag[] | Tag
+-
+
+
+title
+自定义标题文字
+string|slot
+-
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+back
+返回按钮的点击事件
+function(e)
+
+
+
+
+      最后更新 : 2023/07/31通知提醒框分页Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

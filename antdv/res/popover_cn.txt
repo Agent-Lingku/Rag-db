@@ -1,0 +1,326 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 位置 箭头指向 三种触发方式 从浮层内关闭 悬停点击弹出窗口 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Popover 气泡卡片点击/鼠标移入元素，弹出气泡式的卡片浮层。
+何时使用 
+          #
+        
+当目标元素有进一步的描述和相关操作时，可以收纳到卡片中，根据用户的操作行为进行展现。
+和 Tooltip 的区别是，用户可以对浮层上的元素进行操作，因此它可以承载更复杂的内容，比如链接或按钮等。
+代码演示Hover me基本用法最简单的用法，浮层的大小由内容区域决定。TS<template>
+  <a-popover title="Title">
+    <template #content>
+      <p>Content</p>
+      <p>Content</p>
+    </template>
+    <a-button type="primary">Hover me</a-button>
+  </a-popover>
+</template>
+TLTopTRLTLeftLBRTRightRBBLBottomBR位置位置有十二个方向。TS<template>
+  <div id="components-popover-demo-placement">
+    <div :style="{ marginLeft: `${buttonWidth}px`, whiteSpace: 'nowrap' }">
+      <a-popover placement="topLeft">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>TL</a-button>
+      </a-popover>
+      <a-popover placement="top">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>Top</a-button>
+      </a-popover>
+      <a-popover placement="topRight">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>TR</a-button>
+      </a-popover>
+    </div>
+    <div :style="{ width: `${buttonWidth}px`, float: 'left' }">
+      <a-popover placement="leftTop">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>LT</a-button>
+      </a-popover>
+      <a-popover placement="left">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>Left</a-button>
+      </a-popover>
+      <a-popover placement="leftBottom">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>LB</a-button>
+      </a-popover>
+    </div>
+    <div :style="{ width: `${buttonWidth}px`, marginLeft: `${buttonWidth * 4 + 24}px` }">
+      <a-popover placement="rightTop">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>RT</a-button>
+      </a-popover>
+      <a-popover placement="right">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>Right</a-button>
+      </a-popover>
+      <a-popover placement="rightBottom">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>RB</a-button>
+      </a-popover>
+    </div>
+    <div :style="{ marginLeft: `${buttonWidth}px`, clear: 'both', whiteSpace: 'nowrap' }">
+      <a-popover placement="bottomLeft">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>BL</a-button>
+      </a-popover>
+      <a-popover placement="bottom">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>Bottom</a-button>
+      </a-popover>
+      <a-popover placement="bottomRight">
+        <template #content>
+          <p>Content</p>
+          <p>Content</p>
+        </template>
+        <template #title>
+          <span>Title</span>
+        </template>
+        <a-button>BR</a-button>
+      </a-popover>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const buttonWidth = ref<number>(70);
+</script>
+<style scoped>
+#components-popover-demo-placement .ant-btn {
+  width: 70px;
+  text-align: center;
+  padding: 0;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+</style>
+Align edge / 边缘对齐Arrow points to center / 箭头指向中心箭头指向设置了 arrowPointAtCenter 后，箭头将指向目标元素的中心。TS<template>
+  <a-space>
+    <a-popover placement="topLeft">
+      <template #content>
+        <p>Content</p>
+        <p>Content</p>
+      </template>
+      <template #title>
+        <span>Title</span>
+      </template>
+      <a-button>Align edge / 边缘对齐</a-button>
+    </a-popover>
+    <a-popover placement="topLeft" arrow-point-at-center>
+      <template #content>
+        <p>Content</p>
+        <p>Content</p>
+      </template>
+      <template #title>
+        <span>Title</span>
+      </template>
+      <a-button>Arrow points to center / 箭头指向中心</a-button>
+    </a-popover>
+  </a-space>
+</template>
+Hover meFocus meClick me三种触发方式鼠标移入、聚集、点击。TS<template>
+  <div>
+    <a-popover title="Title" trigger="hover">
+      <template #content>
+        <p>Content</p>
+        <p>Content</p>
+      </template>
+      <a-button>Hover me</a-button>
+    </a-popover>
+    <a-popover title="Title" trigger="focus">
+      <template #content>
+        <p>Content</p>
+        <p>Content</p>
+      </template>
+      <a-button>Focus me</a-button>
+    </a-popover>
+    <a-popover title="Title" trigger="click">
+      <template #content>
+        <p>Content</p>
+        <p>Content</p>
+      </template>
+      <a-button>Click me</a-button>
+    </a-popover>
+  </div>
+</template>
+
+<style scoped>
+#components-popover-demo-triggerType .ant-btn {
+  margin-right: 8px;
+}
+</style>
+Click me从浮层内关闭使用 visible 属性控制浮层显示。TS<template>
+  <a-popover v-model:open="visible" title="Title" trigger="click">
+    <template #content>
+      <a @click="hide">Close</a>
+    </template>
+    <a-button type="primary">Click me</a-button>
+  </a-popover>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const visible = ref<boolean>(false);
+
+const hide = () => {
+  visible.value = false;
+};
+</script>
+Hover and click / 悬停并单击悬停点击弹出窗口以下示例显示如何创建可悬停和单击的弹出窗口。TS<template>
+  <a-popover
+    style="width: 500px"
+    title="Hover title"
+    trigger="hover"
+    :open="hovered"
+    @openChange="handleHoverChange"
+  >
+    <template #content>
+      <div>This is hover content.</div>
+    </template>
+    <a-popover title="Click title" trigger="click" :open="clicked" @openChange="handleClickChange">
+      <template #content>
+        <div>
+          <div>This is click content.</div>
+          <a @click="hide">Close</a>
+        </div>
+      </template>
+      <a-button>Hover and click / 悬停并单击</a-button>
+    </a-popover>
+  </a-popover>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const clicked = ref<boolean>(false);
+const hovered = ref<boolean>(false);
+
+const hide = () => {
+  clicked.value = false;
+  hovered.value = false;
+};
+
+const handleHoverChange = (visible: boolean) => {
+  clicked.value = false;
+  hovered.value = visible;
+};
+
+const handleClickChange = (visible: boolean) => {
+  clicked.value = visible;
+  hovered.value = false;
+};
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+content
+卡片内容
+string|slot|VNode
+-
+
+
+
+title
+卡片标题
+string|slot|VNode
+-
+
+
+
+
+更多属性请参考 Tooltip。
+注意 
+          #
+        
+请确保 Popover 的子元素能接受 mouseenter、mouseleave、focus、click 事件。
+
+      最后更新 : 2023/07/14气泡确认框进度条Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

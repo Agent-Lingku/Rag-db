@@ -1,0 +1,919 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 前缀和后缀 搜索框 loading 输入框组合 输入时格式化展示 密码框 文本域 自定义状态 适应文本高度的文本域 搜索框 三种大小 前置/后置标签 带移除图标 带字数提示 无边框 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Input 输入框通过鼠标或键盘输入内容，是最基础的表单域的包装。
+何时使用 
+          #
+        
+
+需要用户输入表单域内容时。
+提供组合型输入框，带搜索的输入框，还可以进行大小选择。
+
+代码演示基本用法基本用法。TS<template>
+  <a-space direction="vertical">
+    <a-input v-model:value="value" placeholder="Basic usage" />
+    <a-input v-model:value.lazy="value1" autofocus placeholder="Lazy usage" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { watch, ref } from 'vue';
+const value = ref<string>('');
+const value1 = ref<string>('');
+watch(value, () => {
+  console.log(value.value);
+});
+watch(value1, () => {
+  console.log(value1.value);
+});
+</script>
+￥RMB前缀和后缀在输入框上添加前缀或后缀图标。TS<template>
+  <div class="components-input-demo-presuffix">
+    <a-input v-model:value="userName" placeholder="Basic usage">
+      <template #prefix>
+        <user-outlined />
+      </template>
+      <template #suffix>
+        <a-tooltip title="Extra information">
+          <info-circle-outlined style="color: rgba(0, 0, 0, 0.45)" />
+        </a-tooltip>
+      </template>
+    </a-input>
+    <br />
+    <br />
+    <a-input prefix="￥" suffix="RMB" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { UserOutlined, InfoCircleOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+const userName = ref<string>('');
+</script>
+搜索框 loading用于 onSearch 的时候展示 loading。TS<template>
+  <div>
+    <a-input-search v-model:value="value" placeholder="input search loading deault" loading />
+    <br />
+    <br />
+    <a-input-search
+      v-model:value="value"
+      placeholder="input search loading with enterButton"
+      loading
+      enter-button
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<string>('');
+</script>
+ZhejiangOption1Option1-1Option2-2BetweenSign UpEmailHomeSelect AddressSubmit输入框组合输入框的组合展现。
+注意：使用 compact 模式时，不需要通过 Col 来控制宽度。TS<template>
+  <a-space class="site-input-group-wrapper" direction="vertical" size="middle">
+    <a-input-group size="large">
+      <a-row :gutter="8">
+        <a-col :span="5">
+          <a-input v-model:value="value1" />
+        </a-col>
+        <a-col :span="8">
+          <a-input v-model:value="value2" />
+        </a-col>
+      </a-row>
+    </a-input-group>
+    <a-input-group compact>
+      <a-input v-model:value="value1" style="width: 20%" />
+      <a-input v-model:value="value2" style="width: 30%" />
+    </a-input-group>
+    <a-input-group compact>
+      <a-select v-model:value="value3">
+        <a-select-option value="Zhejiang">Zhejiang</a-select-option>
+        <a-select-option value="Jiangsu">Jiangsu</a-select-option>
+      </a-select>
+      <a-input v-model:value="value4" style="width: 50%" />
+    </a-input-group>
+    <a-input-group compact>
+      <a-select v-model:value="value5">
+        <a-select-option value="Option1">Option1</a-select-option>
+        <a-select-option value="Option2">Option2</a-select-option>
+      </a-select>
+      <a-input v-model:value="value6" style="width: 50%" />
+    </a-input-group>
+    <a-input-group compact>
+      <a-input v-model:value="value7" style="width: 50%" />
+      <a-date-picker v-model:value="value8" style="width: 50%" />
+    </a-input-group>
+    <a-input-group compact>
+      <a-select v-model:value="value9">
+        <a-select-option value="Option1-1">Option1-1</a-select-option>
+        <a-select-option value="Option1-2">Option1-2</a-select-option>
+      </a-select>
+      <a-select v-model:value="value10">
+        <a-select-option value="Option2-1">Option2-1</a-select-option>
+        <a-select-option value="Option2-2">Option2-2</a-select-option>
+      </a-select>
+    </a-input-group>
+    <a-input-group compact>
+      <a-select v-model:value="value11">
+        <a-select-option value="1">Between</a-select-option>
+        <a-select-option value="2">Except</a-select-option>
+      </a-select>
+      <a-input
+        v-model:value="value12"
+        style="width: 100px; text-align: center"
+        placeholder="Minimum"
+      />
+      <a-input
+        v-model:value="value13"
+        class="site-input-split"
+        style="width: 30px; border-left: 0; pointer-events: none"
+        placeholder="~"
+        disabled
+      />
+      <a-input
+        v-model:value="value14"
+        class="site-input-right"
+        style="width: 100px; text-align: center"
+        placeholder="Maximum"
+      />
+    </a-input-group>
+    <a-input-group compact>
+      <a-select v-model:value="value15">
+        <a-select-option value="Sign Up">Sign Up</a-select-option>
+        <a-select-option value="Sign In">Sign In</a-select-option>
+      </a-select>
+      <a-auto-complete
+        v-model:value="value16"
+        :options="[{ value: 'text 1' }, { value: 'text 2' }]"
+        style="width: 200px"
+        placeholder="Email"
+      />
+    </a-input-group>
+    <a-input-group compact>
+      <a-select v-model:value="value17" style="width: 30%">
+        <a-select-option value="Home">Home</a-select-option>
+        <a-select-option value="Company">Company</a-select-option>
+      </a-select>
+      <a-cascader
+        v-model:value="value18"
+        style="width: 70%"
+        :options="options"
+        placeholder="Select Address"
+      />
+    </a-input-group>
+    <a-input-group compact>
+      <a-input v-model:value="value19" style="width: calc(100% - 200px)" />
+      <a-button type="primary">Submit</a-button>
+    </a-input-group>
+    <a-input-group compact>
+      <a-input v-model:value="value20" style="width: calc(100% - 200px)" />
+      <a-tooltip title="copy git url">
+        <a-button>
+          <template #icon><CopyOutlined /></template>
+        </a-button>
+      </a-tooltip>
+    </a-input-group>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { CopyOutlined } from '@ant-design/icons-vue';
+
+const options = [
+  {
+    value: 'zhejiang',
+    label: 'Zhejiang',
+    children: [
+      {
+        value: 'hangzhou',
+        label: 'Hangzhou',
+        children: [
+          {
+            value: 'xihu',
+            label: 'West Lake',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'jiangsu',
+    label: 'Jiangsu',
+    children: [
+      {
+        value: 'nanjing',
+        label: 'Nanjing',
+        children: [
+          {
+            value: 'zhonghuamen',
+            label: 'Zhong Hua Men',
+          },
+        ],
+      },
+    ],
+  },
+];
+const value1 = ref<string>('0571');
+const value2 = ref<string>('26888888');
+const value3 = ref<string>('Zhejiang');
+const value4 = ref<string>('Xihu District, Hangzhou');
+const value5 = ref<string>('Option1');
+const value6 = ref<string>('input content');
+const value7 = ref<string>('input content');
+const value8 = ref<string | null>(null);
+const value9 = ref<string>('Option1-1');
+const value10 = ref<string>('Option2-2');
+const value11 = ref<string>('1');
+const value12 = ref<string>('');
+const value13 = ref<string>('');
+const value14 = ref<string>('');
+const value15 = ref<string>('Sign Up');
+const value16 = ref<string>('');
+const value17 = ref<string>('Home');
+const value18 = ref<string[]>([]);
+const value19 = ref<string>('https://surely.cool');
+const value20 = ref<string>('https://antdv.com');
+</script>
+<style scoped>
+.site-input-group-wrapper .site-input-split {
+  background-color: #fff;
+}
+
+.site-input-group-wrapper .site-input-right {
+  border-left-width: 0;
+}
+
+.site-input-group-wrapper .site-input-right:hover,
+.site-input-group-wrapper .site-input-right:focus {
+  border-left-width: 1px;
+}
+
+.site-input-group-wrapper .ant-input-rtl.site-input-right {
+  border-right-width: 0;
+}
+
+.site-input-group-wrapper .ant-input-rtl.site-input-right:hover,
+.site-input-group-wrapper .ant-input-rtl.site-input-right:focus {
+  border-right-width: 1px;
+}
+[data-theme='dark'] .site-input-group-wrapper .site-input-split {
+  background-color: transparent;
+}
+</style>
+输入时格式化展示结合 Tooltip 组件，实现一个数值输入框，方便内容超长时的全量展现。TS<template>
+  <a-tooltip :trigger="['focus']" placement="topLeft" overlay-class-name="numeric-input">
+    <template v-if="inputValue" #title>
+      <span class="numeric-input-title">
+        {{ formatValue }}
+      </span>
+    </template>
+
+    <a-input
+      v-model:value="inputValue"
+      placeholder="Input a number"
+      :max-length="25"
+      style="width: 120px"
+      @blur="onBlur"
+    />
+  </a-tooltip>
+</template>
+<script lang="ts" setup>
+import { computed, ref, watch } from 'vue';
+
+function formatNumber(value: string) {
+  value += '';
+  const list = value.split('.');
+  const prefix = list[0].charAt(0) === '-' ? '-' : '';
+  let num = prefix ? list[0].slice(1) : list[0];
+  let result = '';
+
+  while (num.length > 3) {
+    result = `,${num.slice(-3)}${result}`;
+    num = num.slice(0, num.length - 3);
+  }
+
+  if (num) {
+    result = num + result;
+  }
+
+  return `${prefix}${result}${list[1] ? `.${list[1]}` : ''}`;
+}
+
+const inputValue = ref<string>('111');
+const formatValue = computed(() => {
+  if (inputValue.value === '-') return '-';
+  return formatNumber(inputValue.value);
+});
+
+const format = (val: string, preVal: string) => {
+  const reg = /^-?\d*(\.\d*)?$/;
+
+  if ((!isNaN(+val) && reg.test(val)) || val === '' || val === '-') {
+    inputValue.value = val;
+  } else {
+    inputValue.value = preVal;
+  }
+};
+
+// '.' at the end or only '-' in the input box.
+const onBlur = () => {
+  if (inputValue.value.charAt(inputValue.value.length - 1) === '.' || inputValue.value === '-') {
+    format(inputValue.value.slice(0, -1), inputValue.value);
+  }
+};
+
+watch(inputValue, (val, preVal) => {
+  format(val, preVal);
+});
+</script>
+<style>
+/* to prevent the arrow overflow the popup container,
+or the height is not enough when content is empty */
+.numeric-input .ant-tooltip-inner {
+  min-width: 32px;
+  min-height: 37px;
+}
+
+.numeric-input .numeric-input-title {
+  font-size: 14px;
+}
+</style>
+Hide密码框密码框。TS<template>
+  <a-space direction="vertical" size="middle" style="width: 100%">
+    <a-input-password v-model:value="value" placeholder="input password" />
+    <a-input-password v-model:value="value2" placeholder="input password">
+      <template #iconRender="v">
+        <EyeTwoTone v-if="v"></EyeTwoTone>
+        <EyeInvisibleOutlined v-else></EyeInvisibleOutlined>
+      </template>
+    </a-input-password>
+    <a-input-password
+      v-model:value="value3"
+      placeholder="input password"
+      :visibility-toggle="false"
+    />
+    <a-space>
+      <a-input-password
+        v-model:value="value4"
+        v-model:visible="visible"
+        placeholder="input password"
+      />
+      <a-button @click="visible = !visible">{{ visible ? 'Hide' : 'Show' }}</a-button>
+    </a-space>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons-vue';
+const value = ref<string>('');
+const value2 = ref<string>('');
+const value3 = ref<string>('');
+const value4 = ref<string>('');
+
+const visible = ref<boolean>(true);
+</script>
+文本域用于多行输入。TS<template>
+  <a-textarea v-model:value="value" placeholder="Basic usage" :rows="4" />
+  <br />
+  <br />
+  <a-textarea :rows="4" placeholder="maxlength is 6" :maxlength="6" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<string>('');
+</script>
+自定义状态使用 status 为 Input 添加状态，可选 error 或者 warning。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-input status="error" placeholder="Error" />
+    <a-input status="warning" placeholder="Warning" />
+    <a-input status="error" placeholder="Error with prefix">
+      <template #prefix><ClockCircleOutlined /></template>
+    </a-input>
+    <a-input status="warning" placeholder="Warning with prefix">
+      <template #prefix><ClockCircleOutlined /></template>
+    </a-input>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ClockCircleOutlined } from '@ant-design/icons-vue';
+</script>
+适应文本高度的文本域属性适用于 textarea 节点，并且只有高度会自动变化。另外 autoSize 可以设定为一个对象，指定最小行数和最大行数。
+
+1.5.0 后 autosize 被废弃，请使用 autoSize。
+TS<template>
+  <div>
+    <a-textarea
+      v-model:value="value1"
+      placeholder="Autosize height based on content lines"
+      auto-size
+    />
+    <div style="margin: 24px 0" />
+    <a-textarea
+      v-model:value="value2"
+      placeholder="Autosize height with minimum and maximum number of lines"
+      :auto-size="{ minRows: 2, maxRows: 5 }"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<string>('');
+const value2 = ref<string>('');
+</script>
+SearchCustom搜索框带有搜索按钮的输入框。TS<template>
+  <a-space direction="vertical">
+    <a-input-search
+      v-model:value="value"
+      placeholder="input search text"
+      style="width: 200px"
+      @search="onSearch"
+    />
+    <a-input-search
+      v-model:value="value"
+      placeholder="input search text"
+      enter-button
+      @search="onSearch"
+    />
+    <a-input-search
+      v-model:value="value"
+      placeholder="input search text"
+      enter-button="Search"
+      size="large"
+      @search="onSearch"
+    />
+    <a-input-search
+      v-model:value="value"
+      placeholder="input search text"
+      size="large"
+      @search="onSearch"
+    >
+      <template #enterButton>
+        <a-button>Custom</a-button>
+      </template>
+    </a-input-search>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<string>('');
+
+const onSearch = (searchValue: string) => {
+  console.log('use value', searchValue);
+  console.log('or use this.value', value.value);
+};
+</script>
+三种大小我们为 <Input /> 输入框定义了三种尺寸（大、默认、小），高度分别为 40px、32px 和 24px。TS<template>
+  <div class="components-input-demo-size">
+    <a-input v-model:value="value" size="large" placeholder="large size" />
+    <a-input v-model:value="value" placeholder="default size" />
+    <a-input v-model:value="value" size="small" placeholder="small size" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<string>('');
+</script>
+<style scoped>
+.components-input-demo-size .ant-input {
+  width: 200px;
+  margin: 0 8px 8px 0;
+}
+</style>
+Http://.comHttp://.comcascader前置/后置标签用于配置一些固定组合。TS<template>
+  <a-space direction="vertical">
+    <a-input v-model:value="value1" addon-before="Http://" addon-after=".com" />
+    <a-input v-model:value="value2">
+      <template #addonBefore>
+        <a-select v-model:value="value3" style="width: 90px">
+          <a-select-option value="Http://">Http://</a-select-option>
+          <a-select-option value="Https://">Https://</a-select-option>
+        </a-select>
+      </template>
+      <template #addonAfter>
+        <a-select v-model:value="value4" style="width: 80px">
+          <a-select-option value=".com">.com</a-select-option>
+          <a-select-option value=".jp">.jp</a-select-option>
+          <a-select-option value=".cn">.cn</a-select-option>
+          <a-select-option value=".org">.org</a-select-option>
+        </a-select>
+      </template>
+    </a-input>
+    <a-input v-model:value="value5">
+      <template #addonAfter>
+        <setting-outlined />
+      </template>
+    </a-input>
+
+    <a-input v-model:value="value6">
+      <template #addonBefore>
+        <a-cascader placeholder="cascader" style="width: 150px" />
+      </template>
+    </a-input>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { SettingOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+const value1 = ref<string>('mysite');
+const value2 = ref<string>('mysite');
+const value3 = ref<string>('Http://');
+const value4 = ref<string>('.com');
+const value5 = ref<string>('mysite');
+const value6 = ref<string>('mysite');
+</script>
+带移除图标带移除图标的输入框，点击图标删除所有内容。TS<template>
+  <div>
+    <a-input v-model:value="value1" placeholder="input with clear icon" allow-clear />
+    <br />
+    <br />
+    <a-textarea v-model:value="value2" placeholder="textarea with clear icon" allow-clear />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<string>('');
+const value2 = ref<string>('');
+</script>
+10 / 20带字数提示展示字数提示。TS<template>
+  <a-input v-model:value="value1" show-count :maxlength="20" />
+  <br />
+  <br />
+  <a-textarea v-model:value="value2" show-count :maxlength="100" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<string>('test value');
+const value2 = ref<string>('test value');
+</script>
+无边框没有边框。TS<template>
+  <a-input v-model:value="value" :bordered="false" placeholder="Borderless" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<string>('');
+</script>
+
+      API#
+      
+          #
+        
+Input 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+addonAfter
+带标签的 input，设置后置标签
+string|slot
+
+
+
+
+addonBefore
+带标签的 input，设置前置标签
+string|slot
+
+
+
+
+allowClear
+可以点击清除图标删除内容
+boolean
+
+
+
+
+bordered
+是否有边框
+boolean
+true
+3.0
+
+
+clearIcon
+自定义清除图标 （allowClear 为 true 时生效）
+slot
+<CloseCircleFilled />
+3.3.0
+
+
+defaultValue
+输入框默认内容
+string
+
+
+
+
+disabled
+是否禁用状态，默认为 false
+boolean
+false
+
+
+
+id
+输入框的 id
+string
+
+
+
+
+maxlength
+最大长度
+number
+
+1.5.0
+
+
+prefix
+带有前缀图标的 input
+string|slot
+
+
+
+
+showCount
+是否展示字数
+boolean
+false
+3.0
+
+
+status
+设置校验状态
+'error' | 'warning'
+-
+3.3.0
+
+
+size
+控件大小。注：标准表单内的输入框大小限制为 middle。可选 large middle small
+string
+-
+
+
+
+suffix
+带有后缀图标的 input
+string|slot
+
+
+
+
+type
+声明 input 类型，同原生 input 标签的 type 属性，见：MDN(请直接使用 <a-textarea /> 代替 type="textarea")。
+string
+text
+
+
+
+value(v-model)
+输入框内容
+string
+
+
+
+
+
+Input 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+
+change
+输入框内容变化时的回调
+function(e)
+
+
+
+pressEnter
+按下回车的回调
+function(e)
+
+
+
+
+
+如果 Input 在 Form.Item 内，并且 Form.Item 设置了 id 和 options 属性，则 value defaultValue 和 id 属性会被自动设置。
+
+TextArea 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+
+allowClear
+可以点击清除图标删除内容
+boolean
+
+1.5.0
+
+
+
+autosize
+自适应内容高度，可设置为 true | false 或对象：{ minRows: 2, maxRows: 6 }
+boolean|object
+false
+
+
+
+
+defaultValue
+输入框默认内容
+string
+
+
+
+
+
+showCount
+是否展示字数
+boolean
+false
+
+
+
+
+value(v-model)
+输入框内容
+string
+
+
+
+
+
+
+TextArea 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+pressEnter
+按下回车的回调
+function(e)
+
+
+
+Textarea 的其他属性和浏览器自带的 textarea 一致。
+Input.Search 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+enterButton
+是否有确认按钮，可设为按钮文字。该属性会与 addon 冲突。
+boolean|slot
+false
+
+
+
+loading
+搜索 loading
+boolean
+
+1.5.0
+
+
+
+Input.Search 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+search
+点击搜索或按下回车键时的回调
+function(value, event)
+
+
+
+其余属性和 Input 一致。
+Input.Group 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+compact
+是否用紧凑模式
+boolean
+false
+
+
+size
+Input.Group 中所有的 Input 的大小，可选 large default small
+string
+default
+
+
+
+<a-input-group>
+  <a-input />
+  <a-input />
+</a-input-group>
+
+Input.Password (1.14.0 中新增) 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+visible(v-model)
+密码是否可见
+boolean
+false
+
+
+iconRender
+自定义切换按钮
+slot
+-
+
+
+visibilityToggle
+是否显示切换按钮或者控制密码显隐
+boolean
+true
+
+
+
+
+      最后更新 : 2025/03/06图片数字输入框Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

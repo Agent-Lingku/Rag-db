@@ -1,0 +1,271 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 多行水印 图片水印 自定义配置 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Watermark 水印给页面的某个区域加上水印。
+何时使用 
+          #
+        
+
+页面需要添加水印标识版权时使用。
+适用于防止信息盗用。
+
+代码演示基本最简单的用法。TS<template>
+  <a-watermark content="Ant Design Vue">
+    <div style="height: 500px" />
+  </a-watermark>
+</template>
+多行水印通过 content 设置 字符串数组 指定多行文字水印内容。TS<template>
+  <a-watermark :content="['Ant Design Vue', 'Happy Working']">
+    <div style="height: 500px" />
+  </a-watermark>
+</template>
+图片水印通过 image 指定图片地址。为保证图片高清且不被拉伸，请设置 width 和 height, 并上传至少两倍的宽高的 logo 图片地址。TS<template>
+  <a-watermark
+    :height="30"
+    :width="130"
+    image="https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*lkAoRbywo0oAAAAAAAAAAAAADrJ8AQ/original"
+  >
+    <div style="height: 500px" />
+  </a-watermark>
+</template>
+ The light-speed iteration of the digital world makes products more complex. However, human consciousness and attention resources are limited. Facing this design contradiction, the pursuit of natural interaction will be the consistent direction of Ant Design.  Natural user cognition: According to cognitive psychology, about 80% of external information is obtained through visual channels. The most important visual elements in the interface design, including layout, colors, illustrations, icons, etc., should fully absorb the laws of nature, thereby reducing the user's cognitive cost and bringing authentic and smooth feelings. In some scenarios, opportunely adding other sensory channels such as hearing, touch can create a richer and more natural product experience.  Natural user behavior: In the interaction with the system, the designer should fully understand the relationship between users, system roles, and task objectives, and also contextually organize system functions and services. At the same time, a series of methods such as behavior analysis, artificial intelligence and sensors could be applied to assist users to make effective decisions and reduce extra operations of users, to save users' mental and physical resources and make human-computer interaction more natural. ContentFontSizezIndexRotateGapOffset自定义配置通过自定义参数配置预览水印效果。TS<template>
+  <div style="display: flex">
+    <a-watermark v-bind="model">
+      <a-typography>
+        <a-typography-paragraph>
+          The light-speed iteration of the digital world makes products more complex. However, human
+          consciousness and attention resources are limited. Facing this design contradiction, the
+          pursuit of natural interaction will be the consistent direction of Ant Design.
+        </a-typography-paragraph>
+        <a-typography-paragraph>
+          Natural user cognition: According to cognitive psychology, about 80% of external
+          information is obtained through visual channels. The most important visual elements in the
+          interface design, including layout, colors, illustrations, icons, etc., should fully
+          absorb the laws of nature, thereby reducing the user&apos;s cognitive cost and bringing
+          authentic and smooth feelings. In some scenarios, opportunely adding other sensory
+          channels such as hearing, touch can create a richer and more natural product experience.
+        </a-typography-paragraph>
+        <a-typography-paragraph>
+          Natural user behavior: In the interaction with the system, the designer should fully
+          understand the relationship between users, system roles, and task objectives, and also
+          contextually organize system functions and services. At the same time, a series of methods
+          such as behavior analysis, artificial intelligence and sensors could be applied to assist
+          users to make effective decisions and reduce extra operations of users, to save
+          users&apos; mental and physical resources and make human-computer interaction more
+          natural.
+        </a-typography-paragraph>
+      </a-typography>
+      <img
+        style="z-index: 10; width: 100%; max-width: 800px; position: relative"
+        src="https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*zx7LTI_ECSAAAAAAAAAAAABkARQnAQ"
+        alt="示例图片"
+      />
+    </a-watermark>
+    <a-form
+      style="
+        width: 280px;
+        flex-shrink: 0;
+        border-left: 1px solid #eee;
+        padding-left: 20px;
+        margin-left: 20px;
+      "
+      layout="vertical"
+      :model="model"
+    >
+      <a-form-item name="content" label="Content">
+        <a-input v-model:value="model.content" />
+      </a-form-item>
+      <a-form-item name="font.fontSize" label="FontSize">
+        <a-slider v-model:value="model.font.fontSize" :step="1" :min="0" :max="100" />
+      </a-form-item>
+      <a-form-item name="zIndex" label="zIndex">
+        <a-slider v-model:value="model.zIndex" :step="1" :min="0" :max="100" />
+      </a-form-item>
+      <a-form-item name="rotate" label="Rotate">
+        <a-slider v-model:value="model.rotate" :step="1" :min="-180" :max="180" />
+      </a-form-item>
+      <a-form-item label="Gap" style="margin-bottom: 0">
+        <a-space style="display: flex" align="baseline">
+          <a-form-item :name="['gap', 0]">
+            <a-input-number v-model:value="model.gap[0]" placeholder="gapX" />
+          </a-form-item>
+          <a-form-item :name="['gap', 1]">
+            <a-input-number v-model:value="model.gap[1]" placeholder="gapY" />
+          </a-form-item>
+        </a-space>
+      </a-form-item>
+      <a-form-item label="Offset" style="margin-bottom: 0">
+        <a-space style="display: flex" align="baseline">
+          <a-form-item :name="['offset', 0]">
+            <a-input-number v-model:value="model.offset[0]" placeholder="offsetLeft" />
+          </a-form-item>
+          <a-form-item :name="['offset', 1]">
+            <a-input-number v-model:value="model.offset[1]" placeholder="offsetTop" />
+          </a-form-item>
+        </a-space>
+      </a-form-item>
+    </a-form>
+  </div>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+const model = reactive({
+  content: 'Ant Design Vue',
+  font: {
+    fontSize: 16,
+  },
+  zIndex: 11,
+  rotate: -22,
+  gap: [100, 100] as [number, number],
+  offset: [],
+});
+</script>
+
+      API#
+      
+          #
+        
+Watermark 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+width
+水印的宽度，content 的默认值为自身的宽度
+number
+120
+
+
+
+height
+水印的高度，content 的默认值为自身的高度
+number
+64
+
+
+
+rotate
+水印绘制时，旋转的角度，单位 °
+number
+-22
+
+
+
+zIndex
+追加的水印元素的 z-index
+number
+9
+
+
+
+image
+图片源，建议导出 2 倍或 3 倍图，优先级高
+string
+-
+
+
+
+content
+水印文字内容
+string | string[]
+-
+
+
+
+font
+文字样式
+Font
+Font
+
+
+
+gap
+水印之间的间距
+[number, number]
+[100, 100]
+
+
+
+offset
+水印距离容器左上角的偏移量，默认为 gap/2
+[number, number]
+[gap[0]/2, gap[1]/2]
+
+
+
+
+Font 
+          #
+        
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+color
+字体颜色
+string
+rgba(0,0,0,.15)
+
+
+
+fontSize
+字体大小
+number
+16
+
+
+
+fontWeight
+字体粗细
+normal | light | weight | number
+normal
+
+
+
+fontFamily
+字体类型
+string
+sans-serif
+
+
+
+fontStyle
+字体样式
+none | normal | italic | oblique
+normal
+
+
+
+
+
+      最后更新 : 2023/12/18上传Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

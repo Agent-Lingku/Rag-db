@@ -1,0 +1,517 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本使用 静态位置 自定义锚点高亮 监听锚点链接改变 横向 Anchor。 自定义 click 事件 设置锚点滚动偏移量 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Anchor 锚点用于跳转到页面指定位置。
+何时使用 
+          #
+        
+需要展现当前页面上可供跳转的锚点链接，以及快速在锚点之间跳转。
+代码演示Part 1Part 2Part 3基本使用最简单的用法。TS<template>
+  <a-anchor
+    :items="[
+      {
+        key: 'part-1',
+        href: '#part-1',
+        title: () => h('span', { style: 'color: red' }, 'Part 1'),
+      },
+      {
+        key: 'part-2',
+        href: '#part-2',
+        title: 'Part 2',
+      },
+      {
+        key: 'part-3',
+        href: '#part-3',
+        title: 'Part 3',
+      },
+    ]"
+  />
+</template>
+<script lang="ts" setup>
+import { h } from 'vue';
+</script>
+Basic demoStatic demoAPIAnchor PropsLink Props静态位置不浮动，状态不随页面滚动变化。TS<template>
+  <a-anchor
+    :affix="false"
+    :items="[
+      {
+        key: '1',
+        href: '#components-anchor-demo-basic',
+        title: 'Basic demo',
+      },
+      {
+        key: '2',
+        href: '#components-anchor-demo-static',
+        title: 'Static demo',
+      },
+      {
+        key: '3',
+        href: '#api',
+        title: 'API',
+        children: [
+          {
+            key: '4',
+            href: '#anchor-props',
+            title: 'Anchor Props',
+          },
+          {
+            key: '5',
+            href: '#link-props',
+            title: 'Link Props',
+          },
+        ],
+      },
+    ]"
+  ></a-anchor>
+</template>
+Basic demoStatic demoAPIAnchor PropsLink Props自定义锚点高亮自定义锚点高亮。TS<template>
+  <a-anchor
+    :affix="false"
+    :get-current-anchor="getCurrentAnchor"
+    :items="[
+      {
+        key: '1',
+        href: '#components-anchor-demo-basic',
+        title: 'Basic demo',
+      },
+      {
+        key: '2',
+        href: '#components-anchor-demo-static',
+        title: 'Static demo',
+      },
+      {
+        key: '3',
+        href: '#api',
+        title: 'API',
+        children: [
+          {
+            key: '4',
+            href: '#anchor-props',
+            title: 'Anchor Props',
+          },
+          {
+            key: '5',
+            href: '#link-props',
+            title: 'Link Props',
+          },
+        ],
+      },
+    ]"
+  ></a-anchor>
+</template>
+<script lang="ts" setup>
+const getCurrentAnchor = () => {
+  return '#components-anchor-demo-static';
+};
+</script>
+Basic demoStatic demoAPIAnchor PropsLink Props监听锚点链接改变监听锚点链接改变。TS<template>
+  <a-anchor
+    :affix="false"
+    :items="[
+      {
+        key: '1',
+        href: '#components-anchor-demo-basic',
+        title: 'Basic demo',
+      },
+      {
+        key: '2',
+        href: '#components-anchor-demo-static',
+        title: 'Static demo',
+      },
+      {
+        key: '3',
+        href: '#api',
+        title: 'API',
+        children: [
+          {
+            key: '4',
+            href: '#anchor-props',
+            title: 'Anchor Props',
+          },
+          {
+            key: '5',
+            href: '#link-props',
+            title: 'Link Props',
+          },
+        ],
+      },
+    ]"
+    @change="onChange"
+  ></a-anchor>
+</template>
+<script lang="ts" setup>
+const onChange = (link: string) => {
+  console.log('Anchor:OnChange', link);
+};
+</script>
+Part 1Part 2Part 3Part 4Part 5Part 6横向 Anchor。横向 Anchor。TS<template>
+  <div
+    style="
+       {
+        padding: '20px';
+      }
+    "
+  >
+    <a-anchor
+      direction="horizontal"
+      :items="[
+        {
+          key: 'horizontally-part-1',
+          href: '#horizontally-part-1',
+          title: 'Part 1',
+        },
+        {
+          key: 'horizontally-part-2',
+          href: '#horizontally-part-2',
+          title: 'Part 2',
+        },
+        {
+          key: 'horizontally-part-3',
+          href: '#horizontally-part-3',
+          title: 'Part 3',
+        },
+        {
+          key: 'horizontally-part-4',
+          href: '#horizontally-part-4',
+          title: 'Part 4',
+        },
+        {
+          key: 'horizontally-part-5',
+          href: '#horizontally-part-5',
+          title: 'Part 5',
+        },
+        {
+          key: 'horizontally-part-6',
+          href: '#horizontally-part-6',
+          title: 'Part 6',
+        },
+      ]"
+    />
+  </div>
+</template>
+Basic demoStatic demoAPIAnchor PropsLink Props自定义 click 事件点击锚点不记录历史。TS<template>
+  <a-anchor
+    :affix="false"
+    :items="[
+      {
+        key: '1',
+        href: '#components-anchor-demo-basic',
+        title: 'Basic demo',
+      },
+      {
+        key: '2',
+        href: '#components-anchor-demo-static',
+        title: 'Static demo',
+      },
+      {
+        key: '3',
+        href: '#api',
+        title: 'API',
+        children: [
+          {
+            key: '4',
+            href: '#anchor-props',
+            title: 'Anchor Props',
+          },
+          {
+            key: '5',
+            href: '#link-props',
+            title: 'Link Props',
+          },
+        ],
+      },
+    ]"
+    @click="handleClick"
+  ></a-anchor>
+</template>
+<script lang="ts" setup>
+import type { AnchorProps } from 'ant-design-vue';
+const handleClick: AnchorProps['onClick'] = (e, link) => {
+  e.preventDefault();
+  console.log(link);
+};
+</script>
+Basic demoStatic demoAPIAnchor PropsLink Props设置锚点滚动偏移量锚点目标滚动到屏幕正中间。TS<template>
+  <a-anchor
+    :target-offset="targetOffset"
+    :items="[
+      {
+        key: '1',
+        href: '#components-anchor-demo-basic',
+        title: 'Basic demo',
+      },
+      {
+        key: '2',
+        href: '#components-anchor-demo-static',
+        title: 'Static demo',
+      },
+      {
+        key: '3',
+        href: '#api',
+        title: 'API',
+        children: [
+          {
+            key: '4',
+            href: '#anchor-props',
+            title: 'Anchor Props',
+          },
+          {
+            key: '5',
+            href: '#link-props',
+            title: 'Link Props',
+          },
+        ],
+      },
+    ]"
+  ></a-anchor>
+</template>
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue';
+const targetOffset = ref<number | undefined>(undefined);
+onMounted(() => {
+  targetOffset.value = window.innerHeight / 2;
+});
+</script>
+
+      API#
+      
+          #
+        
+Anchor Props 
+          #
+        
+
+
+
+成员
+说明
+类型
+默认值
+版本
+
+
+
+
+affix
+固定模式
+boolean
+true
+
+
+
+bounds
+锚点区域边界
+number
+5(px)
+
+
+
+getContainer
+指定滚动的容器
+() => HTMLElement
+() => window
+
+
+
+getCurrentAnchor
+自定义高亮的锚点
+(activeLink: string) => string
+-
+activeLink(3.3)
+
+
+offsetBottom
+距离窗口底部达到指定偏移量后触发
+number
+
+
+
+
+offsetTop
+距离窗口顶部达到指定偏移量后触发
+number
+
+
+
+
+showInkInFixed
+:affix="false" 时是否显示小方块
+boolean
+false
+
+
+
+targetOffset
+锚点滚动偏移量，默认与 offsetTop 相同，例子
+number
+offsetTop
+1.5.0
+
+
+wrapperClass
+容器的类名
+string
+-
+
+
+
+wrapperStyle
+容器样式
+object
+-
+
+
+
+items
+数据化配置选项内容，支持通过 children 嵌套
+{ key, href, title, target, children }[] 具体见
+-
+4.0
+
+
+direction
+设置导航方向
+vertical | horizontal
+vertical
+4.0
+
+
+customTitle
+使用插槽自定义选项 title
+v-slot="AnchorItem"
+-
+4.0
+
+
+
+AnchorItem 
+          #
+        
+
+
+
+成员
+说明
+类型
+默认值
+版本
+
+
+
+
+key
+唯一标志
+string | number
+-
+
+
+
+href
+锚点链接
+string
+-
+
+
+
+target
+该属性指定在何处显示链接的资源
+string
+-
+
+
+
+title
+文字内容
+VueNode | (item: AnchorItem) => VueNode
+-
+
+
+
+children
+嵌套的 Anchor Link，注意：水平方向该属性不支持
+AnchorItem[]
+-
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+
+change
+监听锚点链接改变
+(currentActiveLink: string) => void
+
+1.5.0
+
+
+click
+click 事件的 handler
+Function(e: MouseEvent, link: Object)
+
+
+
+
+
+Link Props 
+          #
+        
+
+
+
+成员
+说明
+类型
+默认值
+版本
+
+
+
+
+href
+锚点链接
+string
+
+
+
+
+target
+该属性指定在何处显示链接的资源。
+string
+
+1.5.0
+
+
+title
+文字内容
+string|slot
+
+
+
+
+
+
+      最后更新 : 2023/07/14卡片走马灯Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

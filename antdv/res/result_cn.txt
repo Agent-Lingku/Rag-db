@@ -1,0 +1,200 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 Success Info Warning 403 404 500 Error 自定义 icon APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Result 结果用于反馈一系列操作任务的处理结果。
+何时使用 
+          #
+        
+当有重要操作需告知用户处理结果，且反馈内容较为复杂时使用。
+代码演示Successfully Purchased Cloud Server ECS!Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait.Go ConsoleBuy AgainSuccess成功的结果。TS<template>
+  <a-result
+    status="success"
+    title="Successfully Purchased Cloud Server ECS!"
+    sub-title="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+  >
+    <template #extra>
+      <a-button key="console" type="primary">Go Console</a-button>
+      <a-button key="buy">Buy Again</a-button>
+    </template>
+  </a-result>
+</template>
+Your operation has been executedGo ConsoleInfo展示处理结果。TS<template>
+  <a-result title="Your operation has been executed">
+    <template #extra>
+      <a-button key="console" type="primary">Go Console</a-button>
+    </template>
+  </a-result>
+</template>
+There are some problems with your operation.Go ConsoleWarning警告类型的结果。TS<template>
+  <a-result status="warning" title="There are some problems with your operation.">
+    <template #extra>
+      <a-button key="console" type="primary">Go Console</a-button>
+    </template>
+  </a-result>
+</template>
+403Sorry, you are not authorized to access this page.Back Home403你没有此页面的访问权限。TS<template>
+  <a-result status="403" title="403" sub-title="Sorry, you are not authorized to access this page.">
+    <template #extra>
+      <a-button type="primary">Back Home</a-button>
+    </template>
+  </a-result>
+</template>
+404Sorry, the page you visited does not exist.Back Home404此页面未找到。TS<template>
+  <a-result status="404" title="404" sub-title="Sorry, the page you visited does not exist.">
+    <template #extra>
+      <a-button type="primary">Back Home</a-button>
+    </template>
+  </a-result>
+</template>
+500Sorry, the server is wrong.Back Home500服务器发生了错误。TS<template>
+  <a-result status="500" title="500" sub-title="Sorry, the server is wrong.">
+    <template #extra>
+      <a-button type="primary">Back Home</a-button>
+    </template>
+  </a-result>
+</template>
+Submission FailedPlease check and modify the following information before resubmitting.Go ConsoleBuy AgainThe content you submitted has the following error: Your account has been frozen Thaw immediately > Your account is not yet eligible to apply Apply Unlock >Error复杂的错误反馈。TS<template>
+  <a-result
+    status="error"
+    title="Submission Failed"
+    sub-title="Please check and modify the following information before resubmitting."
+  >
+    <template #extra>
+      <a-button key="console" type="primary">Go Console</a-button>
+      <a-button key="buy">Buy Again</a-button>
+    </template>
+
+    <div class="desc">
+      <p style="font-size: 16px">
+        <strong>The content you submitted has the following error:</strong>
+      </p>
+      <p>
+        <close-circle-outlined :style="{ color: 'red' }" />
+        Your account has been frozen
+        <a>Thaw immediately &gt;</a>
+      </p>
+      <p>
+        <close-circle-outlined :style="{ color: 'red' }" />
+        Your account is not yet eligible to apply
+        <a>Apply Unlock &gt;</a>
+      </p>
+    </div>
+  </a-result>
+</template>
+<script lang="ts" setup>
+import { CloseCircleOutlined } from '@ant-design/icons-vue';
+</script>
+<style scoped>
+.desc p {
+  margin-bottom: 1em;
+}
+</style>
+Great, we have done all the operations!Next自定义 icon自定义 icon。TS<template>
+  <a-result title="Great, we have done all the operations!">
+    <template #icon>
+      <smile-twoTone />
+    </template>
+    <template #extra>
+      <a-button type="primary">Next</a-button>
+    </template>
+  </a-result>
+</template>
+<script lang="ts" setup>
+import { SmileTwoTone } from '@ant-design/icons-vue';
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+
+
+
+
+
+
+extra
+操作区
+slot
+-
+
+
+
+
+
+
+
+
+icon
+自定义 icon
+slot
+-
+
+
+
+
+
+
+
+
+status
+结果的状态,决定图标和颜色
+success | error | info | warning | 404 | 403 | 500
+'info'
+
+
+
+
+
+
+
+
+subTitle
+subTitle 文字
+string | VNode | slot
+-
+
+
+
+
+
+
+
+
+title
+title 文字
+string | VNode | slot
+-
+
+
+
+
+
+
+
+
+
+
+      评分分段控制器Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

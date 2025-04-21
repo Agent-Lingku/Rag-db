@@ -1,0 +1,284 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 不可用 动态数据 Block分段控制器 自定义渲染 三种大小 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Segmented 分段控制器分段控制器。
+何时使用 
+          #
+        
+
+用于展示多个选项并允许用户选择其中单个选项；
+当切换选中选项时，关联区域的内容会发生变化。
+
+代码演示DailyWeeklyMonthlyQuarterlyYearly基本用法最简单的用法。TS<template>
+  <a-segmented v-model:value="value" :options="data" />
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+const data = reactive(['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']);
+const value = ref(data[0]);
+</script>
+MapTransitSatelliteDailyWeeklyMonthlyQuarterlyYearly不可用Segmented 不可用。TS<template>
+  <div>
+    <a-segmented v-model:value="value" disabled :options="data" />
+    <br />
+    <br />
+    <a-segmented v-model:value="value2" :options="data2" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+const data = reactive(['Map', 'Transit', 'Satellite']);
+const data2 = reactive([
+  'Daily',
+  { value: 'Weekly', disabled: true },
+  'Monthly',
+  { value: 'Quarterly', disabled: true },
+  'Yearly',
+]);
+const value = ref(data[0]);
+const value2 = ref('Daily');
+</script>
+DailyWeeklyMonthlyLoad More动态数据动态加载数据。TS<template>
+  <a-segmented v-model:value="value" :options="data"></a-segmented>
+  <br />
+  <br />
+  <a-button type="primary" :disabled="isDisabled" @click="loadMore">Load More</a-button>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+const data = reactive(['Daily', 'Weekly', 'Monthly']);
+const isDisabled = ref(false);
+const loadMore = () => {
+  data.push(...['Quarterly', 'Yearly']);
+  isDisabled.value = true;
+};
+const value = ref(data[0]);
+</script>
+123456longtext-longtext-longtext-longtextBlock分段控制器block 属性使其适合父元素宽度。TS<template>
+  <a-segmented v-model:value="value" block :options="data" />
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+const data = reactive([123, 456, 'longtext-longtext-longtext-longtext']);
+const value = ref(data[0]);
+</script>
+user1Kuser2user3SpringJan-MarSummerApr-JunAutumnJul-SeptWinterOct-Dec自定义渲染自定义渲染每一个 Segmented Item。TS<template>
+  <a-segmented v-model:value="value" :options="data">
+    <template #label="{ value: val, payload = {} }">
+      <div style="padding: 4px 4px">
+        <template v-if="payload.icon">
+          <a-avatar :src="payload.src" :style="payload.style">
+            <template #icon><component :is="payload.icon" /></template>
+            {{ payload.content }}
+          </a-avatar>
+        </template>
+        <template v-else>
+          <a-avatar :src="payload.src" :style="payload.style">
+            {{ payload.content }}
+          </a-avatar>
+        </template>
+        <div>{{ val }}</div>
+      </div>
+    </template>
+  </a-segmented>
+  <br />
+  <br />
+  <a-segmented v-model:value="value2" :options="options2">
+    <template #label="{ payload }">
+      <div style="padding: 4px 4px">
+        <div>{{ payload.title }}</div>
+        <div>{{ payload.subTitle }}</div>
+      </div>
+    </template>
+  </a-segmented>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UserOutlined } from '@ant-design/icons-vue';
+import ASegmented from 'ant-design-vue/es/segmented/src/segmented';
+const data = ref([
+  {
+    value: 'user1',
+    payload: {
+      src: 'https://joeschmoe.io/api/v1/random',
+      style: { backgroundColor: '#f56a00' },
+    },
+  },
+  {
+    value: 'user2',
+    payload: {
+      style: { backgroundColor: '#f56a00' },
+      content: 'K',
+    },
+  },
+  {
+    value: 'user3',
+    payload: {
+      icon: UserOutlined,
+      style: { backgroundColor: '#f56a00' },
+    },
+  },
+]);
+const options2 = ref([
+  {
+    value: 'spring',
+    payload: {
+      title: 'Spring',
+      subTitle: 'Jan-Mar',
+    },
+  },
+  {
+    value: 'summer',
+    payload: {
+      title: 'Summer',
+      subTitle: 'Apr-Jun',
+    },
+  },
+  {
+    value: 'autumn',
+    payload: {
+      title: 'Autumn',
+      subTitle: 'Jul-Sept',
+    },
+  },
+  {
+    value: 'winter',
+    payload: {
+      title: 'Winter',
+      subTitle: 'Oct-Dec',
+    },
+  },
+]);
+const value = ref('user1');
+const value2 = ref('spring');
+</script>
+DailyWeeklyMonthlyQuarterlyYearlyDailyWeeklyMonthlyQuarterlyYearlyDailyWeeklyMonthlyQuarterlyYearly三种大小我们为 <a-segmented /> 组件定义了三种尺寸（大、默认、小），高度分别为 40px、32px 和 24px。TS<template>
+  <a-segmented v-model:value="value" :options="data" size="large" />
+  <br />
+  <br />
+  <a-segmented v-model:value="value2" :options="data" />
+  <br />
+  <br />
+  <a-segmented v-model:value="value3" :options="data" size="small" />
+</template>
+<script lang="ts" setup>
+import { ref, reactive } from 'vue';
+const data = reactive(['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']);
+const value = ref(data[0]);
+const value2 = ref(data[0]);
+const value3 = ref(data[0]);
+</script>
+
+      API#
+      
+          #
+        
+Segmented 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+block
+将宽度调整为父元素宽度的选项
+boolean
+-
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+options
+数据化配置选项内容
+string[] | number[] | SegmentedOption[]
+[]
+
+
+
+size
+控件尺寸
+large | middle | small
+-
+
+
+
+value
+当前选中的值
+string | number
+
+
+
+
+label
+使用插槽自定义 label
+v-slot:label="SegmentedBaseOption"
+
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+
+change
+选项变化时的回调函数
+function(value: string | number)
+-
+
+
+
+SegmentedBaseOption、SegmentedOption 
+          #
+        
+interface SegmentedBaseOption {
+  value: string | number;
+  disabled?: boolean;
+  payload?: any; // payload more data
+  /**
+   * html `title` property for label
+   */
+  title?: string;
+  className?: string;
+}
+interface SegmentedOption extends SegmentedBaseOption {
+  label?: VueNode | ((option: SegmentedBaseOption) => VueNode);
+}
+
+
+      结果选择器Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

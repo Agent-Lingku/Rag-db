@@ -1,0 +1,732 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 自定义位置 抽屉表单 信息预览抽屉 额外操作 渲染在当前 DOM 多层抽屉 预设宽度 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Drawer 抽屉屏幕边缘滑出的浮层面板。
+何时使用 
+          #
+        
+抽屉从父窗体边缘滑入，覆盖住部分父窗体内容。用户在抽屉内操作时不必离开当前任务，操作完成后，可以平滑地回到原任务。
+
+当需要一个附加的面板来控制父窗体内容，这个面板在需要时呼出。比如，控制界面展示样式，往界面中添加内容。
+当需要在当前任务流中插入临时任务，创建或预览附加内容。比如展示协议条款，创建子对象。
+
+代码演示Open基本用法基础抽屉，点击触发按钮抽屉从右滑出，点击遮罩区关闭。TS<template>
+  <a-button type="primary" @click="showDrawer">Open</a-button>
+  <a-drawer
+    v-model:open="open"
+    class="custom-class"
+    root-class-name="root-class-name"
+    :root-style="{ color: 'blue' }"
+    style="color: red"
+    title="Basic Drawer"
+    placement="right"
+    @after-open-change="afterOpenChange"
+  >
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </a-drawer>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const open = ref<boolean>(false);
+
+const afterOpenChange = (bool: boolean) => {
+  console.log('open', bool);
+};
+
+const showDrawer = () => {
+  open.value = true;
+};
+</script>
+toprightbottomleftOpen自定义位置自定义位置，点击触发按钮抽屉从相应的位置滑出，点击遮罩区关闭TS<template>
+  <a-radio-group v-model:value="placement" style="margin-right: 8px">
+    <a-radio value="top">top</a-radio>
+    <a-radio value="right">right</a-radio>
+    <a-radio value="bottom">bottom</a-radio>
+    <a-radio value="left">left</a-radio>
+  </a-radio-group>
+  <a-button type="primary" @click="showDrawer">Open</a-button>
+  <a-drawer
+    title="Basic Drawer"
+    :placement="placement"
+    :closable="false"
+    :open="open"
+    @close="onClose"
+  >
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </a-drawer>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { DrawerProps } from 'ant-design-vue';
+const placement = ref<DrawerProps['placement']>('left');
+const open = ref<boolean>(false);
+
+const showDrawer = () => {
+  open.value = true;
+};
+
+const onClose = () => {
+  open.value = false;
+};
+</script>
+New account抽屉表单在抽屉中使用表单。TS<template>
+  <a-button type="primary" @click="showDrawer">
+    <template #icon><PlusOutlined /></template>
+    New account
+  </a-button>
+  <a-drawer
+    title="Create a new account"
+    :width="720"
+    :open="open"
+    :body-style="{ paddingBottom: '80px' }"
+    :footer-style="{ textAlign: 'right' }"
+    @close="onClose"
+  >
+    <a-form :model="form" :rules="rules" layout="vertical">
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="Name" name="name">
+            <a-input v-model:value="form.name" placeholder="Please enter user name" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="Url" name="url">
+            <a-input
+              v-model:value="form.url"
+              style="width: 100%"
+              addon-before="http://"
+              addon-after=".com"
+              placeholder="please enter url"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="Owner" name="owner">
+            <a-select v-model:value="form.owner" placeholder="Please a-s an owner">
+              <a-select-option value="xiao">Xiaoxiao Fu</a-select-option>
+              <a-select-option value="mao">Maomao Zhou</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="Type" name="type">
+            <a-select v-model:value="form.type" placeholder="Please choose the type">
+              <a-select-option value="private">Private</a-select-option>
+              <a-select-option value="public">Public</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="Approver" name="approver">
+            <a-select v-model:value="form.approver" placeholder="Please choose the approver">
+              <a-select-option value="jack">Jack Ma</a-select-option>
+              <a-select-option value="tom">Tom Liu</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="DateTime" name="dateTime">
+            <a-date-picker
+              v-model:value="form.dateTime"
+              style="width: 100%"
+              :get-popup-container="trigger => trigger.parentElement"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+        <a-col :span="24">
+          <a-form-item label="Description" name="description">
+            <a-textarea
+              v-model:value="form.description"
+              :rows="4"
+              placeholder="please enter url description"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+    </a-form>
+    <template #extra>
+      <a-space>
+        <a-button @click="onClose">Cancel</a-button>
+        <a-button type="primary" @click="onClose">Submit</a-button>
+      </a-space>
+    </template>
+  </a-drawer>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+import { PlusOutlined } from '@ant-design/icons-vue';
+import type { Rule } from 'ant-design-vue/es/form';
+const form = reactive({
+  name: '',
+  url: '',
+  owner: '',
+  type: '',
+  approver: '',
+  dateTime: null,
+  description: '',
+});
+
+const rules: Record<string, Rule[]> = {
+  name: [{ required: true, message: 'Please enter user name' }],
+  url: [{ required: true, message: 'please enter url' }],
+  owner: [{ required: true, message: 'Please select an owner' }],
+  type: [{ required: true, message: 'Please choose the type' }],
+  approver: [{ required: true, message: 'Please choose the approver' }],
+  dateTime: [{ required: true, message: 'Please choose the dateTime', type: 'object' }],
+  description: [{ required: true, message: 'Please enter url description' }],
+};
+
+const open = ref<boolean>(false);
+
+const showDrawer = () => {
+  open.value = true;
+};
+
+const onClose = () => {
+  open.value = false;
+};
+</script>
+LilyProgresser XTechView ProfileLilyProgresser XTechView Profile信息预览抽屉需要快速预览对象概要时使用，点击遮罩区关闭。TS<template>
+  <a-list
+    :data-source="[
+      {
+        name: 'Lily',
+      },
+      {
+        name: 'Lily',
+      },
+    ]"
+    bordered
+  >
+    <template #renderItem="{ item }">
+      <a-list-item :key="`a-${item.id}`">
+        <template #actions><a @click="showDrawer">View Profile</a></template>
+        <a-list-item-meta description="Progresser XTech">
+          <template #title>
+            <a href="https://www.antdv.com/">{{ item.name }}</a>
+          </template>
+          <template #avatar>
+            <a-avatar src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" />
+          </template>
+        </a-list-item-meta>
+      </a-list-item>
+    </template>
+  </a-list>
+  <a-drawer width="640" placement="right" :closable="false" :open="open" @close="onClose">
+    <p :style="[pStyle, pStyle2]">User Profile</p>
+    <p :style="pStyle">Personal</p>
+    <a-row>
+      <a-col :span="12">
+        <description-item title="Full Name" content="Lily" />
+      </a-col>
+      <a-col :span="12">
+        <description-item title="Account" content="AntDesign@example.com" />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="12">
+        <description-item title="City" content="HangZhou" />
+      </a-col>
+      <a-col :span="12">
+        <description-item title="Country" content="China🇨🇳" />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="12">
+        <description-item title="Birthday" content="February 2,1900" />
+      </a-col>
+      <a-col :span="12">
+        <description-item title="Website" content="-" />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="12">
+        <description-item
+          title="Message"
+          content="Make things as simple as possible but no simpler."
+        />
+      </a-col>
+    </a-row>
+    <a-divider />
+    <p :style="pStyle">Company</p>
+    <a-row>
+      <a-col :span="12">
+        <description-item title="Position" content="Programmer" />
+      </a-col>
+      <a-col :span="12">
+        <description-item title="Responsibilities" content="Coding" />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="12">
+        <description-item title="Department" content="XTech" />
+      </a-col>
+      <a-col :span="12">
+        <description-item title="Supervisor">
+          <template #content><a>Lin</a></template>
+        </description-item>
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="24">
+        <description-item
+          title="Skills"
+          content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
+        />
+      </a-col>
+    </a-row>
+    <a-divider />
+    <p :style="pStyle">Contacts</p>
+    <a-row>
+      <a-col :span="12">
+        <description-item title="Email" content="ant-design-vue@example.com" />
+      </a-col>
+      <a-col :span="12">
+        <description-item title="Phone Number" content="+86 181 0000 0000" />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="24">
+        <description-item title="Github">
+          <template #content>
+            <a href="https://github.com/vueComponent/ant-design-vue">
+              github.com/vueComponent/ant-design-vue
+            </a>
+          </template>
+        </description-item>
+      </a-col>
+    </a-row>
+  </a-drawer>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import descriptionItem from './descriptionItem/index.vue';
+const open = ref<boolean>(false);
+const pStyle = {
+  fontSize: '16px',
+  color: 'rgba(0,0,0,0.85)',
+  lineHeight: '24px',
+  display: 'block',
+  marginBottom: '16px',
+};
+const pStyle2 = {
+  marginBottom: '24px',
+};
+
+const showDrawer = () => {
+  open.value = true;
+};
+const onClose = () => {
+  open.value = false;
+};
+</script>
+toprightbottomleftOpen额外操作在 Ant Design 规范中，操作按钮建议放在抽屉的右上角，可以使用 extra 属性来实现。TS<template>
+  <a-radio-group v-model:value="placement" style="margin-right: 8px">
+    <a-radio value="top">top</a-radio>
+    <a-radio value="right">right</a-radio>
+    <a-radio value="bottom">bottom</a-radio>
+    <a-radio value="left">left</a-radio>
+  </a-radio-group>
+  <a-button type="primary" @click="showDrawer">Open</a-button>
+  <a-drawer :width="500" title="Basic Drawer" :placement="placement" :open="open" @close="onClose">
+    <template #extra>
+      <a-button style="margin-right: 8px" @click="onClose">Cancel</a-button>
+      <a-button type="primary" @click="onClose">Submit</a-button>
+    </template>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </a-drawer>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { DrawerProps } from 'ant-design-vue';
+const placement = ref<DrawerProps['placement']>('left');
+const open = ref<boolean>(false);
+
+const showDrawer = () => {
+  open.value = true;
+};
+
+const onClose = () => {
+  open.value = false;
+};
+</script>
+ Render in this Open渲染在当前 DOM渲染在当前 dom 里。自定义容器，查看 getContainer。TS<template>
+  <div
+    :style="{
+      height: '200px',
+      overflow: 'hidden',
+      position: 'relative',
+      border: '1px solid #ebedf0',
+      borderRadius: '2px',
+      padding: '48px',
+      textAlign: 'center',
+      background: '#fafafa',
+    }"
+  >
+    Render in this
+    <div style="margin-top: 16px">
+      <a-button type="primary" @click="showDrawer">Open</a-button>
+    </div>
+    <a-drawer
+      title="Basic Drawer"
+      placement="right"
+      :closable="false"
+      :open="open"
+      :get-container="false"
+      :style="{ position: 'absolute' }"
+      @close="onClose"
+    >
+      <p>Some contents...</p>
+    </a-drawer>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const open = ref(false);
+
+const showDrawer = () => {
+  open.value = true;
+};
+
+const onClose = () => {
+  open.value = false;
+};
+</script>
+Open多层抽屉在抽屉内打开新的抽屉，用以解决多分支任务的复杂状况。TS<template>
+  <a-button type="primary" @click="showDrawer">Open</a-button>
+  <a-drawer
+    v-model:open="open"
+    title="Multi-level drawer"
+    width="520"
+    :closable="false"
+    :footer-style="{ textAlign: 'right' }"
+    @close="onClose"
+  >
+    <a-button type="primary" @click="showChildrenDrawer">Two-level drawer</a-button>
+    <a-drawer v-model:open="childrenDrawer" title="Two-level Drawer" width="320" :closable="false">
+      <a-button type="primary" @click="showChildrenDrawer">This is two-level drawer</a-button>
+    </a-drawer>
+
+    <template #footer>
+      <a-button style="margin-right: 8px" @click="onClose">Cancel</a-button>
+      <a-button type="primary" @click="onClose">Submit</a-button>
+    </template>
+  </a-drawer>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const open = ref<boolean>(false);
+
+const childrenDrawer = ref<boolean>(false);
+
+const showDrawer = () => {
+  open.value = true;
+};
+const onClose = () => {
+  open.value = false;
+};
+const showChildrenDrawer = () => {
+  childrenDrawer.value = true;
+};
+</script>
+Open Default Size (378px)Open Large Size (736px)预设宽度抽屉的默认宽度为 378px，另外还提供一个大号抽屉 736px，可以用 size 属性来设置。TS<template>
+  <a-button type="primary" style="margin-right: 8px" @click="showDrawer('default')">
+    Open Default Size (378px)
+  </a-button>
+  <a-button type="primary" @click="showDrawer('large')">Open Large Size (736px)</a-button>
+  <a-drawer title="Basic Drawer" :size="size" :open="open" @close="onClose">
+    <template #extra>
+      <a-button style="margin-right: 8px" @click="onClose">Cancel</a-button>
+      <a-button type="primary" @click="onClose">Submit</a-button>
+    </template>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </a-drawer>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { DrawerProps } from 'ant-design-vue';
+const open = ref<boolean>(false);
+const size = ref<DrawerProps['size']>('default');
+
+const showDrawer = (val: DrawerProps['size']) => {
+  size.value = val;
+  open.value = true;
+};
+
+const onClose = () => {
+  open.value = false;
+};
+</script>
+
+      API#
+      
+          #
+        
+🚨 注意： v4 使用 rootClassName 与 rootStyle 来配置最外层元素样式。原 v4 class 与 style 改至配置 Drawer 窗体样式以和 Modal 对齐。
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+autofocus
+抽屉展开后是否将焦点切换至其 Dom 节点
+boolean
+true
+3.0.0
+
+
+bodyStyle
+可用于设置 Drawer 内容部分的样式
+CSSProperties
+-
+
+
+
+class
+Drawer 容器外层 className 设置，如果需要设置最外层，请使用 rootClassName
+string
+-
+
+
+
+closable
+是否显示左上角的关闭按钮
+boolean
+true
+
+
+
+closeIcon
+自定义关闭图标
+VNode | slot
+<CloseOutlined />
+3.0.0
+
+
+contentWrapperStyle
+可用于设置 Drawer 包裹内容部分的样式
+CSSProperties
+-
+3.0.0
+
+
+destroyOnClose
+关闭时销毁 Drawer 里的子元素
+boolean
+false
+
+
+
+extra
+抽屉右上角的操作区域
+VNode | slot
+-
+3.0.0
+
+
+footer
+抽屉的页脚
+VNode | slot
+-
+3.0.0
+
+
+footerStyle
+抽屉页脚部件的样式
+CSSProperties
+-
+3.0.0
+
+
+forceRender
+预渲染 Drawer 内元素
+boolean
+false
+3.0.0
+
+
+getContainer
+指定 Drawer 挂载的节点，并在容器内展现 | () => HTMLElement | Selectors
+'body'
+
+
+
+
+headerStyle
+用于设置 Drawer 头部的样式
+CSSProperties
+-
+3.0.0
+
+
+height
+高度, 在 placement 为 top 或 bottom 时使用
+string | number
+378
+
+
+
+keyboard
+是否支持键盘 esc 关闭
+boolean
+true
+
+
+
+mask
+是否展示遮罩
+Boolean
+true
+
+
+
+maskClosable
+点击蒙层是否允许关闭
+boolean
+true
+
+
+
+maskStyle
+遮罩样式
+CSSProperties
+{}
+
+
+
+placement
+抽屉的方向
+'top' | 'right' | 'bottom' | 'left'
+'right'
+
+
+
+push
+用于设置多层 Drawer 的推动行为
+boolean | {distance: string | number}
+{ distance: 180 }
+3.0.0
+
+
+rootClassName
+对话框外层容器的类名
+string
+-
+4.0
+
+
+rootStyle
+可用于设置 Drawer 最外层容器的样式，和 style 的区别是作用节点包括 mask
+CSSProperties
+-
+4.0
+
+
+size
+预设抽屉宽度（或高度），default 378px 和 large 736px
+default | large
+default
+3.0.0
+
+
+style
+设计 Drawer 容器样式，如果你只需要设置内容部分请使用 bodyStyle
+CSSProperties
+-
+
+
+
+title
+标题
+string | slot
+-
+
+
+
+open(v-model)
+Drawer 是否可见
+boolean
+-
+4.0
+
+
+width
+宽度
+string | number
+378
+
+
+
+zIndex
+设置 Drawer 的 z-index
+Number
+1000
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+描述
+类型
+默认值
+版本
+
+
+
+
+afterOpenChange
+切换抽屉时动画结束后的回调
+function(open)
+无
+4.0
+
+
+close
+点击遮罩层或左上角叉或取消按钮的回调
+function(e)
+无
+
+
+
+
+
+      分割线下拉菜单Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

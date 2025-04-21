@@ -1,0 +1,383 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 复杂的组合 动画效果 包含子组件 列表 按钮/头像/输入框/图像 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Skeleton 骨架屏在需要等待加载内容的位置提供一个占位图形组合。
+何时使用 
+          #
+        
+
+网络较慢，需要长时间等待加载处理的情况下。
+图文信息内容较多的列表/卡片中。
+只在第一次加载数据的时候使用。
+可以被 Spin 完全代替，但是在可用的场景下可以比 Spin 提供更好的视觉效果和用户体验。
+
+代码演示基本用法最简单的占位效果。TS<template>
+  <a-skeleton />
+</template>
+复杂的组合更复杂的组合。TS<template>
+  <a-skeleton avatar :paragraph="{ rows: 4 }" />
+</template>
+动画效果显示动画效果。TS<template>
+  <a-skeleton active />
+</template>
+Ant Design Vue, a design language We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently. Show Skeleton包含子组件加载占位图包含子组件。TS<template>
+  <a-space direction="vertical" style="width: 100%" :size="16">
+    <a-skeleton :loading="loading">
+      <div>
+        <h4>Ant Design Vue, a design language</h4>
+        <p>
+          We supply a series of design principles, practical patterns and high quality design
+          resources (Sketch and Axure), to help people create their product prototypes beautifully
+          and efficiently.
+        </p>
+      </div>
+    </a-skeleton>
+    <a-button :disabled="loading" @click="showSkeleton">Show Skeleton</a-button>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const loading = ref<boolean>(false);
+
+const showSkeleton = () => {
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+  }, 3000);
+};
+</script>
+列表在列表组件中使用加载占位符。TS<template>
+  <div>
+    <a-switch :checked="!loading" @change="onChange" />
+    <a-list item-layout="vertical" size="large" :data-source="listData">
+      <template #renderItem="{ item }">
+        <a-list-item key="item.title">
+          <template v-if="!loading" #actions>
+            <span v-for="({ icon, text }, index) in actions" :key="index">
+              <component :is="icon" style="margin-right: 8px"></component>
+              {{ text }}
+            </span>
+          </template>
+          <template #extra>
+            <img
+              v-if="!loading"
+              width="272"
+              alt="logo"
+              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+            />
+          </template>
+          <a-skeleton :loading="loading" active avatar>
+            <a-list-item-meta :description="item.description">
+              <template #title>
+                <a :href="item.href">{{ item.title }}</a>
+              </template>
+              <template #avatar><a-avatar :src="item.avatar" /></template>
+            </a-list-item-meta>
+            {{ item.content }}
+          </a-skeleton>
+        </a-list-item>
+      </template>
+    </a-list>
+  </div>
+</template>
+<script lang="ts" setup>
+import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+interface DataItem {
+  href: string;
+  title: string;
+  avatar: string;
+  description: string;
+  content: string;
+}
+const listData: DataItem[] = [];
+for (let i = 0; i < 3; i++) {
+  listData.push({
+    href: 'https://www.antdv.com/',
+    title: `ant design vue part ${i}`,
+    avatar: 'https://joeschmoe.io/api/v1/random',
+    description:
+      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    content:
+      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+  });
+}
+
+const loading = ref<boolean>(true);
+
+const actions = [
+  { icon: StarOutlined, text: '156' },
+  { icon: LikeOutlined, text: '156' },
+  { icon: MessageOutlined, text: '2' },
+];
+
+const onChange = (checked: boolean) => {
+  loading.value = !checked;
+};
+</script>
+<style scoped>
+.skeleton-demo {
+  border: 1px solid #f4f4f4;
+}
+</style>
+ActiveButton BlockSizeDefaultLargeSmallButton ShapeDefaultRoundCircleAvatar ShapeSquareCircle按钮/头像/输入框/图像骨架按钮、头像、输入框和图像。TS<template>
+  <a-space>
+    <a-skeleton-button :active="active" :size="size" :shape="buttonShape" :block="block" />
+    <a-skeleton-avatar :active="active" :size="size" :shape="avatarShape" />
+    <a-skeleton-input style="width: 200px" :active="active" :size="size" />
+  </a-space>
+  <br />
+  <br />
+  <a-skeleton-button :active="active" :size="size" :shape="buttonShape" :block="block" />
+  <br />
+  <br />
+  <a-skeleton-image />
+  <a-divider />
+  <a-form layout="inline" style="margin: 16px 0">
+    <a-form-item label="Active">
+      <a-switch v-model:checked="active" />
+    </a-form-item>
+    <a-form-item label="Button Block">
+      <a-switch v-model:checked="block" />
+    </a-form-item>
+    <a-form-item label="Size">
+      <a-radio-group v-model:value="size">
+        <a-radio-button value="default">Default</a-radio-button>
+        <a-radio-button value="large">Large</a-radio-button>
+        <a-radio-button value="small">Small</a-radio-button>
+      </a-radio-group>
+    </a-form-item>
+    <a-form-item label="Button Shape">
+      <a-radio-group v-model:value="buttonShape">
+        <a-radio-button value="default">Default</a-radio-button>
+        <a-radio-button value="round">Round</a-radio-button>
+        <a-radio-button value="circle">Circle</a-radio-button>
+      </a-radio-group>
+    </a-form-item>
+    <a-form-item label="Avatar Shape">
+      <a-radio-group v-model:value="avatarShape">
+        <a-radio-button value="square">Square</a-radio-button>
+        <a-radio-button value="circle">Circle</a-radio-button>
+      </a-radio-group>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { SkeletonButtonProps, SkeletonAvatarProps } from 'ant-design-vue';
+const active = ref(false);
+const block = ref(false);
+const size = ref<SkeletonButtonProps['size']>('default');
+const buttonShape = ref<SkeletonButtonProps['shape']>('default');
+const avatarShape = ref<SkeletonAvatarProps['shape']>('circle');
+</script>
+
+      API#
+      
+          #
+        
+Skeleton 
+          #
+        
+
+
+
+属性
+说明
+类型
+默认值
+
+
+
+
+active
+是否展示动画效果
+boolean
+false
+
+
+avatar
+是否显示头像占位图
+boolean | SkeletonAvatarProps
+false
+
+
+loading
+为 true 时，显示占位图。反之则直接展示子组件
+boolean
+-
+
+
+paragraph
+是否显示段落占位图
+boolean | SkeletonParagraphProps
+true
+
+
+title
+是否显示标题占位图
+boolean | SkeletonTitleProps
+true
+
+
+
+SkeletonAvatarProps 
+          #
+        
+
+
+
+属性
+说明
+类型
+默认值
+
+
+
+
+shape
+指定头像的形状
+circle | square
+-
+
+
+size
+设置头像占位图的大小
+number | large | small | default
+-
+
+
+
+SkeletonTitleProps 
+          #
+        
+
+
+
+属性
+说明
+类型
+默认值
+
+
+
+
+width
+设置标题占位图的宽度
+number | string
+-
+
+
+
+SkeletonParagraphProps 
+          #
+        
+
+
+
+属性
+说明
+类型
+默认值
+
+
+
+
+rows
+设置段落占位图的行数
+number
+-
+
+
+width
+设置段落占位图的宽度，若为数组时则为对应的每行宽度，反之则是最后一行的宽度
+number | string | Array<number | string>
+-
+
+
+
+SkeletonButtonProps (3.0+) 
+          #
+        
+
+
+
+属性
+说明
+类型
+默认值
+版本
+
+
+
+
+active
+是否展示动画效果
+boolean
+false
+
+
+
+block
+将按钮宽度调整为其父宽度的选项
+boolean
+false
+
+
+
+shape
+指定按钮的形状
+circle | round | default
+-
+
+
+
+size
+设置按钮的大小
+large | small | default
+-
+
+
+
+
+SkeletonInputProps (3.0+) 
+          #
+        
+
+
+
+属性
+说明
+类型
+默认值
+
+
+
+
+active
+是否展示动画效果
+boolean
+false
+
+
+size
+设置输入框的大小
+large | small | default
+-
+
+
+
+
+      选择器滑动输入条Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

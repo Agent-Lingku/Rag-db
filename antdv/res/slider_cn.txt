@@ -1,0 +1,479 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 带 icon 的滑块 事件 垂直 反向 带输入框的滑块 自定义提示 带标签的滑块 控制 ToolTip 的显示 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Slider 滑动输入条滑动型输入器，展示当前值和可选范围。
+何时使用 
+          #
+        
+当用户需要在数值区间/自定义区间内进行选择时，可为连续或离散值。
+代码演示 Disabled: 基本基本滑动条。当 range 为 true 时，渲染为双滑块。当 disabled 为 true 时，滑块处于不可用状态。TS<template>
+  <div>
+    <a-slider id="test" v-model:value="value1" :disabled="disabled" />
+    <a-slider v-model:value="value2" range :disabled="disabled" />
+    Disabled:
+    <a-switch v-model:checked="disabled" size="small" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<number>(0);
+const value2 = ref<[number, number]>([20, 50]);
+const disabled = ref<boolean>(false);
+</script>
+<style scoped>
+.code-box-demo .ant-slider {
+  margin-bottom: 16px;
+}
+</style>
+带 icon 的滑块滑块左右可以设置图标来表达业务含义。TS<template>
+  <div class="icon-wrapper">
+    <frown-outlined :style="{ color: preColor }" />
+    <a-slider v-model:value="sliderValue" :min="0" :max="20" />
+    <smile-outlined :style="{ color: nextColor }" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref, computed } from 'vue';
+import { FrownOutlined, SmileOutlined } from '@ant-design/icons-vue';
+const sliderValue = ref<number>(0);
+const min = ref<number>(0);
+const max = ref<number>(20);
+
+const preColor = computed(() => {
+  const mid = +((max.value - min.value) / 2).toFixed(5);
+  return sliderValue.value >= mid ? '' : 'rgba(0, 0, 0, .45)';
+});
+
+const nextColor = computed(() => {
+  const mid = +((max.value - min.value) / 2).toFixed(5);
+  return sliderValue.value >= mid ? 'rgba(0, 0, 0, .45)' : '';
+});
+</script>
+<style scoped>
+.icon-wrapper {
+  position: relative;
+  padding: 0px 30px;
+}
+
+.icon-wrapper .anticon {
+  position: absolute;
+  top: -2px;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.icon-wrapper .anticon:first-child {
+  left: 0;
+}
+
+.icon-wrapper .anticon:last-child {
+  right: 0;
+}
+</style>
+事件当 Slider 的值发生改变时，会触发 onChange 事件，并把改变后的值作为参数传入。在 onmouseup 时，会触发 onAfterChange 事件，并把当前值作为参数传入。TS<template>
+  <div class="code-box-demo">
+    <a-slider v-model:value="value1" @change="onChange" @afterChange="onAfterChange" />
+    <a-slider v-model:value="value2" range :step="10" @change="onChange" @afterChange="onAfterChange" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<number>(30);
+const value2 = ref<[number, number]>([20, 50]);
+
+const onChange = (value: number) => {
+  console.log('onChange: ', value);
+};
+
+const onAfterChange = (value: number) => {
+  console.log('afterChange: ', value);
+};
+</script>
+<style scoped>
+.code-box-demo .ant-slider {
+  margin-bottom: 16px;
+}
+</style>
+0°C26°C37°C100°C垂直垂直方向的 Slider。TS<template>
+  <div style="height: 300px">
+    <div style="display: inline-block; height: 300px; margin-left: 70px">
+      <a-slider v-model:value="value1" vertical />
+    </div>
+    <div style="display: inline-block; height: 300px; margin-left: 70px">
+      <a-slider v-model:value="value2" vertical range :step="10" />
+    </div>
+    <div style="display: inline-block; height: 300px; margin-left: 70px">
+      <a-slider v-model:value="value3" vertical range :marks="marks" />
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref, createVNode } from 'vue';
+const value1 = ref<number>(30);
+const value2 = ref<[number, number]>([20, 50]);
+const value3 = ref<[number, number]>([26, 37]);
+const marks = ref<Record<number, any>>({
+  0: '0°C',
+  26: '26°C',
+  37: '37°C',
+  100: {
+    style: {
+      color: '#f50',
+    },
+    label: createVNode('strong', {}, '100°C'),
+  },
+});
+</script>
+<style scoped>
+.code-box-demo .ant-slider {
+  margin-bottom: 16px;
+}
+</style>
+ Reversed: 反向设置 reverse 可以将滑动条置反。TS<template>
+  <div>
+    <a-slider v-model:value="value1" :reverse="reverse" />
+    <a-slider v-model:value="value2" range :reverse="reverse" />
+    Reversed:
+    <a-switch v-model:checked="reverse" size="small" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const value1 = ref<number>(30);
+const value2 = ref<[number, number]>([20, 50]);
+const reverse = ref<boolean>(true);
+</script>
+带输入框的滑块和 数字输入框 组件保持同步。TS<template>
+  <div>
+    <a-row>
+      <a-col :span="12">
+        <a-slider v-model:value="inputValue1" :min="1" :max="20" />
+      </a-col>
+      <a-col :span="4">
+        <a-input-number v-model:value="inputValue1" :min="1" :max="20" style="margin-left: 16px" />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="12">
+        <a-slider v-model:value="inputValue" :min="0" :max="1" :step="0.01" />
+      </a-col>
+      <a-col :span="4">
+        <a-input-number
+          v-model:value="inputValue"
+          :min="0"
+          :max="1"
+          :step="0.01"
+          style="margin-left: 16px"
+        />
+      </a-col>
+    </a-row>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const inputValue = ref<number>(0);
+const inputValue1 = ref<number>(1);
+</script>
+<style scoped>
+.code-box-demo .ant-slider {
+  margin-bottom: 16px;
+}
+</style>
+自定义提示使用 tipFormatter 可以格式化 Tooltip 的内容，设置 tipFormatter={null}，则隐藏 Tooltip。TS<template>
+  <div>
+    <a-slider :tip-formatter="formatter" />
+    <a-slider :tip-formatter="null" />
+  </div>
+</template>
+<script lang="ts" setup>
+const formatter = (value: number) => {
+  return `${value}%`;
+};
+</script>
+included=true0°C26°C37°C100°C0°C26°C37°C100°Cincluded=false0°C26°C37°C100°Cmarks & step0°C26°C37°C100°Cstep=null0°C26°C37°C100°C带标签的滑块使用 marks 属性标注分段式滑块，使用 value 指定滑块位置。当 included=false 时，表明不同标记间为并列关系。当 step=null 时，Slider 的可选值仅有 marks 标出来的部分。TS<template>
+  <div id="components-slider-demo-mark">
+    <h4>included=true</h4>
+    <a-slider v-model:value="value1" :marks="marks">
+      <template #mark="{ label, point }">
+        <template v-if="point === 100">
+          <strong>{{ label }}</strong>
+        </template>
+        <template v-else>{{ label }}</template>
+      </template>
+    </a-slider>
+    <a-slider v-model:value="value2" range :marks="marks">
+      <template #mark="{ label, point }">
+        <template v-if="point === 100">
+          <strong>{{ label }}</strong>
+        </template>
+        <template v-else>{{ label }}</template>
+      </template>
+    </a-slider>
+
+    <h4>included=false</h4>
+    <a-slider v-model:value="value3" :marks="marks" :included="false">
+      <template #mark="{ label, point }">
+        <template v-if="point === 100">
+          <strong>{{ label }}</strong>
+        </template>
+        <template v-else>{{ label }}</template>
+      </template>
+    </a-slider>
+
+    <h4>marks & step</h4>
+    <a-slider v-model:value="value4" :marks="marks" :step="10">
+      <template #mark="{ label, point }">
+        <template v-if="point === 100">
+          <strong>{{ label }}</strong>
+        </template>
+        <template v-else>{{ label }}</template>
+      </template>
+    </a-slider>
+
+    <h4>step=null</h4>
+    <a-slider v-model:value="value5" :marks="marks" :step="null">
+      <template #mark="{ label, point }">
+        <template v-if="point === 100">
+          <strong>{{ label }}</strong>
+        </template>
+        <template v-else>{{ label }}</template>
+      </template>
+    </a-slider>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<number>(37);
+const value2 = ref<[number, number]>([26, 37]);
+const value3 = ref<number>(37);
+const value4 = ref<number>(37);
+const value5 = ref<number>(37);
+const marks = ref<Record<number, any>>({
+  0: '0°C',
+  26: '26°C',
+  37: '37°C',
+  100: {
+    style: {
+      color: '#f50',
+    },
+    label: '100°C',
+  },
+});
+</script>
+<style scoped>
+#components-slider-demo-mark h4 {
+  margin: 0 0 16px;
+}
+#components-slider-demo-mark .ant-slider-with-marks {
+  margin-bottom: 44px;
+}
+</style>
+控制 ToolTip 的显示当 tooltipOpen 为 true 时，将始终显示 ToolTip；反之则始终不显示，即使在拖动、移入时也是如此。TS<template>
+  <a-slider v-model:value="value" :tooltip-open="true" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<number>(30);
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+autofocus
+自动获取焦点
+boolean
+false
+
+
+
+disabled
+值为 true 时，滑块为禁用状态
+boolean
+false
+
+
+
+dots
+是否只能拖拽到刻度上
+boolean
+false
+
+
+
+included
+marks 不为空对象时有效，值为 true 时表示值为包含关系，false 表示并列
+boolean
+true
+
+
+
+mark
+自定义刻度标记
+v-slot:mark
+{ point: number, label: any }
+3.0
+
+
+marks
+刻度标记，key 的类型必须为 number 且取值在闭区间 [min, max] 内，每个标签可以单独设置样式
+object
+{ number: string|VNode } or { number: { style: object, label: string|VNode } } or { number: () => VNode }
+
+
+
+max
+最大值
+number
+100
+
+
+
+min
+最小值
+number
+0
+
+
+
+range
+双滑块模式
+boolean
+false
+
+
+
+reverse
+反向坐标轴
+boolean
+false
+1.5.0
+
+
+step
+步长，取值必须大于 0，并且可被 (max - min) 整除。当 marks 不为空对象时，可以设置 step 为 null，此时 Slider 的可选值仅有 marks 标出来的部分。
+number|null
+1
+
+
+
+value(v-model)
+设置当前取值。当 range 为 false 时，使用 number，否则用 [number, number]
+number|number[]
+
+
+
+
+vertical
+值为 true 时，Slider 为垂直方向
+Boolean
+false
+
+
+
+tipFormatter
+Slider 会把当前值传给 tipFormatter，并在 Tooltip 中显示 tipFormatter 的返回值，若为 null，则隐藏 Tooltip。
+Function|null
+IDENTITY
+
+
+
+tooltipPlacement
+设置 Tooltip 展示位置。参考 Tooltip。
+string
+
+1.5.0
+
+
+tooltipOpen
+值为true时，Tooltip 将会始终显示；否则始终不显示，哪怕在拖拽及移入时。
+Boolean
+
+4.0
+
+
+getTooltipPopupContainer
+Tooltip 渲染父节点，默认渲染到 body 上。
+Function
+() => document.body
+1.5.0
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+
+change
+当 Slider 的值发生改变时，会触发 change 事件，并把改变后的值作为参数传入。
+Function(value)
+NOOP
+
+
+afterChange
+与 mouseup 触发时机一致，把当前值作为参数传入。
+Function(value)
+NOOP
+
+
+
+方法 
+          #
+        
+
+
+
+名称
+描述
+
+
+
+
+blur()
+移除焦点
+
+
+focus()
+获取焦点
+
+
+
+
+      最后更新 : 2024/09/05骨架屏间距Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    30

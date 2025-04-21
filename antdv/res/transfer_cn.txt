@@ -1,0 +1,933 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 单向样式 带搜索框 高级用法 自定义渲染行数据 分页 表格穿梭框 树穿梭框 自定义状态 自定义全选文字 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Transfer 穿梭框双栏穿梭选择框。
+何时使用 
+          #
+        
+
+需要在多个可选项中进行多选时。
+比起 Select 和 TreeSelect，穿梭框占据更大的空间，可以展示可选项的更多信息。
+
+穿梭选择框用直观的方式在两栏中移动元素，完成选择行为。
+选择一个或以上的选项后，点击对应的方向键，可以把选中的选项移动到另一栏。其中，左边一栏为 source，右边一栏为 target，API 的设计也反映了这两个概念。
+代码演示2/14 项Sourcecontent1content2content4content5content7content8content10content11content13content14content16content17content19content206 项Targetcontent3content6content9content12content15content18disabledenabled基本用法最基本的用法，展示了 dataSource、targetKeys、每行的渲染函数 render 以及回调函数 change selectChange scroll 的用法。TS<template>
+  <div>
+    <a-transfer
+      v-model:target-keys="targetKeys"
+      v-model:selected-keys="selectedKeys"
+      :data-source="mockData"
+      :titles="['Source', 'Target']"
+      :render="item => item.title"
+      :disabled="disabled"
+      @change="handleChange"
+      @selectChange="handleSelectChange"
+      @scroll="handleScroll"
+    />
+    <a-switch
+      v-model:checked="disabled"
+      un-checked-children="enabled"
+      checked-children="disabled"
+      style="margin-top: 16px"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+  disabled: boolean;
+}
+const mockData: MockData[] = [];
+for (let i = 0; i < 20; i++) {
+  mockData.push({
+    key: i.toString(),
+    title: `content${i + 1}`,
+    description: `description of content${i + 1}`,
+    disabled: i % 3 < 1,
+  });
+}
+
+const oriTargetKeys = mockData.filter(item => +item.key % 3 > 1).map(item => item.key);
+const disabled = ref<boolean>(false);
+
+const targetKeys = ref<string[]>(oriTargetKeys);
+
+const selectedKeys = ref<string[]>(['1', '4']);
+
+const handleChange = (nextTargetKeys: string[], direction: string, moveKeys: string[]) => {
+  console.log('targetKeys: ', nextTargetKeys);
+  console.log('direction: ', direction);
+  console.log('moveKeys: ', moveKeys);
+};
+const handleSelectChange = (sourceSelectedKeys: string[], targetSelectedKeys: string[]) => {
+  console.log('sourceSelectedKeys: ', sourceSelectedKeys);
+  console.log('targetSelectedKeys: ', targetSelectedKeys);
+};
+const handleScroll = (direction: string, e: Event) => {
+  console.log('direction:', direction);
+  console.log('target:', e.target);
+};
+</script>
+2/20 项Sourcecontent1content2content3content4content5content6content7content8content9content10content11content12content13content14content15content16content17content18content19content200 项Target暂无数据disabledenabled单向样式通过 oneWay 将 Transfer 转为单向样式。TS<template>
+  <div>
+    <a-transfer
+      v-model:target-keys="targetKeys"
+      v-model:selected-keys="selectedKeys"
+      :data-source="mockData"
+      :one-way="true"
+      :titles="['Source', 'Target']"
+      :render="item => item.title"
+      :disabled="disabled"
+      @change="handleChange"
+      @selectChange="handleSelectChange"
+      @scroll="handleScroll"
+    />
+    <a-switch
+      v-model:checked="disabled"
+      un-checked-children="enabled"
+      checked-children="disabled"
+      style="margin-top: 16px"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+  disabled: boolean;
+}
+const mockData: MockData[] = [];
+for (let i = 0; i < 20; i++) {
+  mockData.push({
+    key: i.toString(),
+    title: `content${i + 1}`,
+    description: `description of content${i + 1}`,
+    disabled: i % 3 < 1,
+  });
+}
+
+const disabled = ref<boolean>(false);
+
+const targetKeys = ref<string[]>([]);
+
+const selectedKeys = ref<string[]>(['1', '4']);
+
+const handleChange = (nextTargetKeys: string[], direction: string, moveKeys: string[]) => {
+  console.log('targetKeys: ', nextTargetKeys);
+  console.log('direction: ', direction);
+  console.log('moveKeys: ', moveKeys);
+};
+const handleSelectChange = (sourceSelectedKeys: string[], targetSelectedKeys: string[]) => {
+  console.log('sourceSelectedKeys: ', sourceSelectedKeys);
+  console.log('targetSelectedKeys: ', targetSelectedKeys);
+};
+const handleScroll = (direction: string, e: Event) => {
+  console.log('direction:', direction);
+  console.log('target:', e.target);
+};
+</script>
+11 项content1content2content3content4content5content6content7content8content16content18content199 项content9content10content11content12content13content14content15content17content20带搜索框带搜索框的穿梭框，可以自定义搜索函数。TS<template>
+  <a-transfer
+    v-model:target-keys="targetKeys"
+    :data-source="mockData"
+    show-search
+    :filter-option="filterOption"
+    :render="item => item.title"
+    @change="handleChange"
+    @search="handleSearch"
+  />
+</template>
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue';
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+  chosen: boolean;
+}
+const mockData = ref<MockData[]>([]);
+
+const targetKeys = ref<string[]>([]);
+onMounted(() => {
+  getMock();
+});
+const getMock = () => {
+  const keys = [];
+  const mData = [];
+  for (let i = 0; i < 20; i++) {
+    const data = {
+      key: i.toString(),
+      title: `content${i + 1}`,
+      description: `description of content${i + 1}`,
+      chosen: Math.random() * 2 > 1,
+    };
+    if (data.chosen) {
+      keys.push(data.key);
+    }
+    mData.push(data);
+  }
+  mockData.value = mData;
+  targetKeys.value = keys;
+};
+const filterOption = (inputValue: string, option: MockData) => {
+  return option.description.indexOf(inputValue) > -1;
+};
+const handleChange = (keys: string[], direction: string, moveKeys: string[]) => {
+  console.log(keys, direction, moveKeys);
+};
+
+const handleSearch = (dir: string, value: string) => {
+  console.log('search:', dir, value);
+};
+</script>
+9 项content1-description of content1content3-description of content3content6-description of content6content8-description of content8content13-description of content13content15-description of content15content16-description of content16content18-description of content18content19-description of content19left reloadto rightto left11 项content2-description of content2content4-description of content4content5-description of content5content7-description of content7content9-description of content9content10-description of content10content11-description of content11content12-description of content12content14-description of content14content17-description of content17content20-description of content20right reload高级用法穿梭框高级用法，可配置操作文案，可定制宽高，可对底部进行自定义渲染。TS<template>
+  <a-transfer
+    v-model:target-keys="targetKeys"
+    :data-source="mockData"
+    show-search
+    :list-style="{
+      width: '250px',
+      height: '300px',
+    }"
+    :operations="['to right', 'to left']"
+    :render="item => `${item.title}-${item.description}`"
+    @change="handleChange"
+  >
+    <template #footer="{ direction }">
+      <a-button
+        v-if="direction === 'left'"
+        size="small"
+        style="float: left; margin: 5px"
+        @click="getMock"
+      >
+        left reload
+      </a-button>
+      <a-button
+        v-else-if="direction === 'right'"
+        size="small"
+        style="float: right; margin: 5px"
+        @click="getMock"
+      >
+        right reload
+      </a-button>
+    </template>
+    <template #notFoundContent>
+      <span>没数据</span>
+    </template>
+  </a-transfer>
+</template>
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+  chosen: boolean;
+}
+const mockData = ref<MockData[]>([]);
+
+const targetKeys = ref<string[]>([]);
+onMounted(() => {
+  getMock();
+});
+const getMock = () => {
+  const keys = [];
+  const mData = [];
+  for (let i = 0; i < 20; i++) {
+    const data = {
+      key: i.toString(),
+      title: `content${i + 1}`,
+      description: `description of content${i + 1}`,
+      chosen: Math.random() * 2 > 1,
+    };
+    if (data.chosen) {
+      keys.push(data.key);
+    }
+    mData.push(data);
+  }
+  mockData.value = mData;
+  targetKeys.value = keys;
+};
+const handleChange = (keys: string[], direction: string, moveKeys: string[]) => {
+  console.log(keys, direction, moveKeys);
+};
+</script>
+15 项content2 - description of content2content3 - description of content3content4 - description of content4content6 - description of content6content8 - description of content8content9 - description of content9content10 - description of content10content11 - description of content11content12 - description of content12content13 - description of content13content14 - description of content14content15 - description of content15content17 - description of content17content19 - description of content19content20 - description of content205 项content1 - description of content1content5 - description of content5content7 - description of content7content16 - description of content16content18 - description of content18自定义渲染行数据自定义渲染每一个 Transfer Item，可用于渲染复杂数据。TS<template>
+  <a-transfer
+    v-model:target-keys="targetKeys"
+    :data-source="mockData"
+    :list-style="{
+      width: '300px',
+      height: '300px',
+    }"
+    @change="handleChange"
+  >
+    <template #render="item">
+      <span class="custom-item" style="color: red">{{ item.title }} - {{ item.description }}</span>
+    </template>
+  </a-transfer>
+</template>
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+  chosen: boolean;
+}
+const mockData = ref<MockData[]>([]);
+
+const targetKeys = ref<string[]>([]);
+onMounted(() => {
+  getMock();
+});
+const getMock = () => {
+  const keys = [];
+  const mData = [];
+  for (let i = 0; i < 20; i++) {
+    const data = {
+      key: i.toString(),
+      title: `content${i + 1}`,
+      description: `description of content${i + 1}`,
+      chosen: Math.random() * 2 > 1,
+    };
+    if (data.chosen) {
+      keys.push(data.key);
+    }
+    mData.push(data);
+  }
+  mockData.value = mData;
+  targetKeys.value = keys;
+};
+const handleChange = (keys: string[], direction: string, moveKeys: string[]) => {
+  console.log(keys, direction, moveKeys);
+};
+</script>
+134 项content1content2content4content5content7content8content10content11content13content14／1466 项content3content6content9content12content15content18content21content24content27content30／7disabledenabled分页大数据下使用分页。TS<template>
+  <div>
+    <a-transfer
+      v-model:target-keys="targetKeys"
+      :data-source="mockData"
+      :render="item => item.title"
+      :disabled="disabled"
+      pagination
+      @change="handleChange"
+    />
+    <a-switch
+      v-model:checked="disabled"
+      un-checked-children="enabled"
+      checked-children="disabled"
+      style="margin-top: 16px"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+}
+const mockData: MockData[] = [];
+for (let i = 0; i < 200; i++) {
+  mockData.push({
+    key: i.toString(),
+    title: `content${i + 1}`,
+    description: `description of content${i + 1}`,
+  });
+}
+
+const oriTargetKeys = mockData.filter(item => +item.key % 3 > 1).map(item => item.key);
+
+const disabled = ref<boolean>(false);
+
+const targetKeys = ref<string[]>(oriTargetKeys);
+
+const handleChange = (nextTargetKeys: string[], direction: string, moveKeys: string[]) => {
+  console.log('targetKeys: ', nextTargetKeys);
+  console.log('direction: ', direction);
+  console.log('moveKeys: ', moveKeys);
+};
+</script>
+7 项NameDescriptioncontent1description of content1content2description of content2content4description of content4content5description of content5content7description of content7content8description of content8content10description of content1013 项Namecontent3content6content91disableddisabledshowSearchshowSearch表格穿梭框使用 Table 组件作为自定义渲染列表。TS<template>
+  <div>
+    <a-transfer
+      v-model:target-keys="targetKeys"
+      :data-source="mockData"
+      :disabled="disabled"
+      :show-search="showSearch"
+      :filter-option="(inputValue, item) => item.title.indexOf(inputValue) !== -1"
+      :show-select-all="false"
+      @change="onChange"
+    >
+      <template
+        #children="{
+          direction,
+          filteredItems,
+          selectedKeys,
+          disabled: listDisabled,
+          onItemSelectAll,
+          onItemSelect,
+        }"
+      >
+        <a-table
+          :row-selection="
+            getRowSelection({
+              disabled: listDisabled,
+              selectedKeys,
+              onItemSelectAll,
+              onItemSelect,
+            })
+          "
+          :columns="direction === 'left' ? leftColumns : rightColumns"
+          :data-source="filteredItems"
+          size="small"
+          :style="{ pointerEvents: listDisabled ? 'none' : null }"
+          :custom-row="
+            ({ key, disabled: itemDisabled }) => ({
+              onClick: () => {
+                if (itemDisabled || listDisabled) return;
+                onItemSelect(key, !selectedKeys.includes(key));
+              },
+            })
+          "
+        />
+      </template>
+    </a-transfer>
+    <a-switch
+      v-model:checked="disabled"
+      un-checked-children="disabled"
+      checked-children="disabled"
+      style="margin-top: 16px"
+    />
+    <a-switch
+      v-model:checked="showSearch"
+      un-checked-children="showSearch"
+      checked-children="showSearch"
+      style="margin-top: 16px"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+  disabled: boolean;
+}
+type tableColumn = Record<string, string>;
+const mockData: MockData[] = [];
+for (let i = 0; i < 10; i++) {
+  mockData.push({
+    key: i.toString(),
+    title: `content${i + 1}`,
+    description: `description of content${i + 1}`,
+    disabled: i % 4 === 0,
+  });
+}
+
+const originTargetKeys = mockData.filter(item => +item.key % 3 > 1).map(item => item.key);
+
+const leftTableColumns = [
+  {
+    dataIndex: 'title',
+    title: 'Name',
+  },
+  {
+    dataIndex: 'description',
+    title: 'Description',
+  },
+];
+const rightTableColumns = [
+  {
+    dataIndex: 'title',
+    title: 'Name',
+  },
+];
+
+const targetKeys = ref<string[]>(originTargetKeys);
+const disabled = ref<boolean>(false);
+const showSearch = ref<boolean>(false);
+const leftColumns = ref<tableColumn[]>(leftTableColumns);
+const rightColumns = ref<tableColumn[]>(rightTableColumns);
+
+const onChange = (nextTargetKeys: string[]) => {
+  console.log('nextTargetKeys', nextTargetKeys);
+};
+
+const getRowSelection = ({
+  disabled,
+  selectedKeys,
+  onItemSelectAll,
+  onItemSelect,
+}: Record<string, any>) => {
+  return {
+    getCheckboxProps: (item: Record<string, string | boolean>) => ({
+      disabled: disabled || item.disabled,
+    }),
+    onSelectAll(selected: boolean, selectedRows: Record<string, string | boolean>[]) {
+      const treeSelectedKeys = selectedRows.filter(item => !item.disabled).map(({ key }) => key);
+      onItemSelectAll(treeSelectedKeys, selected);
+    },
+    onSelect({ key }: Record<string, string>, selected: boolean) {
+      onItemSelect(key, selected);
+    },
+    selectedRowKeys: selectedKeys,
+  };
+};
+</script>
+5 项0-00-10-1-00-1-10-30 项暂无数据树穿梭框使用 Tree 组件作为自定义渲染列表。TS<template>
+  <div>
+    <a-transfer
+      v-model:target-keys="targetKeys"
+      class="tree-transfer"
+      :data-source="dataSource"
+      :render="item => item.title"
+      :show-select-all="false"
+    >
+      <template #children="{ direction, selectedKeys, onItemSelect }">
+        <a-tree
+          v-if="direction === 'left'"
+          block-node
+          checkable
+          check-strictly
+          default-expand-all
+          :checked-keys="[...selectedKeys, ...targetKeys]"
+          :tree-data="treeData"
+          @check="
+            (_, props) => {
+              onChecked(props, [...selectedKeys, ...targetKeys], onItemSelect);
+            }
+          "
+          @select="
+            (_, props) => {
+              onChecked(props, [...selectedKeys, ...targetKeys], onItemSelect);
+            }
+          "
+        />
+      </template>
+    </a-transfer>
+  </div>
+</template>
+<script lang="ts" setup>
+import { computed, ref } from 'vue';
+import type { TransferProps, TreeProps } from 'ant-design-vue';
+const tData: TransferProps['dataSource'] = [
+  { key: '0-0', title: '0-0' },
+  {
+    key: '0-1',
+    title: '0-1',
+    children: [
+      { key: '0-1-0', title: '0-1-0' },
+      { key: '0-1-1', title: '0-1-1' },
+    ],
+  },
+  { key: '0-2', title: '0-3' },
+];
+
+const transferDataSource: TransferProps['dataSource'] = [];
+function flatten(list: TransferProps['dataSource'] = []) {
+  list.forEach(item => {
+    transferDataSource.push(item);
+    flatten(item.children);
+  });
+}
+flatten(JSON.parse(JSON.stringify(tData)));
+
+function isChecked(selectedKeys: (string | number)[], eventKey: string | number) {
+  return selectedKeys.indexOf(eventKey) !== -1;
+}
+
+function handleTreeData(treeNodes: TransferProps['dataSource'], targetKeys: string[] = []) {
+  return treeNodes.map(({ children, ...props }) => ({
+    ...props,
+    disabled: targetKeys.includes(props.key as string),
+    children: handleTreeData(children ?? [], targetKeys),
+  }));
+}
+const targetKeys = ref<string[]>([]);
+
+const dataSource = ref(transferDataSource);
+
+const treeData = computed(() => {
+  return handleTreeData(tData, targetKeys.value);
+});
+
+const onChecked = (
+  e: Parameters<TreeProps['onCheck']>[1] | Parameters<TreeProps['onSelect']>[1],
+  checkedKeys: string[],
+  onItemSelect: (n: any, c: boolean) => void,
+) => {
+  const { eventKey } = e.node;
+  onItemSelect(eventKey, !isChecked(checkedKeys, eventKey));
+};
+</script>
+<style scoped>
+.tree-transfer .ant-transfer-list:first-child {
+  width: 50%;
+  flex: none;
+}
+</style>
+0 项暂无数据0 项暂无数据0 项暂无数据0 项暂无数据自定义状态使用 status 为 DatePicker 添加状态，可选 error 或者 warning。TS<template>
+  <a-space direction="vertical">
+    <a-transfer status="error" />
+    <a-transfer status="warning" show-search />
+  </a-space>
+</template>
+Select AllSourcecontent1content2content4content5content7content8content10content11content13content14content16content17content19content200/6Targetcontent3content6content9content12content15content18disabledenabled自定义全选文字自定义穿梭框全选按钮的文字。TS<template>
+  <div>
+    <a-transfer
+      v-model:target-keys="targetKeys"
+      v-model:selected-keys="selectedKeys"
+      :data-source="mockData"
+      :titles="['Source', 'Target']"
+      :render="item => item.title"
+      :select-all-labels="selectAllLabels"
+      :disabled="disabled"
+      @change="handleChange"
+      @selectChange="handleSelectChange"
+      @scroll="handleScroll"
+    />
+    <a-switch
+      v-model:checked="disabled"
+      un-checked-children="enabled"
+      checked-children="disabled"
+      style="margin-top: 16px"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { SelectAllLabel } from 'ant-design-vue/es/transfer';
+
+interface MockData {
+  key: string;
+  title: string;
+  description: string;
+  disabled: boolean;
+}
+const mockData: MockData[] = [];
+for (let i = 0; i < 20; i++) {
+  mockData.push({
+    key: i.toString(),
+    title: `content${i + 1}`,
+    description: `description of content${i + 1}`,
+    disabled: i % 3 < 1,
+  });
+}
+
+const oriTargetKeys = mockData.filter(item => +item.key % 3 > 1).map(item => item.key);
+const disabled = ref<boolean>(false);
+
+const targetKeys = ref<string[]>(oriTargetKeys);
+
+const selectedKeys = ref<string[]>(['1', '4']);
+
+const handleChange = (nextTargetKeys: string[], direction: string, moveKeys: string[]) => {
+  console.log('targetKeys: ', nextTargetKeys);
+  console.log('direction: ', direction);
+  console.log('moveKeys: ', moveKeys);
+};
+const handleSelectChange = (sourceSelectedKeys: string[], targetSelectedKeys: string[]) => {
+  console.log('sourceSelectedKeys: ', sourceSelectedKeys);
+  console.log('targetSelectedKeys: ', targetSelectedKeys);
+};
+const handleScroll = (direction: string, e: Event) => {
+  console.log('direction:', direction);
+  console.log('target:', e.target);
+};
+
+const selectAllLabels: SelectAllLabel[] = [
+  'Select All',
+  ({ selectedCount, totalCount }) => `${selectedCount}/${totalCount}`,
+];
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+dataSource
+数据源，其中的数据将会被渲染到左边一栏中，targetKeys 中指定的除外。
+[{key: string.isRequired,title: string.isRequired,description: string,disabled: bool}][]
+[]
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+filterOption
+接收 inputValue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false。
+(inputValue, option): boolean
+
+
+
+
+footer
+可以设置为一个 作用域插槽
+slot="footer" slot-scope="props"
+
+
+
+
+listStyle
+两个穿梭框的自定义样式
+CSSProperties
+
+
+
+
+locale
+各种语言
+object
+{ itemUnit: '项', itemsUnit: '项', notFoundContent: '列表为空', searchPlaceholder: '请输入搜索内容' }
+
+
+
+oneWay
+展示为单向样式
+boolean
+false
+3.0.0
+
+
+operations
+操作文案集合，顺序从上至下
+string[]
+['>', '<']
+
+
+
+operationStyle
+操作栏的自定义样式
+CSSProperties
+-
+3.0.0
+
+
+pagination
+使用分页样式，自定义渲染列表下无效
+boolean | { pageSize: number, simple: boolean, showSizeChanger?: boolean, showLessItems?: boolean }
+flase
+3.0.0
+
+
+render
+每行数据渲染函数，该函数的入参为 dataSource 中的项，返回值为 element。或者返回一个普通对象，其中 label 字段为 element，value 字段为 title
+Function(record)| slot
+
+
+
+
+selectAllLabels
+自定义顶部多选框标题的集合
+VueNode | ((info: { selectedCount: number; totalCount: number }) => VueNode);
+-
+3.0.0
+
+
+selectedKeys(v-model)
+设置哪些项应该被选中
+string[]
+[]
+
+
+
+showSearch
+是否显示搜索框
+boolean
+false
+
+
+
+showSelectAll
+是否展示全选勾选框
+boolean
+true
+
+
+
+status
+设置校验状态
+'error' | 'warning'
+-
+3.3.0
+
+
+targetKeys(v-model)
+显示在右侧框数据的 key 集合
+string[]
+[]
+
+
+
+titles
+标题集合，顺序从左至右
+string[]
+['', '']
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+change
+选项在两栏之间转移时的回调函数
+(targetKeys, direction, moveKeys): void
+
+
+
+scroll
+选项列表滚动时的回调函数
+(direction, event): void
+
+
+
+search
+搜索框内容时改变时的回调函数
+(direction: 'left'|'right', value: string): void
+-
+
+
+selectChange
+选中项发生改变时的回调函数
+(sourceSelectedKeys, targetSelectedKeys): void
+
+
+
+
+Render Props 
+          #
+        
+Transfer 支持接收 children 自定义渲染列表，并返回以下参数：
+{
+  "direction": String,
+  "disabled": Boolean,
+  "filteredItems": Array,
+  "selectedKeys": Array,
+  "onItemSelect": Function,
+  "onItemSelectAll": Function
+}
+
+
+
+
+参数
+说明
+类型
+版本
+
+
+
+
+direction
+渲染列表的方向
+'left' | 'right'
+
+
+
+disabled
+是否禁用列表
+boolean
+
+
+
+filteredItems
+过滤后的数据
+TransferItem[]
+
+
+
+itemSelect
+勾选条目
+(key: string, selected: boolean)
+
+
+
+itemSelectAll
+勾选一组条目
+(keys: string[], selected: boolean)
+
+
+
+selectedKeys
+选中的条目
+string[]
+
+
+
+
+参考示例 
+          #
+        
+<a-transfer>
+  <template
+    #children="{
+      direction,
+      filteredItems,
+      selectedKeys,
+      disabled: listDisabled,
+      onItemSelectAll,
+      onItemSelect,
+    }"
+  >
+    <your-component />
+  <template>
+</a-transfer>
+
+注意 
+          #
+        
+按照 Vue 最新的规范，所有的组件数组最好绑定 key。在 Transfer 中，dataSource里的数据值需要指定 key 值。对于 dataSource 默认将每列数据的 key 属性作为唯一的标识。
+如果你的数据没有这个属性，务必使用 rowKey 来指定数据列的主键。
+// 比如你的数据主键是 uid
+return <Transfer :rowKey="record => record.uid" />;
+
+
+      最后更新 : 2023/08/31漫游式引导树形控件Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

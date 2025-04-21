@@ -1,0 +1,404 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 折叠面板 手风琴 面板嵌套 简洁风格 自定义面板 隐藏箭头 额外节点 幽灵折叠面板 可折叠触发区域 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Collapse 折叠面板可以折叠/展开的内容区域。
+何时使用 
+          #
+        
+
+对复杂区域进行分组和隐藏，保持页面的整洁。
+'手风琴' 是一种特殊的折叠面板，只允许单个内容区域展开。
+
+代码演示This is panel header 1A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.This is panel header 2This is panel header 3折叠面板可以同时展开多个面板，这个例子默认展开了第一个。TS<template>
+  <a-collapse v-model:activeKey="activeKey">
+    <a-collapse-panel key="1" header="This is panel header 1">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header 2">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="3" header="This is panel header 3" collapsible="disabled">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+  </a-collapse>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
+const activeKey = ref(['1']);
+
+watch(activeKey, val => {
+  console.log(val);
+});
+</script>
+This is panel header 1This is panel header 2This is panel header 3手风琴手风琴，每次只打开一个 tab。TS<template>
+  <a-collapse v-model:activeKey="activeKey" accordion>
+    <a-collapse-panel key="1" header="This is panel header 1">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header 2">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="3" header="This is panel header 3">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+  </a-collapse>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref([]);
+const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
+</script>
+This is panel header 1This is panel header 2This is panel header 3面板嵌套嵌套折叠面板。TS<template>
+  <a-collapse v-model:activeKey="activeKey" @change="changeActivekey">
+    <a-collapse-panel key="1" header="This is panel header 1">
+      <a-collapse default-active-key="4">
+        <a-collapse-panel key="4" header="This is panel nest panel">
+          <p>{{ text }}</p>
+        </a-collapse-panel>
+      </a-collapse>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header 2">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="3" header="This is panel header 3">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+  </a-collapse>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const activeKey = ref([]);
+const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
+
+const changeActivekey = (key: string) => {
+  console.log(key);
+};
+</script>
+This is panel header 1A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.This is panel header 2This is panel header 3简洁风格一套没有边框的简洁样式。TS<template>
+  <a-collapse v-model:activeKey="activeKey" :bordered="false">
+    <a-collapse-panel key="1" header="This is panel header 1">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header 2">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="3" header="This is panel header 3">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+  </a-collapse>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref(['1']);
+const text = `A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.`;
+</script>
+This is panel header 1A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.This is panel header 2This is panel header 3自定义面板自定义各个面板的背景色、圆角、边距和图标。TS<template>
+  <a-collapse
+    v-model:activeKey="activeKey"
+    :bordered="false"
+    style="background: rgb(255, 255, 255)"
+  >
+    <template #expandIcon="{ isActive }">
+      <caret-right-outlined :rotate="isActive ? 90 : 0" />
+    </template>
+    <a-collapse-panel key="1" header="This is panel header 1" :style="customStyle">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header 2" :style="customStyle">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="3" header="This is panel header 3" :style="customStyle">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+  </a-collapse>
+</template>
+<script lang="ts" setup>
+import { CaretRightOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+
+const activeKey = ref(['1']);
+const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
+const customStyle =
+  'background: #f7f7f7;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden';
+</script>
+This is panel header with arrow iconA dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.This is panel header with no arrow icon隐藏箭头你可以通过 :showArrow="false" 隐藏 a-collapse-panel 组件的箭头图标。TS<template>
+  <a-collapse v-model:activeKey="activeKey">
+    <a-collapse-panel key="1" header="This is panel header with arrow icon">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header with no arrow icon" :show-arrow="false">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+  </a-collapse>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+const activeKey = ref(['1']);
+const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
+
+watch(activeKey, val => {
+  console.log('activeKey', val);
+});
+</script>
+This is panel header 1A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.This is panel header 2This is panel header 3Expand Icon Position:start额外节点可以同时展开多个面板，这个例子默认展开了第一个。TS<template>
+  <a-collapse v-model:activeKey="activeKey" :expand-icon-position="expandIconPosition">
+    <a-collapse-panel key="1" header="This is panel header 1">
+      <p>{{ text }}</p>
+      <template #extra><setting-outlined @click="handleClick" /></template>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header 2">
+      <p>{{ text }}</p>
+      <template #extra><setting-outlined @click="handleClick" /></template>
+    </a-collapse-panel>
+    <a-collapse-panel key="3" header="This is panel header 3" collapsible="disabled">
+      <p>{{ text }}</p>
+      <template #extra><setting-outlined @click="handleClick" /></template>
+    </a-collapse-panel>
+  </a-collapse>
+  <br />
+  <span>Expand Icon Position:</span>
+  <a-select v-model:value="expandIconPosition">
+    <a-select-option value="start">start</a-select-option>
+    <a-select-option value="end">end</a-select-option>
+  </a-select>
+</template>
+<script lang="ts" setup>
+import { SettingOutlined } from '@ant-design/icons-vue';
+import { ref, watch } from 'vue';
+import type { CollapseProps } from 'ant-design-vue';
+
+const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
+const activeKey = ref(['1']);
+const expandIconPosition = ref<CollapseProps['expandIconPosition']>('start');
+
+const handleClick = (event: MouseEvent) => {
+  // If you don't want click extra trigger collapse, you can prevent this:
+  event.stopPropagation();
+};
+watch(activeKey, val => {
+  console.log(val);
+});
+</script>
+This is panel header 1A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.This is panel header 2This is panel header 3幽灵折叠面板将折叠面板的背景变成透明。TS<template>
+  <a-collapse v-model:activeKey="activeKey" ghost>
+    <a-collapse-panel key="1" header="This is panel header 1">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="2" header="This is panel header 2">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+    <a-collapse-panel key="3" header="This is panel header 3" collapsible="disabled">
+      <p>{{ text }}</p>
+    </a-collapse-panel>
+  </a-collapse>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+const text = `A dog is a type of domesticated animal.Known for its loyalty and faithfulness,it can be found as a welcome guest in many households across the world.`;
+const activeKey = ref(['1']);
+
+watch(activeKey, val => {
+  console.log(val);
+});
+</script>
+This panel can only be collapsed by clicking textA dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.This panel can only be collapsed by clicking iconA dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.This panel can't be collapsed可折叠触发区域通过 collapsible 属性，可以设置面板的可折叠触发区域。TS<template>
+  <a-space direction="vertical">
+    <a-collapse v-model:activeKey="activeKey" collapsible="header">
+      <a-collapse-panel key="1" header="This panel can only be collapsed by clicking text">
+        <p>{{ text }}</p>
+      </a-collapse-panel>
+    </a-collapse>
+    <a-collapse v-model:activeKey="activeKey" collapsible="icon">
+      <a-collapse-panel key="1" header="This panel can only be collapsed by clicking icon">
+        <p>{{ text }}</p>
+      </a-collapse-panel>
+    </a-collapse>
+    <a-collapse collapsible="disabled">
+      <a-collapse-panel key="1" header="This panel can't be collapsed">
+        <p>{{ text }}</p>
+      </a-collapse-panel>
+    </a-collapse>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref(['1']);
+const text = `A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.`;
+</script>
+<style scoped>
+.ant-space {
+  width: 100%;
+}
+</style>
+
+      API#
+      
+          #
+        
+Collapse 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+accordion
+手风琴模式，始终只有一个面板处在激活状态
+boolean
+false
+
+
+
+activeKey(v-model)
+当前激活 tab 面板的 key
+string[] | string  number[] | number
+默认无，手风琴模式下默认第一个元素
+
+
+
+bordered
+带边框风格的折叠面板
+boolean
+true
+
+
+
+collapsible
+所有子面板是否可折叠或指定可折叠触发区域
+header | icon | disabled
+-
+4.0
+
+
+destroyInactivePanel
+销毁折叠隐藏的面板
+boolean
+false
+
+
+
+expandIcon
+自定义切换图标
+Function(props):VNode | slot="expandIcon" slot-scope="props"|#expandIcon="props"
+
+
+
+
+expandIconPosition
+设置图标位置
+start | end
+-
+4.0
+
+
+ghost
+使折叠面板透明且无边框
+boolean
+false
+3.0
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+change
+切换面板的回调
+function(key)
+
+
+
+
+Collapse.Panel 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+collapsible
+是否可折叠或指定可折叠触发区域
+header | disabled
+-
+3.0
+
+
+extra
+自定义渲染每个面板右上角的内容
+VNode | slot
+-
+1.5.0
+
+
+forceRender
+被隐藏时是否渲染 DOM 结构
+boolean
+false
+
+
+
+header
+面板头内容
+string|slot
+-
+
+
+
+key
+对应 activeKey
+string | number
+-
+
+
+
+showArrow
+是否展示当前面板上的箭头
+boolean
+true
+
+
+
+
+
+      最后更新 : 2024/06/21多选框评论Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

@@ -1,0 +1,674 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 带下拉框的按钮 其他元素 弹出位置 箭头指向 触发方式 右键菜单 触发事件 菜单隐藏方式 箭头 多级菜单 加载中状态 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Dropdown 下拉菜单向下弹出的列表。
+何时使用 
+          #
+        
+当页面上的操作命令过多时，用此组件可以收纳操作元素。点击或移入触点，会出现一个下拉菜单。可在列表中进行选择，并执行相应的命令。
+
+用于收罗一组命令操作。
+Select 用于选择，而 Dropdown 是命令集合。
+
+代码演示 Hover me 基本最简单的下拉菜单。TS<template>
+  <a-dropdown>
+    <a class="ant-dropdown-link" @click.prevent>
+      Hover me
+      <DownOutlined />
+    </a>
+    <template #overlay>
+      <a-menu>
+        <a-menu-item>
+          <a href="javascript:;">1st menu item</a>
+        </a-menu-item>
+        <a-menu-item>
+          <a href="javascript:;">2nd menu item</a>
+        </a-menu-item>
+        <a-menu-item>
+          <a href="javascript:;">3rd menu item</a>
+        </a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
+</template>
+<script lang="ts" setup>
+import { DownOutlined } from '@ant-design/icons-vue';
+</script>
+DropdownDropdownDropdownButton带下拉框的按钮左边是按钮，右边是额外的相关功能菜单。可设置 icon 属性来修改右边的图标。TS<template>
+  <div class="demo-dropdown-wrap">
+    <a-dropdown-button @click="handleButtonClick">
+      Dropdown
+      <template #overlay>
+        <a-menu @click="handleMenuClick">
+          <a-menu-item key="1">
+            <UserOutlined />
+            1st menu item
+          </a-menu-item>
+          <a-menu-item key="2">
+            <UserOutlined />
+            2nd menu item
+          </a-menu-item>
+          <a-menu-item key="3">
+            <UserOutlined />
+            3rd item
+          </a-menu-item>
+        </a-menu>
+      </template>
+    </a-dropdown-button>
+    <a-dropdown-button>
+      Dropdown
+      <template #overlay>
+        <a-menu @click="handleMenuClick">
+          <a-menu-item key="1">
+            <UserOutlined />
+            1st menu item
+          </a-menu-item>
+          <a-menu-item key="2">
+            <UserOutlined />
+            2nd menu item
+          </a-menu-item>
+          <a-menu-item key="3">
+            <UserOutlined />
+            3rd item
+          </a-menu-item>
+        </a-menu>
+      </template>
+      <template #icon><UserOutlined /></template>
+    </a-dropdown-button>
+    <a-dropdown-button disabled @click="handleButtonClick">
+      Dropdown
+      <template #overlay>
+        <a-menu @click="handleMenuClick">
+          <a-menu-item key="1">
+            <UserOutlined />
+            1st menu item
+          </a-menu-item>
+          <a-menu-item key="2">
+            <UserOutlined />
+            2nd menu item
+          </a-menu-item>
+          <a-menu-item key="3">
+            <UserOutlined />
+            3rd item
+          </a-menu-item>
+        </a-menu>
+      </template>
+    </a-dropdown-button>
+    <a-dropdown>
+      <template #overlay>
+        <a-menu @click="handleMenuClick">
+          <a-menu-item key="1">
+            <UserOutlined />
+            1st menu item
+          </a-menu-item>
+          <a-menu-item key="2">
+            <UserOutlined />
+            2nd menu item
+          </a-menu-item>
+          <a-menu-item key="3">
+            <UserOutlined />
+            3rd item
+          </a-menu-item>
+        </a-menu>
+      </template>
+      <a-button>
+        Button
+        <DownOutlined />
+      </a-button>
+    </a-dropdown>
+  </div>
+</template>
+<script lang="ts" setup>
+import { UserOutlined, DownOutlined } from '@ant-design/icons-vue';
+import type { MenuProps } from 'ant-design-vue';
+const handleButtonClick = (e: Event) => {
+  console.log('click left button', e);
+};
+const handleMenuClick: MenuProps['onClick'] = e => {
+  console.log('click', e);
+};
+</script>
+<style lang="less" scoped>
+.demo-dropdown-wrap :deep(.ant-dropdown-button) {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+</style>
+ Hover me 其他元素分割线和不可用菜单项。TS<template>
+  <a-dropdown>
+    <a class="ant-dropdown-link" @click.prevent>
+      Hover me
+      <DownOutlined />
+    </a>
+    <template #overlay>
+      <a-menu>
+        <a-menu-item key="0">
+          <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+            1st menu item
+          </a>
+        </a-menu-item>
+        <a-menu-item key="1">
+          <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+            2nd menu item
+          </a>
+        </a-menu-item>
+        <a-menu-divider />
+        <a-menu-item key="3" disabled>3rd menu item（disabled）</a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
+</template>
+<script lang="ts" setup>
+import { DownOutlined } from '@ant-design/icons-vue';
+</script>
+bottomLeftbottombottomRighttopLefttoptopRight弹出位置支持 6 个弹出位置。TS<template>
+  <div id="components-dropdown-demo-placement">
+    <template v-for="(placement, index) in placements" :key="placement">
+      <a-dropdown :placement="placement">
+        <a-button>{{ placement }}</a-button>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+                1st menu item
+              </a>
+            </a-menu-item>
+            <a-menu-item>
+              <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                2nd menu item
+              </a>
+            </a-menu-item>
+            <a-menu-item>
+              <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+                3rd menu item
+              </a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+      <br v-if="index === 2" />
+    </template>
+  </div>
+</template>
+<script lang="ts" setup>
+import type { DropdownProps } from 'ant-design-vue';
+const placements = [
+  'bottomLeft',
+  'bottom',
+  'bottomRight',
+  'topLeft',
+  'top',
+  'topRight',
+] as DropdownProps['placement'][];
+</script>
+<style scoped>
+#components-dropdown-demo-placement .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+</style>
+topLefttoptopRightbottomLeftbottombottomRight箭头指向设置 arrow 为 { pointAtCenter: true } 后，箭头将指向目标元素的中心。TS<template>
+  <a-space style="display: flex; flex-wrap: wrap">
+    <template v-for="placement in placements" :key="placement">
+      <a-dropdown :placement="placement" :arrow="{ pointAtCenter: true }">
+        <a-button>{{ placement }}</a-button>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a href="javascript:;">1st menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">2nd menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">3rd menu item</a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </template>
+  </a-space>
+</template>
+<script lang="ts" setup>
+const placements = ['topLeft', 'top', 'topRight', 'bottomLeft', 'bottom', 'bottomRight'] as const;
+</script>
+ Click me 触发方式默认是移入触发菜单，可以点击触发。TS<template>
+  <a-dropdown :trigger="['click']">
+    <a class="ant-dropdown-link" @click.prevent>
+      Click me
+      <DownOutlined />
+    </a>
+    <template #overlay>
+      <a-menu>
+        <a-menu-item key="0">
+          <a href="http://www.alipay.com/">1st menu item</a>
+        </a-menu-item>
+        <a-menu-item key="1">
+          <a href="http://www.taobao.com/">2nd menu item</a>
+        </a-menu-item>
+        <a-menu-divider />
+        <a-menu-item key="3">3rd menu item</a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
+</template>
+<script lang="ts" setup>
+import { DownOutlined } from '@ant-design/icons-vue';
+</script>
+ Right Click on here 右键菜单默认是移入触发菜单，可以点击鼠标右键触发。TS<template>
+  <a-dropdown :trigger="['contextmenu']">
+    <div
+      :style="{
+        textAlign: 'center',
+        background: '#f7f7f7',
+        height: '200px',
+        lineHeight: '200px',
+        color: '#777',
+      }"
+    >
+      Right Click on here
+    </div>
+    <template #overlay>
+      <a-menu>
+        <a-menu-item key="1">1st menu item</a-menu-item>
+        <a-menu-item key="2">2nd menu item</a-menu-item>
+        <a-menu-item key="3">3rd menu item</a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
+</template>
+ Hover me, Click menu item 触发事件点击菜单项后会触发事件，用户可以通过相应的菜单项 key 进行不同的操作。TS<template>
+  <a-dropdown>
+    <a class="ant-dropdown-link" @click.prevent>
+      Hover me, Click menu item
+      <DownOutlined />
+    </a>
+    <template #overlay>
+      <a-menu @click="onClick">
+        <a-menu-item key="1">1st menu item</a-menu-item>
+        <a-menu-item key="2">2nd menu item</a-menu-item>
+        <a-menu-item key="3">3rd menu item</a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
+</template>
+<script lang="ts" setup>
+import { DownOutlined } from '@ant-design/icons-vue';
+import type { MenuProps } from 'ant-design-vue';
+
+const onClick: MenuProps['onClick'] = ({ key }) => {
+  console.log(`Click on item ${key}`);
+};
+</script>
+ Hover me 菜单隐藏方式默认是点击关闭菜单，可以关闭此功能。TS<template>
+  <a-dropdown v-model:open="visible">
+    <a class="ant-dropdown-link" @click.prevent>
+      Hover me
+      <DownOutlined />
+    </a>
+    <template #overlay>
+      <a-menu @click="handleMenuClick">
+        <a-menu-item key="1">Clicking me will not close the menu.</a-menu-item>
+        <a-menu-item key="2">Clicking me will not close the menu also.</a-menu-item>
+        <a-menu-item key="3">Clicking me will close the menu</a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { DownOutlined } from '@ant-design/icons-vue';
+import type { MenuProps } from 'ant-design-vue';
+const visible = ref(false);
+const handleMenuClick: MenuProps['onClick'] = e => {
+  if (e.key === '3') {
+    visible.value = false;
+  }
+};
+</script>
+topLefttoptopRightbottomLeftbottombottomRight箭头可以展示一个箭头。TS<template>
+  <a-space style="display: flex; flex-wrap: wrap">
+    <template v-for="placement in placements" :key="placement">
+      <a-dropdown :placement="placement" arrow>
+        <a-button>{{ placement }}</a-button>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a href="javascript:;">1st menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">2nd menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">3rd menu item</a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </template>
+  </a-space>
+</template>
+<script lang="ts" setup>
+const placements = ['topLeft', 'top', 'topRight', 'bottomLeft', 'bottom', 'bottomRight'] as const;
+</script>
+ Cascading menu 多级菜单传入的菜单里有多个层级。TS<template>
+  <a-dropdown>
+    <a class="ant-dropdown-link" @click.prevent>
+      Cascading menu
+      <DownOutlined />
+    </a>
+    <template #overlay>
+      <a-menu>
+        <a-menu-item>1st menu item</a-menu-item>
+        <a-menu-item>2nd menu item</a-menu-item>
+        <a-sub-menu key="sub1" title="sub menu">
+          <a-menu-item>3rd menu item</a-menu-item>
+          <a-menu-item>4th menu item</a-menu-item>
+        </a-sub-menu>
+        <a-sub-menu key="sub2" title="disabled sub menu" disabled>
+          <a-menu-item>5d menu item</a-menu-item>
+          <a-menu-item>6th menu item</a-menu-item>
+        </a-sub-menu>
+      </a-menu>
+    </template>
+  </a-dropdown>
+</template>
+<script lang="ts" setup>
+import { DownOutlined } from '@ant-design/icons-vue';
+</script>
+SubmitSubmitSubmitSubmit加载中状态添加 loading 属性即可让按钮处于加载状态，最后两个按钮演示点击后进入加载状态。TS<template>
+  <a-space direction="vertical">
+    <a-dropdown-button type="primary" loading>
+      <template #overlay>
+        <a-menu>
+          <a-menu-item key="1">Submit and continue</a-menu-item>
+        </a-menu>
+      </template>
+      Submit
+    </a-dropdown-button>
+    <a-dropdown-button type="primary" size="small" loading>
+      <template #overlay>
+        <a-menu>
+          <a-menu-item key="1">Submit and continue</a-menu-item>
+        </a-menu>
+      </template>
+      Submit
+    </a-dropdown-button>
+    <a-dropdown-button type="primary" :loading="loading1" @click="enterLoading1">
+      <template #overlay>
+        <a-menu>
+          <a-menu-item key="1">Submit and continue</a-menu-item>
+        </a-menu>
+      </template>
+      Submit
+    </a-dropdown-button>
+    <a-dropdown-button :loading="loading2" @click="enterLoading2">
+      Submit
+      <template #overlay>
+        <a-menu>
+          <a-menu-item key="1">Submit and continue</a-menu-item>
+        </a-menu>
+      </template>
+      <template #icon><DownOutlined /></template>
+    </a-dropdown-button>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { Ref, ref } from 'vue';
+import { DownOutlined } from '@ant-design/icons-vue';
+const loading1 = ref(false);
+const loading2 = ref(false);
+const enterLoading = (loading: Ref<boolean>) => {
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+  }, 6000);
+};
+function enterLoading1() {
+  enterLoading(loading1);
+}
+function enterLoading2() {
+  enterLoading(loading2);
+}
+</script>
+
+      API#
+      
+          #
+        
+属性如下
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+
+align
+该值将合并到 placement 的配置中，设置参考 dom-align
+Object
+-
+
+
+
+arrow
+下拉框箭头是否显示
+boolean | { pointAtCenter: boolean }
+false
+3.3.0
+
+
+destroyPopupOnHide
+关闭后是否销毁 Dropdown
+boolean
+false
+3.0
+
+
+disabled
+菜单是否禁用
+boolean
+-
+
+
+
+getPopupContainer
+菜单渲染父节点。默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位。
+Function(triggerNode)
+() => document.body
+
+
+
+overlay(v-slot)
+菜单
+Menu
+-
+
+
+
+overlayClassName
+下拉根元素的类名称
+string
+-
+
+
+
+overlayStyle
+下拉根元素的样式
+object
+-
+
+
+
+placement
+菜单弹出位置
+bottomLeft | bottom | bottomRight | topLeft | top | topRight
+bottomLeft
+
+
+
+trigger
+触发下拉的行为, 移动端不支持 hover
+Array<click|hover|contextmenu>
+['hover']
+
+
+
+open(v-model)
+菜单是否显示
+boolean
+-
+
+
+
+
+overlay 菜单使用 Menu，还包括菜单项 Menu.Item，分割线 Menu.Divider。
+
+注意： Menu.Item 必须设置唯一的 key 属性。
+Dropdown 下的 Menu 默认不可选中。如果需要菜单可选中，可以指定 <Menu selectable>.
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+openChange
+菜单显示状态改变时调用，参数为 visible。点击菜单按钮导致的消失不会触发
+function(open)
+4.0
+
+
+
+Dropdown.Button 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+disabled
+菜单是否禁用
+boolean
+-
+
+
+
+icon
+右侧的 icon
+VNode | slot
+-
+1.5.0
+
+
+loading
+设置按钮载入状态
+boolean | { delay: number }
+false
+3.0
+
+
+overlay(v-slot)
+菜单
+Menu
+-
+
+
+
+placement
+菜单弹出位置
+bottomLeft | bottom | bottomRight | topLeft | top | topRight
+bottomLeft
+
+
+
+size
+按钮大小，和 Button 一致
+string
+'default'
+
+
+
+trigger
+触发下拉的行为
+Array<click|hover|contextmenu>
+['hover']
+
+
+
+type
+按钮类型，和 Button 一致
+string
+'default'
+
+
+
+open(v-model)
+菜单是否显示
+boolean
+-
+
+
+
+
+Dropdown.Button 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+click
+点击左侧按钮的回调，和 Button 一致
+Function
+
+
+
+openChange
+菜单显示状态改变时调用，参数为 visible。点击菜单按钮导致的消失不会触发
+function(open)
+4.0
+
+
+
+
+      最后更新 : 2024/06/09抽屉空状态Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

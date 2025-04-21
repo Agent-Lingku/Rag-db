@@ -1,0 +1,1244 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 顶部导航 内嵌菜单 缩起内嵌菜单 只展开当前父级菜单 垂直菜单 主题 子菜单主题 切换菜单类型 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Menu 导航菜单为页面和功能提供导航的菜单列表。
+何时使用 
+          #
+        
+导航菜单是一个网站的灵魂，用户依赖导航在各个页面中进行跳转。一般分为顶部导航和侧边导航，顶部导航提供全局性的类目和功能，侧边导航提供多级结构来收纳和排列网站架构。
+更多布局和导航的使用可以参考：通用布局。
+开发者注意事项 
+          #
+        
+
+Menu 元素为 ul，因而仅支持 li 以及 script-supporting 子元素。因而你的子节点元素应该都在 Menu.Item 内使用。
+Menu 需要计算节点结构，因而其子元素仅支持 Menu.* 以及对此进行封装的 HOC 组件。
+必须为 SubMenu 设置唯一 key
+
+代码演示Navigation OneNavigation TwoNavigation Three - SubmenuNavigation Four - Link顶部导航水平的顶部导航菜单。TS<template>
+  <a-menu v-model:selectedKeys="current" mode="horizontal" :items="items" />
+</template>
+<script lang="ts" setup>
+import { h, ref } from 'vue';
+import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
+import { MenuProps } from 'ant-design-vue';
+const current = ref<string[]>(['mail']);
+const items = ref<MenuProps['items']>([
+  {
+    key: 'mail',
+    icon: () => h(MailOutlined),
+    label: 'Navigation One',
+    title: 'Navigation One',
+  },
+  {
+    key: 'app',
+    icon: () => h(AppstoreOutlined),
+    label: 'Navigation Two',
+    title: 'Navigation Two',
+  },
+  {
+    key: 'sub1',
+    icon: () => h(SettingOutlined),
+    label: 'Navigation Three - Submenu',
+    title: 'Navigation Three - Submenu',
+    children: [
+      {
+        type: 'group',
+        label: 'Item 1',
+        children: [
+          {
+            label: 'Option 1',
+            key: 'setting:1',
+          },
+          {
+            label: 'Option 2',
+            key: 'setting:2',
+          },
+        ],
+      },
+      {
+        type: 'group',
+        label: 'Item 2',
+        children: [
+          {
+            label: 'Option 3',
+            key: 'setting:3',
+          },
+          {
+            label: 'Option 4',
+            key: 'setting:4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'alipay',
+    label: h('a', { href: 'https://antdv.com', target: '_blank' }, 'Navigation Four - Link'),
+    title: 'Navigation Four - Link',
+  },
+]);
+</script>
+Navigation OneItem 1Option 1Option 2Item 2Option 3Option 4Navigation TwoOption 5Option 6SubmenuOption 7Option 8Navigation ThreeOption 9Option 10Option 11Option 12GroupOption 13Option 14内嵌菜单垂直菜单，子菜单内嵌在菜单区域。TS<template>
+  <a-menu
+    id="dddddd"
+    v-model:openKeys="openKeys"
+    v-model:selectedKeys="selectedKeys"
+    style="width: 256px"
+    mode="inline"
+    :items="items"
+    @click="handleClick"
+  ></a-menu>
+</template>
+<script lang="ts" setup>
+import { reactive, ref, watch, VueElement, h } from 'vue';
+import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
+import type { MenuProps, ItemType } from 'ant-design-vue';
+
+const selectedKeys = ref<string[]>(['1']);
+const openKeys = ref<string[]>(['sub1']);
+
+function getItem(
+  label: VueElement | string,
+  key: string,
+  icon?: any,
+  children?: ItemType[],
+  type?: 'group',
+): ItemType {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as ItemType;
+}
+
+const items: ItemType[] = reactive([
+  getItem('Navigation One', 'sub1', () => h(MailOutlined), [
+    getItem('Item 1', 'g1', null, [getItem('Option 1', '1'), getItem('Option 2', '2')], 'group'),
+    getItem('Item 2', 'g2', null, [getItem('Option 3', '3'), getItem('Option 4', '4')], 'group'),
+  ]),
+
+  getItem('Navigation Two', 'sub2', () => h(AppstoreOutlined), [
+    getItem('Option 5', '5'),
+    getItem('Option 6', '6'),
+    getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
+  ]),
+
+  { type: 'divider' },
+
+  getItem('Navigation Three', 'sub4', () => h(SettingOutlined), [
+    getItem('Option 9', '9'),
+    getItem('Option 10', '10'),
+    getItem('Option 11', '11'),
+    getItem('Option 12', '12'),
+  ]),
+
+  getItem('Group', 'grp', null, [getItem('Option 13', '13'), getItem('Option 14', '14')], 'group'),
+]);
+
+const handleClick: MenuProps['onClick'] = e => {
+  console.log('click', e);
+};
+
+watch(openKeys, val => {
+  console.log('openKeys', val);
+});
+</script>
+Option 1Option 2Option 3Navigation OneOption 5Option 6Option 7Option 8Navigation TwoOption 9Option 10SubmenuOption 11Option 12缩起内嵌菜单内嵌菜单可以被缩起/展开。
+你可以在 Layout 里查看侧边布局结合的完整示例。TS<template>
+  <div style="width: 256px">
+    <a-button type="primary" style="margin-bottom: 16px" @click="toggleCollapsed">
+      <MenuUnfoldOutlined v-if="state.collapsed" />
+      <MenuFoldOutlined v-else />
+    </a-button>
+    <a-menu
+      v-model:openKeys="state.openKeys"
+      v-model:selectedKeys="state.selectedKeys"
+      mode="inline"
+      theme="dark"
+      :inline-collapsed="state.collapsed"
+      :items="items"
+    ></a-menu>
+  </div>
+</template>
+<script lang="ts" setup>
+import { reactive, watch, h } from 'vue';
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+  MailOutlined,
+  DesktopOutlined,
+  InboxOutlined,
+  AppstoreOutlined,
+} from '@ant-design/icons-vue';
+const state = reactive({
+  collapsed: false,
+  selectedKeys: ['1'],
+  openKeys: ['sub1'],
+  preOpenKeys: ['sub1'],
+});
+const items = reactive([
+  {
+    key: '1',
+    icon: () => h(PieChartOutlined),
+    label: 'Option 1',
+    title: 'Option 1',
+  },
+  {
+    key: '2',
+    icon: () => h(DesktopOutlined),
+    label: 'Option 2',
+    title: 'Option 2',
+  },
+  {
+    key: '3',
+    icon: () => h(InboxOutlined),
+    label: 'Option 3',
+    title: 'Option 3',
+  },
+  {
+    key: 'sub1',
+    icon: () => h(MailOutlined),
+    label: 'Navigation One',
+    title: 'Navigation One',
+    children: [
+      {
+        key: '5',
+        label: 'Option 5',
+        title: 'Option 5',
+      },
+      {
+        key: '6',
+        label: 'Option 6',
+        title: 'Option 6',
+      },
+      {
+        key: '7',
+        label: 'Option 7',
+        title: 'Option 7',
+      },
+      {
+        key: '8',
+        label: 'Option 8',
+        title: 'Option 8',
+      },
+    ],
+  },
+  {
+    key: 'sub2',
+    icon: () => h(AppstoreOutlined),
+    label: 'Navigation Two',
+    title: 'Navigation Two',
+    children: [
+      {
+        key: '9',
+        label: 'Option 9',
+        title: 'Option 9',
+      },
+      {
+        key: '10',
+        label: 'Option 10',
+        title: 'Option 10',
+      },
+      {
+        key: 'sub3',
+        label: 'Submenu',
+        title: 'Submenu',
+        children: [
+          {
+            key: '11',
+            label: 'Option 11',
+            title: 'Option 11',
+          },
+          {
+            key: '12',
+            label: 'Option 12',
+            title: 'Option 12',
+          },
+        ],
+      },
+    ],
+  },
+]);
+watch(
+  () => state.openKeys,
+  (_val, oldVal) => {
+    state.preOpenKeys = oldVal;
+  },
+);
+const toggleCollapsed = () => {
+  state.collapsed = !state.collapsed;
+  state.openKeys = state.collapsed ? [] : state.preOpenKeys;
+};
+</script>
+Navigation OneOption 1Option 2Option 3Option 4Navigation TwoOption 5Option 6SubmenuOption 7Option 8Navigation ThreeOption 9Option 10Option 11Option 12只展开当前父级菜单点击菜单，收起其他展开的所有菜单，保持菜单聚焦简洁。TS<template>
+  <div>
+    <a-menu
+      v-model:selectedKeys="state.selectedKeys"
+      style="width: 256px"
+      mode="inline"
+      :open-keys="state.openKeys"
+      :items="items"
+      @openChange="onOpenChange"
+    ></a-menu>
+  </div>
+</template>
+<script lang="ts" setup>
+import { VueElement, h, reactive } from 'vue';
+import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
+import { ItemType } from 'ant-design-vue';
+
+function getItem(
+  label: VueElement | string,
+  key: string,
+  icon?: any,
+  children?: ItemType[],
+  type?: 'group',
+): ItemType {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as ItemType;
+}
+
+const items: ItemType[] = reactive([
+  getItem('Navigation One', 'sub1', () => h(MailOutlined), [
+    getItem('Option 1', '1'),
+    getItem('Option 2', '2'),
+    getItem('Option 3', '3'),
+    getItem('Option 4', '4'),
+  ]),
+  getItem('Navigation Two', 'sub2', () => h(AppstoreOutlined), [
+    getItem('Option 5', '5'),
+    getItem('Option 6', '6'),
+    getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
+  ]),
+  getItem('Navigation Three', 'sub4', () => h(SettingOutlined), [
+    getItem('Option 9', '9'),
+    getItem('Option 10', '10'),
+    getItem('Option 11', '11'),
+    getItem('Option 12', '12'),
+  ]),
+]);
+
+const state = reactive({
+  rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
+  openKeys: ['sub1'],
+  selectedKeys: [],
+});
+const onOpenChange = (openKeys: string[]) => {
+  const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
+  if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    state.openKeys = openKeys;
+  } else {
+    state.openKeys = latestOpenKey ? [latestOpenKey] : [];
+  }
+};
+</script>
+Navigation OneNavigation TwoNavigation ThreeNavigation Four垂直菜单子菜单是弹出的形式。TS<template>
+  <a-menu
+    v-model:openKeys="openKeys"
+    v-model:selectedKeys="selectedKeys"
+    style="width: 256px"
+    mode="vertical"
+    :items="items"
+    @click="handleClick"
+  />
+</template>
+<script lang="ts" setup>
+import { h, ref } from 'vue';
+import {
+  MailOutlined,
+  CalendarOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+} from '@ant-design/icons-vue';
+import type { MenuProps } from 'ant-design-vue';
+
+const selectedKeys = ref([]);
+const openKeys = ref([]);
+const items = ref([
+  {
+    key: '1',
+    icon: () => h(MailOutlined),
+    label: 'Navigation One',
+    title: 'Navigation One',
+  },
+  {
+    key: '2',
+    icon: () => h(CalendarOutlined),
+    label: 'Navigation Two',
+    title: 'Navigation Two',
+  },
+  {
+    key: 'sub1',
+    icon: () => h(AppstoreOutlined),
+    label: 'Navigation Three',
+    title: 'Navigation Three',
+    children: [
+      {
+        key: '3',
+        label: 'Option 3',
+        title: 'Option 3',
+      },
+      {
+        key: '4',
+        label: 'Option 4',
+        title: 'Option 4',
+      },
+      {
+        key: 'sub1-2',
+        label: 'Submenu',
+        title: 'Submenu',
+        children: [
+          {
+            key: '5',
+            label: 'Option 5',
+            title: 'Option 5',
+          },
+          {
+            key: '6',
+            label: 'Option 6',
+            title: 'Option 6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'sub2',
+    icon: () => h(SettingOutlined),
+    label: 'Navigation Four',
+    title: 'Navigation Four',
+    children: [
+      {
+        key: '7',
+        label: 'Option 7',
+        title: 'Option 7',
+      },
+      {
+        key: '8',
+        label: 'Option 8',
+        title: 'Option 8',
+      },
+      {
+        key: '9',
+        label: 'Option 9',
+        title: 'Option 9',
+      },
+      {
+        key: '10',
+        label: 'Option 10',
+        title: 'Option 10',
+      },
+    ],
+  },
+]);
+const handleClick: MenuProps['onClick'] = menuInfo => {
+  console.log('click ', menuInfo);
+};
+</script>
+DarkLightNavigation OneNavigation TwoNavigation ThreeOption 3Option 4SubmenuOption 5Option 6Navigation FourOption 7Option 8Option 9Option 10主题内建了两套主题 light 和 dark，默认 light。TS<template>
+  <div>
+    <a-switch
+      :checked="theme === 'dark'"
+      checked-children="Dark"
+      un-checked-children="Light"
+      @change="changeTheme"
+    />
+    <br />
+    <br />
+    <a-menu
+      v-model:openKeys="openKeys"
+      v-model:selectedKeys="selectedKeys"
+      style="width: 256px"
+      mode="inline"
+      :theme="theme"
+      :items="items"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { h, ref } from 'vue';
+import {
+  MailOutlined,
+  CalendarOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+} from '@ant-design/icons-vue';
+import type { MenuTheme } from 'ant-design-vue';
+const theme = ref<MenuTheme>('dark');
+const selectedKeys = ref(['1']);
+const openKeys = ref(['sub1']);
+const items = ref([
+  {
+    key: '1',
+    icon: () => h(MailOutlined),
+    label: 'Navigation One',
+    title: 'Navigation One',
+  },
+  {
+    key: '2',
+    icon: () => h(CalendarOutlined),
+    label: 'Navigation Two',
+    title: 'Navigation Two',
+  },
+  {
+    key: 'sub1',
+    icon: () => h(AppstoreOutlined),
+    label: 'Navigation Three',
+    title: 'Navigation Three',
+    children: [
+      {
+        key: '3',
+        label: 'Option 3',
+        title: 'Option 3',
+      },
+      {
+        key: '4',
+        label: 'Option 4',
+        title: 'Option 4',
+      },
+      {
+        key: 'sub1-2',
+        label: 'Submenu',
+        title: 'Submenu',
+        children: [
+          {
+            key: '5',
+            label: 'Option 5',
+            title: 'Option 5',
+          },
+          {
+            key: '6',
+            label: 'Option 6',
+            title: 'Option 6',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'sub2',
+    icon: () => h(SettingOutlined),
+    label: 'Navigation Four',
+    title: 'Navigation Four',
+    children: [
+      {
+        key: '7',
+        label: 'Option 7',
+        title: 'Option 7',
+      },
+      {
+        key: '8',
+        label: 'Option 8',
+        title: 'Option 8',
+      },
+      {
+        key: '9',
+        label: 'Option 9',
+        title: 'Option 9',
+      },
+      {
+        key: '10',
+        label: 'Option 10',
+        title: 'Option 10',
+      },
+    ],
+  },
+]);
+const changeTheme = (checked: boolean) => {
+  theme.value = checked ? 'dark' : 'light';
+};
+</script>
+darklightNavigation OneOption 5Option 6子菜单主题你可以通过 theme 属性来设置 SubMenu 的主题从而达到不同目录树下不同主题色的效果。该例子默认为根目录深色，子目录浅色效果。TS<template>
+  <div>
+    <a-switch
+      :checked="theme === 'dark'"
+      checked-children="dark"
+      un-checked-children="light"
+      @Change="changeTheme"
+    />
+    <br />
+    <br />
+    <a-menu
+      :style="{ width: '256px' }"
+      :open-keys="openKeys"
+      :selected-keys="selectedKeys"
+      mode="vertical"
+      theme="dark"
+      :items="items"
+      @click="handleClick"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { computed, ref, VueElement, ComputedRef, h } from 'vue';
+import { MailOutlined } from '@ant-design/icons-vue';
+import type { MenuProps } from 'ant-design-vue';
+
+const selectedKeys = ref<string[]>(['1']);
+const openKeys = ref<string[]>(['sub1']);
+const theme = ref<MenuProps['theme']>('light');
+
+function getItem(
+  label: VueElement | string,
+  key: string,
+  icon?: any,
+  children?: MenuProps['items'],
+  theme?: 'light' | 'dark',
+): MenuProps['items'][number] {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    theme,
+  };
+}
+
+const items: ComputedRef<MenuProps['items']> = computed(() => [
+  getItem(
+    'Navigation One',
+    'sub1',
+    () => h(MailOutlined),
+    [getItem('Option 1', '1'), getItem('Option 2', '2'), getItem('Option 3', '3')],
+    theme.value,
+  ),
+  getItem('Option 5', '5'),
+  getItem('Option 6', '6'),
+]);
+
+function handleClick(info: any) {
+  console.log('click', info);
+}
+
+function changeTheme(checked: boolean) {
+  theme.value = checked ? 'dark' : 'light';
+}
+</script>
+ Change Mode  Change Theme Navigation OneNavigation TwoNavigation TwoOption 3Option 4SubmenuOption 5Option 6Navigation ThreeOption 7Option 8Option 9Option 10切换菜单类型展示动态切换模式。TS<template>
+  <div>
+    <a-switch :checked="state.mode === 'vertical'" @change="changeMode" />
+    Change Mode
+    <span class="ant-divider" style="margin: 0 1em" />
+    <a-switch :checked="state.theme === 'dark'" @change="changeTheme" />
+    Change Theme
+    <br />
+    <br />
+    <a-menu
+      v-model:openKeys="state.openKeys"
+      v-model:selectedKeys="state.selectedKeys"
+      style="width: 256px"
+      :mode="state.mode"
+      :items="items"
+      :theme="state.theme"
+    ></a-menu>
+  </div>
+</template>
+<script lang="ts" setup>
+import { h, reactive } from 'vue';
+import {
+  MailOutlined,
+  CalendarOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+} from '@ant-design/icons-vue';
+import type { MenuMode, MenuTheme } from 'ant-design-vue';
+import { ItemType } from 'ant-design-vue';
+
+const state = reactive({
+  mode: 'inline' as MenuMode,
+  theme: 'light' as MenuTheme,
+  selectedKeys: ['1'],
+  openKeys: ['sub1'],
+});
+
+function getItem(
+  label: string,
+  key: string,
+  icon?: any,
+  children?: ItemType[],
+  type?: 'group',
+): ItemType {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as ItemType;
+}
+
+const items: ItemType[] = reactive([
+  getItem('Navigation One', '1', h(MailOutlined)),
+  getItem('Navigation Two', '2', h(CalendarOutlined)),
+  getItem('Navigation Two', 'sub1', h(AppstoreOutlined), [
+    getItem('Option 3', '3'),
+    getItem('Option 4', '4'),
+    getItem('Submenu', 'sub1-2', null, [getItem('Option 5', '5'), getItem('Option 6', '6')]),
+  ]),
+  getItem('Navigation Three', 'sub2', h(SettingOutlined), [
+    getItem('Option 7', '7'),
+    getItem('Option 8', '8'),
+    getItem('Option 9', '9'),
+    getItem('Option 10', '10'),
+  ]),
+]);
+
+const changeMode = (checked: boolean) => {
+  state.mode = checked ? 'vertical' : 'inline';
+};
+
+const changeTheme = (checked: boolean) => {
+  state.theme = checked ? 'dark' : 'light';
+};
+</script>
+
+      API#
+      
+          #
+        
+Menu 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+forceSubMenuRender
+在子菜单展示之前就渲染进 DOM
+boolean
+false
+
+
+inlineCollapsed
+inline 时菜单是否收起状态
+boolean
+-
+
+
+inlineIndent
+inline 模式的菜单缩进宽度
+number
+24
+
+
+items
+菜单内容
+ItemType[]
+-
+
+
+mode
+菜单类型，现在支持垂直、水平、和内嵌模式三种
+vertical | horizontal | inline
+vertical
+
+
+multiple
+是否允许多选
+boolean
+false
+
+
+openKeys(v-model)
+当前展开的 SubMenu 菜单项 key 数组
+(string | number)[]
+
+
+
+overflowedIndicator
+用于自定义 Menu 水平空间不足时的省略收缩的图标
+slot
+<EllipsisOutlined />
+
+
+selectable
+是否允许选中
+boolean
+true
+
+
+selectedKeys(v-model)
+当前选中的菜单项 key 数组
+(string | number)[]
+
+
+
+subMenuCloseDelay
+用户鼠标离开子菜单后关闭延时，单位：秒
+number
+0.1
+
+
+subMenuOpenDelay
+用户鼠标进入子菜单后开启延时，单位：秒
+number
+0
+
+
+theme
+主题颜色
+light | dark
+light
+
+
+triggerSubMenuAction
+修改 Menu 子菜单的触发方式
+click | hover
+hover
+
+
+
+Menu 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+click
+点击 MenuItem 调用此函数
+function({ item, key, keyPath })
+
+
+deselect
+取消选中时调用，仅在 multiple 生效
+function({ item, key, selectedKeys })
+
+
+openChange
+SubMenu 展开/关闭的回调
+function(openKeys: (string | number)[])
+
+
+select
+被选中时调用
+function({ item, key, selectedKeys })
+
+
+
+Menu.Item 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+icon
+菜单图标
+slot
+
+2.8.0
+
+
+key
+item 的唯一标志
+string | number
+
+
+
+
+title
+设置收缩时展示的悬浮标题
+string | slot
+
+
+
+
+
+ItemType 
+          #
+        
+
+type ItemType = MenuItemType | SubMenuType | MenuItemGroupType | MenuDividerType;
+
+MenuItemType 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+danger
+展示错误状态样式
+boolean
+false
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+icon
+菜单图标
+VueNode|(item: MenuItemType)=>VueNode
+-
+
+
+
+key
+item 的唯一标志
+string | number
+-
+
+
+
+label
+菜单项标题
+VueNode
+-
+
+
+
+title
+设置收缩时展示的悬浮标题
+string
+-
+
+
+
+
+SubMenuType 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+children
+子菜单的菜单项
+ItemType[]
+-
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+icon
+菜单图标
+VueNode|(item: SubMenuType)=>VueNode
+-
+
+
+
+key
+唯一标志
+string | number
+-
+
+
+
+label
+菜单项标题
+VueNode
+-
+
+
+
+popupClassName
+子菜单样式，mode="inline" 时无效
+string
+-
+
+
+
+popupOffset
+子菜单偏移量，mode="inline" 时无效
+[number, number]
+-
+
+
+
+onTitleClick
+点击子菜单标题
+function({ key, domEvent })
+-
+
+
+
+theme
+设置子菜单的主题，默认从 Menu 上继承
+light | dark
+-
+
+
+
+
+MenuItemGroupType 
+          #
+        
+定义类型为 group 时，会作为分组处理:
+const groupItem = {
+  type: 'group', // Must have
+  label: 'My Group',
+  children: [],
+};
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+children
+分组的菜单项
+MenuItemType[]
+-
+
+
+
+label
+分组标题
+VueNode
+-
+
+
+
+
+MenuDividerType 
+          #
+        
+菜单项分割线，只用在弹出菜单内，需要定义类型为 divider：
+const dividerItem = {
+  type: 'divider', // Must have
+};
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+dashed
+是否虚线
+boolean
+false
+
+
+
+
+Menu.SubMenu 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+expandIcon
+自定义 Menu 展开收起图标
+slot
+箭头图标
+
+
+
+icon
+菜单图标
+slot
+
+2.8.0
+
+
+key
+唯一标志, 必填
+string | number
+
+
+
+
+popupClassName
+子菜单样式
+string
+
+1.5.0
+
+
+popupOffset
+子菜单偏移量，mode="inline" 时无效
+[number, number]
+-
+
+
+
+title
+子菜单项值
+string|slot
+
+
+
+
+
+Menu.SubMenu 的子元素必须是 MenuItem 或者 SubMenu.
+SubMenu 必须传递 key，如不传递，该 SubMenu 下子元素将提前渲染，而且部分场景无法进行有效高亮。
+SubMenu 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+titleClick
+点击子菜单标题
+({ key, domEvent })
+
+
+
+Menu.ItemGroup 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+title
+分组标题
+string|slot
+
+
+
+
+Menu.ItemGroup 的子元素必须是 MenuItem.
+Menu.Divider 
+          #
+        
+菜单项分割线，只用在弹出菜单内。
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+dashed
+是否虚线
+boolean
+false
+3.0
+
+
+
+FAQ 
+          #
+        
+为何 Menu 的子元素会渲染两次？ 
+          #
+        
+Menu 通过二次渲染收集嵌套结构信息以支持 HOC 的结构。合并成一个推导结构会使得逻辑变得十分复杂，欢迎 PR 以协助改进该设计。
+
+      最后更新 : 2024/06/21提及全局提示Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    Option 1Option 2Option 3

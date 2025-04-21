@@ -1,0 +1,329 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本评论 嵌套评论 配合 List 组件 回复框 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Comment 评论对网站内容的反馈、评价和讨论。
+何时使用 
+          #
+        
+评论组件可用于对事物的讨论，例如页面、博客文章、问题等等。
+代码演示Han Solo几秒前 We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently. 00Reply to基本评论一个基本的评论组件，带有作者、头像、时间和操作。TS<template>
+  <a-comment>
+    <template #actions>
+      <span key="comment-basic-like">
+        <a-tooltip title="Like">
+          <template v-if="action === 'liked'">
+            <LikeFilled @click="like" />
+          </template>
+          <template v-else>
+            <LikeOutlined @click="like" />
+          </template>
+        </a-tooltip>
+        <span style="padding-left: 8px; cursor: auto">
+          {{ likes }}
+        </span>
+      </span>
+      <span key="comment-basic-dislike">
+        <a-tooltip title="Dislike">
+          <template v-if="action === 'disliked'">
+            <DislikeFilled @click="dislike" />
+          </template>
+          <template v-else>
+            <DislikeOutlined @click="dislike" />
+          </template>
+        </a-tooltip>
+        <span style="padding-left: 8px; cursor: auto">
+          {{ dislikes }}
+        </span>
+      </span>
+      <span key="comment-basic-reply-to">Reply to</span>
+    </template>
+    <template #author><a>Han Solo</a></template>
+    <template #avatar>
+      <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+    </template>
+    <template #content>
+      <p>
+        We supply a series of design principles, practical patterns and high quality design
+        resources (Sketch and Axure), to help people create their product prototypes beautifully and
+        efficiently.
+      </p>
+    </template>
+    <template #datetime>
+      <a-tooltip :title="dayjs().format('YYYY-MM-DD HH:mm:ss')">
+        <span>{{ dayjs().fromNow() }}</span>
+      </a-tooltip>
+    </template>
+  </a-comment>
+</template>
+<script lang="ts" setup>
+import dayjs from 'dayjs';
+import { LikeFilled, LikeOutlined, DislikeFilled, DislikeOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
+const likes = ref<number>(0);
+const dislikes = ref<number>(0);
+const action = ref<string>();
+
+const like = () => {
+  likes.value = 1;
+  dislikes.value = 0;
+  action.value = 'liked';
+};
+
+const dislike = () => {
+  likes.value = 0;
+  dislikes.value = 1;
+  action.value = 'disliked';
+};
+</script>
+Han Solo We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure). Reply toHan Solo We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure). Reply toHan Solo We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure). Reply toHan Solo We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure). Reply to嵌套评论评论可以嵌套。TS<template>
+  <a-comment>
+    <template #actions>
+      <span key="comment-nested-reply-to">Reply to</span>
+    </template>
+    <template #author>
+      <a>Han Solo</a>
+    </template>
+    <template #avatar>
+      <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+    </template>
+    <template #content>
+      <p>
+        We supply a series of design principles, practical patterns and high quality design
+        resources (Sketch and Axure).
+      </p>
+    </template>
+    <a-comment>
+      <template #actions>
+        <span>Reply to</span>
+      </template>
+      <template #author>
+        <a>Han Solo</a>
+      </template>
+      <template #avatar>
+        <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+      </template>
+      <template #content>
+        <p>
+          We supply a series of design principles, practical patterns and high quality design
+          resources (Sketch and Axure).
+        </p>
+      </template>
+      <a-comment>
+        <template #actions>
+          <span>Reply to</span>
+        </template>
+        <template #author>
+          <a>Han Solo</a>
+        </template>
+        <template #avatar>
+          <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+        </template>
+        <template #content>
+          <p>
+            We supply a series of design principles, practical patterns and high quality design
+            resources (Sketch and Axure).
+          </p>
+        </template>
+      </a-comment>
+      <a-comment>
+        <template #actions>
+          <span>Reply to</span>
+        </template>
+        <template #author>
+          <a>Han Solo</a>
+        </template>
+        <template #avatar>
+          <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+        </template>
+        <template #content>
+          <p>
+            We supply a series of design principles, practical patterns and high quality design
+            resources (Sketch and Axure).
+          </p>
+        </template>
+      </a-comment>
+    </a-comment>
+  </a-comment>
+</template>
+2 repliesHan Solo1 天前We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.Reply toHan Solo2 天前We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.Reply to配合 List 组件配合 List 组件展现评论列表。TS<template>
+  <a-list
+    class="comment-list"
+    :header="`${data.length} replies`"
+    item-layout="horizontal"
+    :data-source="data"
+  >
+    <template #renderItem="{ item }">
+      <a-list-item>
+        <a-comment :author="item.author" :avatar="item.avatar">
+          <template #actions>
+            <span v-for="(action, index) in item.actions" :key="index">{{ action }}</span>
+          </template>
+          <template #content>
+            <p>
+              {{ item.content }}
+            </p>
+          </template>
+          <template #datetime>
+            <a-tooltip :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
+              <span>{{ item.datetime.fromNow() }}</span>
+            </a-tooltip>
+          </template>
+        </a-comment>
+      </a-list-item>
+    </template>
+  </a-list>
+</template>
+<script lang="ts" setup>
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
+const data = [
+  {
+    actions: ['Reply to'],
+    author: 'Han Solo',
+    avatar: 'https://joeschmoe.io/api/v1/random',
+    content:
+      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+    datetime: dayjs().subtract(1, 'days'),
+  },
+  {
+    actions: ['Reply to'],
+    author: 'Han Solo',
+    avatar: 'https://joeschmoe.io/api/v1/random',
+    content:
+      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+    datetime: dayjs().subtract(2, 'days'),
+  },
+];
+</script>
+Add Comment回复框评论编辑器组件提供了相同样式的封装以支持自定义评论编辑器。TS<template>
+  <a-list
+    v-if="comments.length"
+    :data-source="comments"
+    :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
+    item-layout="horizontal"
+  >
+    <template #renderItem="{ item }">
+      <a-list-item>
+        <a-comment
+          :author="item.author"
+          :avatar="item.avatar"
+          :content="item.content"
+          :datetime="item.datetime"
+        />
+      </a-list-item>
+    </template>
+  </a-list>
+  <a-comment>
+    <template #avatar>
+      <a-avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+    </template>
+    <template #content>
+      <a-form-item>
+        <a-textarea v-model:value="value" :rows="4" />
+      </a-form-item>
+      <a-form-item>
+        <a-button html-type="submit" :loading="submitting" type="primary" @click="handleSubmit">
+          Add Comment
+        </a-button>
+      </a-form-item>
+    </template>
+  </a-comment>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
+type Comment = Record<string, string>;
+
+const comments = ref<Comment[]>([]);
+const submitting = ref<boolean>(false);
+const value = ref<string>('');
+const handleSubmit = () => {
+  if (!value.value) {
+    return;
+  }
+
+  submitting.value = true;
+
+  setTimeout(() => {
+    submitting.value = false;
+    comments.value = [
+      {
+        author: 'Han Solo',
+        avatar: 'https://joeschmoe.io/api/v1/random',
+        content: value.value,
+        datetime: dayjs().fromNow(),
+      },
+      ...comments.value,
+    ];
+    value.value = '';
+  }, 1000);
+};
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+Property
+Description
+Type
+Default
+
+
+
+
+actions
+在评论内容下面呈现的操作项列表
+Array|slot
+-
+
+
+author
+要显示为注释作者的元素
+string|slot
+-
+
+
+avatar
+要显示为评论头像的元素 - 通常是 antd Avatar 或者 src
+string|slot
+-
+
+
+content
+评论的主要内容
+string|slot
+-
+
+
+datetime
+展示时间描述
+string|slot
+-
+
+
+
+
+      最后更新 : 2023/07/14折叠面板全局化配置Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

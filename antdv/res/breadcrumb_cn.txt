@@ -1,0 +1,347 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 其它路由 分隔符 带下拉菜单的面包屑 分隔符 带有图标的 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Breadcrumb 面包屑显示当前页面在系统层级结构中的位置，并能向上返回。
+何时使用 
+          #
+        
+
+当系统拥有超过两级以上的层级结构时；
+当需要告知用户『你在哪里』时；
+当需要向上导航的功能时。
+
+代码演示Home/Application Center/Application List/An Application/基本最简单的用法。TS<template>
+  <a-breadcrumb>
+    <a-breadcrumb-item>Home</a-breadcrumb-item>
+    <a-breadcrumb-item><a href="">Application Center</a></a-breadcrumb-item>
+    <a-breadcrumb-item><a href="">Application List</a></a-breadcrumb-item>
+    <a-breadcrumb-item>An Application</a-breadcrumb-item>
+  </a-breadcrumb>
+</template>
+home/first/second/ /components/breadcrumb-cn其它路由和 vue-router 进行结合使用。TS<template>
+  <div>
+    <a-breadcrumb :routes="routes">
+      <template #itemRender="{ route, paths }">
+        <span v-if="routes.indexOf(route) === routes.length - 1">
+          {{ route.breadcrumbName }}
+        </span>
+        <router-link v-else :to="`${basePath}/${paths.join('/')}`">
+          {{ route.breadcrumbName }}
+        </router-link>
+      </template>
+    </a-breadcrumb>
+    <br />
+    {{ $route.path }}
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+interface Route {
+  path: string;
+  breadcrumbName: string;
+  children?: Array<{
+    path: string;
+    breadcrumbName: string;
+  }>;
+}
+const basePath = '/components/breadcrumb';
+const routes = ref<Route[]>([
+  {
+    path: 'index',
+    breadcrumbName: 'home',
+  },
+  {
+    path: 'first',
+    breadcrumbName: 'first',
+    children: [
+      {
+        path: '/general',
+        breadcrumbName: 'General',
+      },
+      {
+        path: '/layout',
+        breadcrumbName: 'Layout',
+      },
+      {
+        path: '/navigation',
+        breadcrumbName: 'Navigation',
+      },
+    ],
+  },
+  {
+    path: 'second',
+    breadcrumbName: 'second',
+  },
+]);
+</script>
+Location:Application Center/Application List/An Application分隔符使用 Breadcrumb.Separator 可以自定义分隔符。TS<template>
+  <a-breadcrumb separator="">
+    <a-breadcrumb-item>Location</a-breadcrumb-item>
+    <a-breadcrumb-separator>:</a-breadcrumb-separator>
+    <a-breadcrumb-item href="">Application Center</a-breadcrumb-item>
+    <a-breadcrumb-separator />
+    <a-breadcrumb-item href="">Application List</a-breadcrumb-item>
+    <a-breadcrumb-separator />
+    <a-breadcrumb-item>An Application</a-breadcrumb-item>
+  </a-breadcrumb>
+</template>
+Ant Design Vue/Component/General/Button/带下拉菜单的面包屑面包屑支持下拉菜单。TS<template>
+  <a-breadcrumb>
+    <a-breadcrumb-item>Ant Design Vue</a-breadcrumb-item>
+    <a-breadcrumb-item><a href="">Component</a></a-breadcrumb-item>
+    <a-breadcrumb-item>
+      <a href="">General</a>
+      <template #overlay>
+        <a-menu>
+          <a-menu-item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">General</a>
+          </a-menu-item>
+          <a-menu-item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">Layout</a>
+          </a-menu-item>
+          <a-menu-item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">Navigation</a>
+          </a-menu-item>
+        </a-menu>
+      </template>
+    </a-breadcrumb-item>
+    <a-breadcrumb-item>Button</a-breadcrumb-item>
+  </a-breadcrumb>
+</template>
+Home>Application Center>Application List>An Application>Home>Application Center>Application List>An Application>分隔符用separator=">"可以自定义分隔符，或者使用slot="separator"自定义更复杂的分隔符TS<template>
+  <a-breadcrumb separator=">">
+    <a-breadcrumb-item>Home</a-breadcrumb-item>
+    <a-breadcrumb-item href="">Application Center</a-breadcrumb-item>
+    <a-breadcrumb-item href="">Application List</a-breadcrumb-item>
+    <a-breadcrumb-item>An Application</a-breadcrumb-item>
+  </a-breadcrumb>
+  <a-breadcrumb>
+    <template #separator><span style="color: red">></span></template>
+    <a-breadcrumb-item>Home</a-breadcrumb-item>
+    <a-breadcrumb-item href="">Application Center</a-breadcrumb-item>
+    <a-breadcrumb-item href="">Application List</a-breadcrumb-item>
+    <a-breadcrumb-item>An Application</a-breadcrumb-item>
+  </a-breadcrumb>
+</template>
+/Application List/Application/带有图标的图标放在文字前面。TS<template>
+  <a-breadcrumb>
+    <a-breadcrumb-item href="">
+      <home-outlined />
+    </a-breadcrumb-item>
+    <a-breadcrumb-item href="">
+      <user-outlined />
+      <span>Application List</span>
+    </a-breadcrumb-item>
+    <a-breadcrumb-item>Application</a-breadcrumb-item>
+  </a-breadcrumb>
+</template>
+<script lang="ts" setup>
+import { HomeOutlined, UserOutlined } from '@ant-design/icons-vue';
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+可选值
+默认值
+
+
+
+
+itemRender
+自定义链接函数，和 vue-router 配置使用， 也可使用 #itemRender="props"
+({route, params, routes, paths}) => vNode
+
+-
+
+
+params
+路由的参数
+object
+
+-
+
+
+routes
+router 的路由栈信息
+routes[]
+
+-
+
+
+separator
+分隔符自定义
+string|slot
+
+'/'
+
+
+
+Breadcrumb.Item 
+          #
+        
+
+
+
+参数
+参数
+类型
+默认值
+版本
+
+
+
+
+href
+链接的目的地
+string
+-
+1.5.0
+
+
+overlay
+下拉菜单的内容
+Menu | () => Menu
+-
+1.5.0
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+
+click
+单击事件
+(e:MouseEvent)=>void
+-
+1.5.0
+
+
+
+Breadcrumb.Separator 1.5.0 
+          #
+        
+
+
+
+参数
+类型
+默认值
+版本
+
+
+
+
+-
+-
+-
+-
+
+
+
+
+注意：在使用 Breadcrumb.Separator 时，其父组件的分隔符必须设置为 separator=""，否则会出现父组件默认的分隔符。
+
+routes 
+          #
+        
+interface Route {
+  path: string;
+  breadcrumbName: string;
+  children?: Array<{
+    path: string;
+    breadcrumbName: string;
+  }>;
+}
+
+和 browserHistory 配合 
+          #
+        
+和 vue-router 一起使用时，默认生成的 url 路径是带有 # 的，如果和 browserHistory 一起使用的话，你可以使用 itemRender 属性定义面包屑链接。
+<template>
+  <a-breadcrumb :routes="routes">
+    <template #itemRender="{ route, params, routes, paths }">
+      <span v-if="routes.indexOf(route) === routes.length - 1">{{route.breadcrumbName}}</span>
+      <router-link v-else :to="paths.join('/')">{{route.breadcrumbName}}</router-link>
+    </template>
+  </a-breadcrumb>
+</template>
+<script lang="ts">
+  import { defineComponent, ref } from 'vue';
+  interface Route {
+    path: string;
+    breadcrumbName: string;
+    children?: Array<{
+      path: string;
+      breadcrumbName: string;
+    }>;
+  }
+  export default defineComponent({
+    setup() {
+      const routes = ref<Route[]>([
+        {
+          path: 'index',
+          breadcrumbName: 'home',
+        },
+        {
+          path: 'first',
+          breadcrumbName: 'first',
+          children: [
+            {
+              path: '/general',
+              breadcrumbName: 'General',
+            },
+            {
+              path: '/layout',
+              breadcrumbName: 'Layout',
+            },
+            {
+              path: '/navigation',
+              breadcrumbName: 'Navigation',
+            },
+          ],
+        },
+        {
+          path: 'second',
+          breadcrumbName: 'second',
+        },
+      ]);
+      return {
+        routes,
+      };
+    },
+  });
+</script>
+
+
+      最后更新 : 2023/08/30头像按钮Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

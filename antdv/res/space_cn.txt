@@ -1,0 +1,610 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 自定义尺寸 间距大小 垂直间距 对齐 自动换行 分隔符 紧凑布局组合 Button 紧凑布局 垂直方向紧凑布局 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Space 间距设置组件之间的间距。
+何时使用 
+          #
+        
+避免组件紧贴在一起，拉开统一的空间。
+
+适合行内元素的水平间距。
+可以设置各种水平对齐方式。
+需要表单组件之间紧凑连接且合并边框时，使用 Space.Compact（自 ant-design-vue@4.0.0 版本开始提供该组件）。
+
+代码演示 Space ButtonClick to UploadConfirm基本用法相邻组件水平间距。TS<template>
+  <a-space>
+    Space
+    <a-button type="primary">Button</a-button>
+    <a-upload>
+      <a-button>
+        <UploadOutlined />
+        Click to Upload
+      </a-button>
+    </a-upload>
+    <a-popconfirm title="Are you sure delete this task?" ok-text="Yes" cancel-text="No">
+      <a-button>Confirm</a-button>
+    </a-popconfirm>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { UploadOutlined } from '@ant-design/icons-vue';
+</script>
+PrimaryDefaultDashedLink自定义尺寸自定义间距大小。TS<template>
+  <div>
+    <a-slider v-model:value="size" />
+    <br />
+    <br />
+    <a-space :size="size">
+      <a-button type="primary">Primary</a-button>
+      <a-button>Default</a-button>
+      <a-button type="dashed">Dashed</a-button>
+      <a-button type="link">Link</a-button>
+    </a-space>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const size = ref(8);
+</script>
+SmallMiddleLargePrimaryDefaultDashedLink间距大小间距预设大、中、小三种大小。
+通过设置 size 为 large middle 分别把间距设为大、中间距。若不设置 size，则间距为小。TS<template>
+  <div>
+    <a-radio-group v-model:value="size">
+      <a-radio value="small">Small</a-radio>
+      <a-radio value="middle">Middle</a-radio>
+      <a-radio value="large">Large</a-radio>
+    </a-radio-group>
+    <br />
+    <br />
+    <a-space :size="size">
+      <a-button type="primary">Primary</a-button>
+      <a-button>Default</a-button>
+      <a-button type="dashed">Dashed</a-button>
+      <a-button type="link">Link</a-button>
+    </a-space>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const size = ref('small' as const);
+</script>
+CardCard contentCard contentCardCard contentCard content垂直间距相邻组件垂直间距。
+可以设置 width: 100% 独占一行。TS<template>
+  <a-space direction="vertical">
+    <a-card title="Card" style="width: 300px">
+      <p>Card content</p>
+      <p>Card content</p>
+    </a-card>
+    <a-card title="Card" style="width: 300px">
+      <p>Card content</p>
+      <p>Card content</p>
+    </a-card>
+  </a-space>
+</template>
+ center PrimaryBlock start PrimaryBlock end PrimaryBlock baseline PrimaryBlock对齐设置对齐模式。TS<template>
+  <div class="space-align-container">
+    <div class="space-align-block">
+      <a-space align="center">
+        center
+        <a-button type="primary">Primary</a-button>
+        <span class="mock-block">Block</span>
+      </a-space>
+    </div>
+    <div class="space-align-block">
+      <a-space align="start">
+        start
+        <a-button type="primary">Primary</a-button>
+        <span class="mock-block">Block</span>
+      </a-space>
+    </div>
+    <div class="space-align-block">
+      <a-space align="end">
+        end
+        <a-button type="primary">Primary</a-button>
+        <span class="mock-block">Block</span>
+      </a-space>
+    </div>
+    <div class="space-align-block">
+      <a-space align="baseline">
+        baseline
+        <a-button type="primary">Primary</a-button>
+        <span class="mock-block">Block</span>
+      </a-space>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.space-align-container {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.space-align-block {
+  margin: 8px 4px;
+  border: 1px solid #40a9ff;
+  padding: 4px;
+  flex: none;
+}
+.space-align-block .mock-block {
+  display: inline-block;
+  padding: 32px 8px 16px;
+  background: rgba(150, 150, 150, 0.2);
+}
+</style>
+ButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButtonButton自动换行自动换行。TS<template>
+  <a-space :size="[8, 16]" wrap>
+    <template v-for="_i in 20" :key="_i">
+      <a-button>Button</a-button>
+    </template>
+  </a-space>
+</template>
+LinkLinkLink分隔符相邻组件分隔符。TS<template>
+  <a-space>
+    <template #split>
+      <a-divider type="vertical" />
+    </template>
+    <a-typography-link>Link</a-typography-link>
+    <a-typography-link>Link</a-typography-link>
+    <a-typography-link>Link</a-typography-link>
+  </a-space>
+</template>
+SubmitSubmitZhejiangZhejianggggg Option1查 询Option1-1Option2-2BetweenSign UpEmailSelect Addressmy leafSubmit紧凑布局组合使用 Space.Compact 让表单组件之间紧凑连接且合并边框。TS<template>
+  <a-space direction="vertical" size="middle" class="site-space-compact-wrapper">
+    <a-space-compact block>
+      <a-input :style="{ width: '20%' }" default-value="0571" />
+      <a-input :style="{ width: '30%' }" default-value="26888888" />
+    </a-space-compact>
+    <a-space-compact block size="small">
+      <a-input :style="{ width: 'calc(100% - 200px)' }" default-value="https://ant.design" />
+      <a-button type="primary">Submit</a-button>
+    </a-space-compact>
+    <a-space-compact block>
+      <a-input :style="{ width: 'calc(100% - 200px)' }" default-value="https://ant.design" />
+      <a-button type="primary">Submit</a-button>
+    </a-space-compact>
+    <a-space-compact block>
+      <a-input
+        :style="{ width: 'calc(100% - 200px)' }"
+        default-value="git@github.com:ant-design/ant-design.git"
+      />
+      <a-tooltip title="copy git url">
+        <a-button>
+          <CopyOutlined />
+        </a-button>
+      </a-tooltip>
+    </a-space-compact>
+    <a-space-compact block>
+      <a-select default-value="Zhejiang" allow-clear>
+        <a-select-option value="Zhejiang">Zhejiang</a-select-option>
+        <a-select-option value="Jiangsu">Jiangsu</a-select-option>
+      </a-select>
+      <a-input :style="{ width: '50%' }" default-value="Xihu District, Hangzhou" />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-select allow-clear mode="multiple" default-value="Zhejianggggg" :style="{ width: '50%' }">
+        <a-select-option value="Zhejianggggg">Zhejianggggg</a-select-option>
+        <a-select-option value="Jiangsu">Jiangsu</a-select-option>
+      </a-select>
+      <a-input :style="{ width: '50%' }" default-value="Xihu District, Hangzhou" />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-input-search :style="{ width: '30%' }" default-value="0571" />
+      <a-input-search allow-clear :style="{ width: '50%' }" default-value="26888888" />
+      <a-input-search :style="{ width: '20%' }" default-value="+1" />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-select default-value="Option1">
+        <a-select-option value="Option1">Option1</a-select-option>
+        <a-select-option value="Option2">Option2</a-select-option>
+      </a-select>
+      <a-input :style="{ width: '50%' }" default-value="input content" />
+      <a-input-number :default-value="12" />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-input :style="{ width: '50%' }" default-value="input content" />
+      <a-date-picker :style="{ width: '50%' }" />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-range-picker :style="{ width: '70%' }" />
+      <a-input :style="{ width: '30%' }" default-value="input content" />
+      <a-button type="primary">查询</a-button>
+    </a-space-compact>
+    <a-space-compact block>
+      <a-input :style="{ width: '30%' }" default-value="input content" />
+      <a-range-picker :style="{ width: '70%' }" />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-select default-value="Option1-1">
+        <a-select-option value="Option1-1">Option1-1</a-select-option>
+        <a-select-option value="Option1-2">Option1-2</a-select-option>
+      </a-select>
+      <a-select default-value="Option2-2">
+        <a-select-option value="Option2-1">Option2-1</a-select-option>
+        <a-select-option value="Option2-2">Option2-2</a-select-option>
+      </a-select>
+    </a-space-compact>
+    <a-space-compact block>
+      <a-select default-value="1">
+        <a-select-option value="1">Between</a-select-option>
+        <a-select-option value="2">Except</a-select-option>
+      </a-select>
+      <a-input :style="{ width: 100, textAlig: 'center' }" placeholder="Minimum" />
+      <a-input
+        class="site-input-split"
+        :style="{
+          width: 30,
+          borderLef: 0,
+          borderRight: 0,
+          pointerEvents: 'none',
+        }"
+        placeholder="~"
+        disabled
+      />
+      <a-input
+        class="site-input-right"
+        :style="{
+          width: 100,
+          textAlig: 'center',
+        }"
+        placeholder="Maximum"
+      />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-select default-value="Sign Up" :style="{ width: '30%' }">
+        <a-select-option value="Sign Up">Sign Up</a-select-option>
+        <a-select-option value="Sign In">Sign In</a-select-option>
+      </a-select>
+      <a-auto-complete
+        :style="{ width: '70%' }"
+        placeholder="Email"
+        :options="[{ value: 'text 1' }, { value: 'text 2' }]"
+      />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-time-picker :style="{ width: '70%' }" />
+      <a-cascader
+        :style="{ width: '70%' }"
+        :options="[
+          {
+            value: 'zhejiang',
+            label: 'Zhejiang',
+            children: [
+              {
+                value: 'hangzhou',
+                label: 'Hangzhou',
+                children: [
+                  {
+                    value: 'xihu',
+                    label: 'West Lake',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            value: 'jiangsu',
+            label: 'Jiangsu',
+            children: [
+              {
+                value: 'nanjing',
+                label: 'Nanjing',
+                children: [
+                  {
+                    value: 'zhonghuamen',
+                    label: 'Zhong Hua Men',
+                  },
+                ],
+              },
+            ],
+          },
+        ]"
+        placeholder="Select Address"
+      />
+    </a-space-compact>
+    <a-space-compact block>
+      <a-time-range-picker />
+      <a-tree-select
+        show-search
+        :style="{ width: '60%' }"
+        value="leaf1"
+        :dropdown-style="{ maxHeight: 400, overflow: 'auto' }"
+        placeholder="Please select"
+        allow-clear
+        tree-default-expand-all
+        :tree-data="treeData"
+      ></a-tree-select>
+      <a-button type="primary">Submit</a-button>
+    </a-space-compact>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { CopyOutlined } from '@ant-design/icons-vue';
+import { TreeSelectProps } from 'ant-design-vue';
+
+const treeData = ref<TreeSelectProps['treeData']>([
+  {
+    title: 'parent 1',
+    value: 'parent 1',
+    children: [
+      {
+        title: 'parent 1-0',
+        value: 'parent 1-0',
+        children: [
+          {
+            title: 'my leaf',
+            value: 'leaf1',
+          },
+          {
+            title: 'your leaf',
+            value: 'leaf2',
+          },
+        ],
+      },
+      {
+        title: 'parent 1-1',
+        value: 'parent 1-1',
+      },
+    ],
+  },
+]);
+</script>
+Button 1Button 2Button 3Button 4Button 1Button 2Button 3Button 4Button 紧凑布局Button 组件紧凑排列的示例。TS<template>
+  <div>
+    <a-space-compact block>
+      <a-tooltip title="Like">
+        <a-button>
+          <LikeOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-tooltip title="Comment">
+        <a-button>
+          <CommentOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-tooltip title="Star">
+        <a-button>
+          <StarOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-tooltip title="Heart">
+        <a-button>
+          <HeartOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-tooltip title="Share">
+        <a-button>
+          <ShareAltOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-tooltip title="Download">
+        <a-button>
+          <DownloadOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-dropdown placement="bottomRight" :trigger="['click']">
+        <a-button>
+          <EllipsisOutlined />
+        </a-button>
+
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a href="javascript:;">1st menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">2nd menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">3rd menu item</a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </a-space-compact>
+    <br />
+    <a-space-compact block>
+      <a-button type="primary">Button 1</a-button>
+      <a-button type="primary">Button 2</a-button>
+      <a-button type="primary">Button 3</a-button>
+      <a-button type="primary">Button 4</a-button>
+      <a-tooltip title="Tooltip">
+        <a-button type="primary" disabled>
+          <DownloadOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-tooltip title="Tooltip">
+        <a-button type="primary" disabled>
+          <DownloadOutlined />
+        </a-button>
+      </a-tooltip>
+    </a-space-compact>
+    <br />
+    <a-space-compact block>
+      <a-button>Button 1</a-button>
+      <a-button>Button 2</a-button>
+      <a-button>Button 3</a-button>
+      <a-tooltip title="Tooltip">
+        <a-button disabled>
+          <DownloadOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-tooltip title="Tooltip">
+        <a-button>
+          <DownloadOutlined />
+        </a-button>
+      </a-tooltip>
+      <a-button type="primary">Button 4</a-button>
+      <a-dropdown placement="bottomRight" :trigger="['click']">
+        <a-button type="primary">
+          <EllipsisOutlined />
+        </a-button>
+
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a href="javascript:;">1st menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">2nd menu item</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">3rd menu item</a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </a-space-compact>
+  </div>
+</template>
+<script lang="ts" setup>
+import {
+  DownloadOutlined,
+  EllipsisOutlined,
+  HeartOutlined,
+  LikeOutlined,
+  CommentOutlined,
+  StarOutlined,
+  ShareAltOutlined,
+} from '@ant-design/icons-vue';
+</script>
+Button 1Button 2Button 3Button 1Button 2Button 3Button 1Button 2Button 3垂直方向紧凑布局垂直方向的紧凑布局，目前仅支持 Button 组合。TS<template>
+  <a-space>
+    <a-space-compact direction="vertical">
+      <a-button>Button 1</a-button>
+      <a-button>Button 2</a-button>
+      <a-button>Button 3</a-button>
+    </a-space-compact>
+    <a-space-compact direction="vertical">
+      <a-button type="dashed">Button 1</a-button>
+      <a-button type="dashed">Button 2</a-button>
+      <a-button type="dashed">Button 3</a-button>
+    </a-space-compact>
+    <a-space-compact direction="vertical">
+      <a-button type="primary">Button 1</a-button>
+      <a-button type="primary">Button 2</a-button>
+      <a-button type="primary">Button 3</a-button>
+    </a-space-compact>
+  </a-space>
+</template>
+
+      API#
+      
+          #
+        
+Space 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+align
+对齐方式
+start | end |center |baseline
+-
+1.6.5
+
+
+direction
+间距方向
+vertical | horizontal
+horizontal
+1.6.5
+
+
+size
+间距大小
+small | middle | large | number
+small
+1.6.5
+
+
+split
+设置拆分
+VueNode | v-slot
+-
+2.2.0
+
+
+wrap
+是否自动换行，仅在 horizontal 时有效
+boolean
+false
+2.2.0
+
+
+
+Space.Compact 
+          #
+        
+
+自 ant-design-vue@4.0.0 版本开始提供该组件。
+
+需要表单组件之间紧凑连接且合并边框时，使用 Space.Compact。支持的组件有：
+
+Button
+AutoComplete
+Cascader
+DatePicker
+Input/Input.Search
+Select
+TimePicker
+TreeSelect
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+block
+将宽度调整为父元素宽度的选项
+boolean
+false
+4.0.0
+
+
+direction
+指定排列方向
+vertical | horizontal
+horizontal
+4.0.0
+
+
+size
+子组件大小
+large | middle | small
+middle
+4.0.0
+
+
+
+
+      最后更新 : 2024/06/04滑动输入条加载中Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

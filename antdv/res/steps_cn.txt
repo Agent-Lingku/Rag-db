@@ -1,0 +1,810 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 迷你版 带图标的步骤条 步骤切换 竖直方向的步骤条 竖直方向的小型步骤条 步骤运行错误 点状步骤条 自定义点状步骤条 可点击 导航步骤 带有进度的步骤 标签放置位置 内联步骤条 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Steps 步骤条引导用户按照流程完成任务的导航条。
+何时使用 
+          #
+        
+当任务复杂或者存在先后关系时，将其分解成一系列步骤，从而简化任务。
+代码演示FinishedThis is a description.2In ProgressLeft 00:00:08This is a description.3WaitingThis is a description.基本用法简单的步骤条。TS<template>
+  <a-steps
+    :current="1"
+    :items="[
+      {
+        title: 'Finished',
+        description,
+      },
+      {
+        title: 'In Progress',
+        description,
+        subTitle: 'Left 00:00:08',
+      },
+      {
+        title: 'Waiting',
+        description,
+      },
+    ]"
+  ></a-steps>
+</template>
+<script lang="ts" setup>
+const description = 'This is a description.';
+</script>
+Finished2In Progress3Waiting迷你版迷你版的步骤条，通过设置 <Steps size="small"> 启用.TS<template>
+  <a-steps
+    :current="1"
+    size="small"
+    :items="[
+      {
+        title: 'Finished',
+      },
+      {
+        title: 'In Progress',
+      },
+      {
+        title: 'Waiting',
+      },
+    ]"
+  ></a-steps>
+</template>
+LoginVerificationPayDone带图标的步骤条通过设置 Steps.Step 的 icon 属性，可以启用自定义图标。TS<template>
+  <a-steps :items="items"></a-steps>
+</template>
+<script lang="ts" setup>
+import { h } from 'vue';
+import {
+  UserOutlined,
+  SolutionOutlined,
+  LoadingOutlined,
+  SmileOutlined,
+} from '@ant-design/icons-vue';
+import { StepProps } from 'ant-design-vue';
+const items = [
+  {
+    title: 'Login',
+    status: 'finish',
+    icon: h(UserOutlined),
+  },
+  {
+    title: 'Verification',
+    status: 'finish',
+    icon: h(SolutionOutlined),
+  },
+  {
+    title: 'Pay',
+    status: 'process',
+    icon: h(LoadingOutlined),
+  },
+  {
+    title: 'Done',
+    status: 'wait',
+    icon: h(SmileOutlined),
+  },
+] as StepProps[];
+</script>
+1First2Second3LastFirst-contentNext步骤切换通常配合内容及按钮使用，表示一个流程的处理进度。TS<template>
+  <div>
+    <a-steps :current="current" :items="items"></a-steps>
+    <div class="steps-content">
+      {{ steps[current].content }}
+    </div>
+    <div class="steps-action">
+      <a-button v-if="current < steps.length - 1" type="primary" @click="next">Next</a-button>
+      <a-button
+        v-if="current == steps.length - 1"
+        type="primary"
+        @click="message.success('Processing complete!')"
+      >
+        Done
+      </a-button>
+      <a-button v-if="current > 0" style="margin-left: 8px" @click="prev">Previous</a-button>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { message } from 'ant-design-vue';
+const current = ref<number>(0);
+const next = () => {
+  current.value++;
+};
+const prev = () => {
+  current.value--;
+};
+const steps = [
+  {
+    title: 'First',
+    content: 'First-content',
+  },
+  {
+    title: 'Second',
+    content: 'Second-content',
+  },
+  {
+    title: 'Last',
+    content: 'Last-content',
+  },
+];
+const items = steps.map(item => ({ key: item.title, title: item.title }));
+</script>
+<style scoped>
+.steps-content {
+  margin-top: 16px;
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  background-color: #fafafa;
+  min-height: 200px;
+  text-align: center;
+  padding-top: 80px;
+}
+
+.steps-action {
+  margin-top: 24px;
+}
+
+[data-theme='dark'] .steps-content {
+  background-color: #2f2f2f;
+  border: 1px dashed #404040;
+}
+</style>
+FinishedThis is a description.2In ProgressThis is a description.3WaitingThis is a description.竖直方向的步骤条简单的竖直方向的步骤条。TS<template>
+  <a-steps
+    direction="vertical"
+    :current="1"
+    :items="[
+      {
+        title: 'Finished',
+        description,
+      },
+      {
+        title: 'In Progress',
+        description,
+      },
+      {
+        title: 'Waiting',
+        description,
+      },
+    ]"
+  ></a-steps>
+</template>
+<script lang="ts" setup>
+const description = 'This is a description.';
+</script>
+FinishedThis is a description.2In ProgressThis is a description.3WaitingThis is a description.竖直方向的小型步骤条简单的竖直方向的小型步骤条。TS<template>
+  <a-steps
+    direction="vertical"
+    size="small"
+    :current="1"
+    :items="[
+      { title: 'Finished', description },
+      {
+        title: 'In Progress',
+        description,
+      },
+      {
+        title: 'Waiting',
+        description,
+      },
+    ]"
+  ></a-steps>
+</template>
+<script lang="ts" setup>
+const description = 'This is a description.';
+</script>
+FinishedThis is a description.In ProcessThis is a description.3WaitingThis is a description.步骤运行错误使用 Steps 的 status 属性来指定当前步骤的状态。TS<template>
+  <a-steps
+    v-model:current="current"
+    status="error"
+    :items="[
+      {
+        title: 'Finished',
+        description,
+      },
+      {
+        title: 'In Process',
+        description,
+      },
+      {
+        title: 'Waiting',
+        description,
+      },
+    ]"
+  ></a-steps>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref<number>(1);
+const description = 'This is a description.';
+</script>
+FinishedThis is a description.In ProgressThis is a description.WaitingThis is a description.FinishedThis is a description. This is a description.FinishedThis is a description. This is a description.In ProgressThis is a description. This is a description.WaitingThis is a description.WaitingThis is a description.点状步骤条包含步骤点的进度条。TS<template>
+  <div>
+    <a-steps
+      progress-dot
+      :current="1"
+      :items="[
+        {
+          title: 'Finished',
+          description: 'This is a description.',
+        },
+        {
+          title: 'In Progress',
+          description: 'This is a description.',
+        },
+        {
+          title: 'Waiting',
+          description: 'This is a description.',
+        },
+      ]"
+    ></a-steps>
+    <a-divider />
+    <a-steps
+      progress-dot
+      :current="1"
+      direction="vertical"
+      :items="[
+        {
+          title: 'Finished',
+          description: 'This is a description. This is a description.',
+        },
+        {
+          title: 'Finished',
+          description: 'This is a description. This is a description.',
+        },
+        {
+          title: 'In Progress',
+          description: 'This is a description. This is a description.',
+        },
+        {
+          title: 'Waiting',
+          description: 'This is a description.',
+        },
+        {
+          title: 'Waiting',
+          description: 'This is a description.',
+        },
+      ]"
+    ></a-steps>
+  </div>
+</template>
+FinishedYou can hover on the dot.In ProgressYou can hover on the dot.WaitingYou can hover on the dot.WaitingYou can hover on the dot.自定义点状步骤条为点状步骤条增加自定义展示。TS<template>
+  <div>
+    <a-steps
+      v-model:current="current"
+      :items="[
+        {
+          title: 'Finished',
+          description,
+        },
+        {
+          title: 'In Progress',
+          description,
+        },
+        {
+          title: 'Waiting',
+          description,
+        },
+        {
+          title: 'Waiting',
+          description,
+        },
+      ]"
+    >
+      <template #progressDot="{ index, status, prefixCls }">
+        <a-popover>
+          <template #content>
+            <span>step {{ index }} status: {{ status }}</span>
+          </template>
+          <span :class="`${prefixCls}-icon-dot`" />
+        </a-popover>
+      </template>
+    </a-steps>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref<number>(1);
+const description = 'You can hover on the dot.';
+</script>
+1Step 1This is a description.2Step 2This is a description.3Step 3This is a description.1Step 1This is a description.2Step 2This is a description.3Step 3This is a description.可点击设置 v-model 后，Steps 变为可点击状态。TS<template>
+  <div>
+    <a-steps
+      v-model:current="current"
+      :items="[
+        {
+          title: 'Step 1',
+          description,
+        },
+        {
+          title: 'Step 2',
+          description,
+        },
+        {
+          title: 'Step 3',
+          description,
+        },
+      ]"
+    ></a-steps>
+    <a-divider />
+    <a-steps
+      v-model:current="current"
+      direction="vertical"
+      :items="[
+        {
+          title: 'Step 1',
+          description,
+        },
+        {
+          title: 'Step 2',
+          description,
+        },
+        {
+          title: 'Step 3',
+          description,
+        },
+      ]"
+    ></a-steps>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref<number>(0);
+const description = 'This is a description.';
+</script>
+Step 100:00:05This is a description.2Step 200:01:02This is a description.3Step 3waiting for longlong timeThis is a description.Step 12Step 23Step 34Step 4finish 1finish 23current process4wait导航步骤导航类型的步骤条。TS<template>
+  <div>
+    <a-steps
+      v-model:current="current"
+      type="navigation"
+      size="small"
+      :style="stepStyle"
+      :items="[
+        {
+          title: 'Step 1',
+          subTitle: '00:00:05',
+          status: 'finish',
+          description: 'This is a description.',
+        },
+        {
+          title: 'Step 2',
+          subTitle: '00:01:02',
+          status: 'process',
+          description: 'This is a description.',
+        },
+        {
+          title: 'Step 3',
+          subTitle: 'waiting for longlong time',
+          status: 'wait',
+          description: 'This is a description.',
+        },
+      ]"
+    ></a-steps>
+    <a-steps
+      v-model:current="current"
+      type="navigation"
+      :style="stepStyle"
+      :items="[
+        {
+          status: 'finish',
+          title: 'Step 1',
+        },
+        {
+          status: 'process',
+          title: 'Step 2',
+        },
+        {
+          status: 'wait',
+          title: 'Step 3',
+        },
+        {
+          status: 'wait',
+          title: 'Step 4',
+        },
+      ]"
+    ></a-steps>
+    <a-steps
+      v-model:current="current"
+      type="navigation"
+      size="small"
+      :style="stepStyle"
+      :items="[
+        {
+          status: 'finish',
+          title: 'finish 1',
+        },
+        {
+          status: 'finish',
+          title: 'finish 2',
+        },
+        {
+          status: 'process',
+          title: 'current process',
+        },
+        {
+          status: 'wait',
+          title: 'wait',
+          disabled: true,
+        },
+      ]"
+    ></a-steps>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref<number>(0);
+
+const stepStyle = {
+  marginBottom: '60px',
+  boxShadow: '0px -1px 0 0 #e8e8e8 inset',
+};
+</script>
+FinishedThis is a description.2In ProgressLeft 00:00:08This is a description.3WaitingThis is a description.FinishedThis is a description.2In ProgressLeft 00:00:08This is a description.3WaitingThis is a description.带有进度的步骤带有进度的步骤。TS<template>
+  <a-steps
+    v-model:current="current"
+    :percent="60"
+    :items="[
+      {
+        title: 'Finished',
+        description,
+      },
+      {
+        title: 'In Progress',
+        subTitle: 'Left 00:00:08',
+        description,
+      },
+      {
+        title: 'Waiting',
+        description,
+      },
+    ]"
+  ></a-steps>
+  <a-steps
+    v-model:current="current"
+    :percent="60"
+    size="small"
+    :items="[
+      {
+        title: 'Finished',
+        description,
+      },
+      {
+        title: 'In Progress',
+        subTitle: 'Left 00:00:08',
+        description,
+      },
+      {
+        title: 'Waiting',
+        description,
+      },
+    ]"
+  ></a-steps>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref<number>(1);
+const description = 'This is a description.';
+</script>
+FinishedThis is a description.2In ProgressThis is a description.3WaitingThis is a description.FinishedThis is a description.2In ProgressThis is a description.3WaitingThis is a description.FinishedThis is a description.2In ProgressThis is a description.3WaitingThis is a description.标签放置位置修改标签放置位置为 vertical。TS<template>
+  <div>
+    <a-steps :current="1" label-placement="vertical" :items="items" />
+    <br />
+    <a-steps :current="1" :percent="60" label-placement="vertical" :items="items" />
+    <br />
+    <a-steps :current="1" size="small" label-placement="vertical" :items="items" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const items = ref([
+  {
+    title: 'Finished',
+    description: 'This is a description.',
+  },
+  {
+    title: 'In Progress',
+    description: 'This is a description.',
+  },
+  {
+    title: 'Waiting',
+    description: 'This is a description.',
+  },
+]);
+</script>
+Ant Design Title 1Ant Design, a design language for background applications, is refined by Ant UED TeamStep 1This is a Step 1.Step 2This is a Step 2.Step 3This is a Step 3.Ant Design Title 2Ant Design, a design language for background applications, is refined by Ant UED TeamStep 1This is a Step 1.Step 2This is a Step 2.Step 3This is a Step 3.Ant Design Title 3Ant Design, a design language for background applications, is refined by Ant UED TeamStep 1This is a Step 1.Step 2This is a Step 2.Step 3This is a Step 3.Ant Design Title 4Ant Design, a design language for background applications, is refined by Ant UED TeamStep 1This is a Step 1.Step 2This is a Step 2.Step 3This is a Step 3.内联步骤条内联类型的步骤条，适用于列表内容场景中展示对象所在流程、当前状态的情况。TS<template>
+  <a-list :data-source="data">
+    <template #renderItem="{ item }">
+      <a-list-item>
+        <a-list-item-meta
+          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+        >
+          <template #title>
+            <a href="https://www.antdv.com/">{{ item.title }}</a>
+          </template>
+          <template #avatar>
+            <a-avatar src="https://joeschmoe.io/api/v1/random" />
+          </template>
+        </a-list-item-meta>
+        <a-steps
+          style="margin-top: 8px"
+          type="inline"
+          :current="item.current"
+          :status="item.status"
+          :items="items"
+        />
+      </a-list-item>
+    </template>
+  </a-list>
+</template>
+<script lang="ts" setup>
+const data = [
+  {
+    title: 'Ant Design Title 1',
+    current: 0,
+  },
+  {
+    title: 'Ant Design Title 2',
+    current: 1,
+    status: 'error',
+  },
+  {
+    title: 'Ant Design Title 3',
+    current: 2,
+  },
+  {
+    title: 'Ant Design Title 4',
+    current: 1,
+  },
+];
+
+const items = [
+  {
+    title: 'Step 1',
+    description: 'This is a Step 1.',
+  },
+  {
+    title: 'Step 2',
+    description: 'This is a Step 2.',
+  },
+  {
+    title: 'Step 3',
+    description: 'This is a Step 3.',
+  },
+];
+</script>
+
+      API#
+      
+          #
+        
+Steps 
+          #
+        
+整体步骤条。
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+current (v-model)
+指定当前步骤，从 0 开始记数。在子 Step 元素中，可以通过 status 属性覆盖状态, 1.5.0 后支持 v-model
+number
+0
+
+
+
+direction
+指定步骤条方向。目前支持水平（horizontal）和竖直（vertical）两种方向
+string
+horizontal
+
+
+
+initial
+起始序号，从 0 开始记数
+number
+0
+
+
+
+labelPlacement
+指定标签放置位置，默认水平放图标右侧，可选vertical放图标下方
+string
+horizontal
+
+
+
+percent
+当前 process 步骤显示的进度条进度（只对基本类型的 Steps 生效）
+number
+-
+3.0
+
+
+progressDot
+点状步骤条，可以设置为一个 作用域插槽,labelPlacement 将强制为vertical
+Boolean or v-slot:progressDot="{index, status, title, description, prefixCls, iconDot}"
+false
+
+
+
+responsive
+当屏幕宽度小于 532px 时自动变为垂直模式
+boolean
+true
+3.0
+
+
+size
+指定大小，目前支持普通（default）和迷你（small）
+string
+default
+
+
+
+status
+指定当前步骤的状态，可选 wait process finish error
+string
+process
+
+
+
+type
+步骤条类型，有 default 和 navigation 两种
+string
+default
+1.5.0
+
+
+items
+配置选项卡内容
+StepItem[]
+[]
+
+
+
+
+type="inline" (4.0+) 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+current
+指定当前步骤，从 0 开始记数。在子 Step 元素中，可以通过 status 属性覆盖状态
+number
+0
+
+
+
+initial
+起始序号，从 0 开始记数
+number
+0
+
+
+
+status
+指定当前步骤的状态，可选 wait process finish error
+string
+process
+
+
+
+items
+配置选项卡内容，不支持 icon subtitle
+StepItem
+[]
+
+
+
+
+Steps 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+
+change
+点击切换步骤时触发
+(current) => void
+-
+1.5.0
+
+
+
+Steps.Step 
+          #
+        
+步骤条内的每一个步骤。
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+description
+步骤的详情描述，可选
+string | slot
+-
+
+
+
+disabled
+禁用点击
+boolean
+false
+1.5.0
+
+
+icon
+步骤图标的类型，可选
+string | slot
+-
+
+
+
+status
+指定状态。当不配置该属性时，会使用 Steps 的 current 来自动指定状态。可选：wait process finish error
+string
+wait
+
+
+
+subTitle
+子标题
+string | slot
+-
+1.5.0
+
+
+title
+标题
+string | slot
+-
+
+
+
+
+
+      最后更新 : 2023/07/14统计数值开关Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

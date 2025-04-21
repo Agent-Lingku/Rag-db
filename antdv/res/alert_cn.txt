@@ -1,0 +1,350 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 可关闭的警告提示 图标 顶部公告 平滑地卸载 四种样式 含有辅助性文字介绍 自定义关闭 自定义图标 操作 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Alert 警告提示警告提示，展现需要关注的信息。
+何时使用 
+          #
+        
+
+当某个页面需要向用户显示警告的信息时。
+非浮层的静态展现形式，始终展现，不会自动消失，用户可以点击关闭。
+
+代码演示Success Text基本用法最简单的用法，适用于简短的警告提示。TS<template>
+  <a-alert message="Success Text" type="success" />
+</template>
+Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning TextError TextError Description Error Description Error Description Error Description Error Description Error Description可关闭的警告提示显示关闭按钮，点击可关闭警告提示。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-alert
+      message="Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text"
+      type="warning"
+      closable
+      @close="onClose"
+    />
+    <a-alert
+      message="Error Text"
+      description="Error Description Error Description Error Description Error Description Error Description Error Description"
+      type="error"
+      closable
+      @close="onClose"
+    />
+  </a-space>
+</template>
+<script lang="ts" setup>
+const onClose = (e: MouseEvent) => {
+  console.log(e, 'I was closed.');
+};
+</script>
+Success TipsInformational NotesWarningErrorSuccess TipsDetailed description and advices about successful copywriting.Informational NotesAdditional description and informations about copywriting.WarningThis is a warning notice about copywriting.ErrorThis is an error message about copywriting.图标可口的图标让信息类型更加醒目。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-alert message="Success Tips" type="success" show-icon />
+    <a-alert message="Informational Notes" type="info" show-icon />
+    <a-alert message="Warning" type="warning" show-icon />
+    <a-alert message="Error" type="error" show-icon />
+    <a-alert
+      message="Success Tips"
+      description="Detailed description and advices about successful copywriting."
+      type="success"
+      show-icon
+    />
+    <a-alert
+      message="Informational Notes"
+      description="Additional description and informations about copywriting."
+      type="info"
+      show-icon
+    />
+    <a-alert
+      message="Warning"
+      description="This is a warning notice about copywriting."
+      type="warning"
+      show-icon
+    />
+    <a-alert
+      message="Error"
+      description="This is an error message about copywriting."
+      type="error"
+      show-icon
+    />
+  </a-space>
+</template>
+Warning textVery long warning text warning text text text text text text textWarning text without iconError text顶部公告最简单的用法，适用于简短的警告提示。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-alert message="Warning text" banner />
+    <a-alert
+      message="Very long warning text warning text text text text text text text"
+      banner
+      closable
+    />
+    <a-alert :show-icon="false" message="Warning text without icon" banner />
+    <a-alert type="error" message="Error text" banner />
+  </a-space>
+</template>
+Alert Message Text平滑地卸载平滑、自然的卸载提示。TS<template>
+  <a-alert
+    v-if="visible"
+    message="Alert Message Text"
+    type="success"
+    closable
+    :after-close="handleClose"
+  />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const visible = ref<boolean>(true);
+const handleClose = () => {
+  visible.value = false;
+};
+</script>
+Success TextInfo TextWarning TextError Text四种样式共有四种样式 success、info、warning、error。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-alert message="Success Text" type="success" />
+    <a-alert message="Info Text" type="info" />
+    <a-alert message="Warning Text" type="warning" />
+    <a-alert message="Error Text" type="error" />
+  </a-space>
+</template>
+Success Text Success Description Success Description Success Description Info TextInfo Description Info Description Info Description Info DescriptionWarning TextWarning Description Warning Description Warning Description Warning DescriptionError TextError Description Error Description Error Description Error Description含有辅助性文字介绍含有辅助性文字介绍的警告提示。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-alert message="Success Text" type="success">
+      <template #description>
+        <p>
+          Success Description
+          <span style="color: red">Success</span>
+          Description Success Description
+        </p>
+      </template>
+    </a-alert>
+    <a-alert
+      message="Info Text"
+      description="Info Description Info Description Info Description Info Description"
+      type="info"
+    />
+    <a-alert
+      message="Warning Text"
+      description="Warning Description Warning Description Warning Description Warning Description"
+      type="warning"
+    />
+    <a-alert
+      message="Error Text"
+      description="Error Description Error Description Error Description Error Description"
+      type="error"
+    />
+  </a-space>
+</template>
+Info TextClose Now自定义关闭自定义图标让信息类型更加醒目。TS<template>
+  <a-alert message="Info Text" type="info" close-text="Close Now" />
+</template>
+showIcon = falseSuccess TipsInformational NotesWarningErrorSuccess TipsDetailed description and advices about successful copywriting.Informational NotesAdditional description and informations about copywriting.WarningThis is a warning notice about copywriting.ErrorThis is an error message about copywriting.自定义图标可以自定义关闭，自定义的文字会替换原先的关闭 Icon。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-alert message="showIcon = false" type="success">
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert message="Success Tips" type="success" show-icon>
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert message="Informational Notes" type="info" show-icon>
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert message="Warning" type="warning" show-icon>
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert message="Error" type="error" show-icon>
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert
+      message="Success Tips"
+      description="Detailed description and advices about successful copywriting."
+      type="success"
+      show-icon
+    >
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert
+      message="Informational Notes"
+      description="Additional description and informations about copywriting."
+      type="info"
+      show-icon
+    >
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert
+      message="Warning"
+      description="This is a warning notice about copywriting."
+      type="warning"
+      show-icon
+    >
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+    <a-alert
+      message="Error"
+      description="This is an error message about copywriting."
+      type="error"
+      show-icon
+    >
+      <template #icon><smile-outlined /></template>
+    </a-alert>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { SmileOutlined } from '@ant-design/icons-vue';
+</script>
+Success TipsUNDOError TextError Description Error Description Error Description Error DescriptionDetailWarning TextDoneInfo TextInfo Description Info Description Info Description Info DescriptionAcceptDecline操作可以在右上角自定义操作项。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-alert message="Success Tips" type="success" show-icon closable>
+      <template #action>
+        <a-button size="small" type="text">UNDO</a-button>
+      </template>
+    </a-alert>
+    <a-alert
+      message="Error Text"
+      show-icon
+      description="Error Description Error Description Error Description Error Description"
+      type="error"
+    >
+      <template #action>
+        <a-button size="small" danger>Detail</a-button>
+      </template>
+    </a-alert>
+    <a-alert message="Warning Text" type="warning" closable>
+      <template #action>
+        <a-space>
+          <a-button size="small" type="ghost">Done</a-button>
+        </a-space>
+      </template>
+    </a-alert>
+    <a-alert
+      message="Info Text"
+      description="Info Description Info Description Info Description Info Description"
+      type="info"
+      closable
+    >
+      <template #action>
+        <a-space direction="vertical">
+          <a-button size="small" type="primary">Accept</a-button>
+          <a-button size="small" danger type="ghost">Decline</a-button>
+        </a-space>
+      </template>
+    </a-alert>
+  </a-space>
+</template>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+action
+自定义操作项
+slot
+-
+4.0.0
+
+
+afterClose
+关闭动画结束后触发的回调函数
+() => void
+-
+
+
+
+banner
+是否用作顶部公告
+boolean
+false
+
+
+
+closable
+默认不显示关闭按钮
+boolean
+无
+
+
+
+closeIcon
+自定义关闭 Icon
+slot
+<CloseOutlined />
+3.0
+
+
+closeText
+自定义关闭按钮
+string|slot
+无
+
+
+
+description
+警告提示的辅助性文字介绍
+string|slot
+无
+
+
+
+icon
+自定义图标，showIcon 为 true 时有效
+vnode|slot
+-
+
+
+
+message
+警告提示内容
+string|slot
+无
+
+
+
+showIcon
+是否显示辅助图标
+boolean
+false,banner 模式下默认值为 true
+
+
+
+type
+指定警告提示的样式，有四种选择 success、info、warning、error
+string
+info,banner 模式下默认值为 warning
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+close
+关闭时触发的回调函数
+(e: MouseEvent) => void
+-
+
+
+
+
+      自动完成徽标数Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+

@@ -1,0 +1,1267 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 点击上传 已上传的文件列表 完全控制的上传列表 图片列表样式 文件夹上传 上传前转换文件 限制数量 只上传 png 图片 用户头像 照片墙 拖拽上传 手动上传 自定义预览 自定义进度条样式 自定义交互图标 自定义上传列表 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Upload 上传文件选择上传和拖拽上传控件。
+何时使用 
+          #
+        
+上传是将信息（网页、文字、图片、视频等）通过网页或者上传工具发布到远程服务器上的过程。
+
+当需要上传一个或一些文件时。
+当需要展现上传的进度时。
+当需要使用拖拽交互时。
+
+代码演示Click to Upload点击上传经典款式，用户点击按钮弹出文件选择框。TS<template>
+  <a-upload
+    v-model:file-list="fileList"
+    name="file"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :headers="headers"
+    @change="handleChange"
+  >
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Click to Upload
+    </a-button>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { message } from 'ant-design-vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadChangeParam } from 'ant-design-vue';
+
+const handleChange = (info: UploadChangeParam) => {
+  if (info.file.status !== 'uploading') {
+    console.log(info.file, info.fileList);
+  }
+  if (info.file.status === 'done') {
+    message.success(`${info.file.name} file uploaded successfully`);
+  } else if (info.file.status === 'error') {
+    message.error(`${info.file.name} file upload failed.`);
+  }
+};
+
+const fileList = ref([]);
+const headers = {
+  authorization: 'authorization-text',
+};
+</script>
+Uploadxxx.pngyyy.pngzzz.png已上传的文件列表使用 fileList 设置已上传的内容。TS<template>
+  <a-upload v-model:file-list="fileList" action="https://www.mocky.io/v2/5cc8019d300000980a055e76">
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Upload
+    </a-button>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadProps } from 'ant-design-vue';
+const fileList = ref<UploadProps['fileList']>([
+  {
+    uid: '1',
+    name: 'xxx.png',
+    status: 'done',
+    response: 'Server Error 500', // custom error message to show
+    url: 'http://www.baidu.com/xxx.png',
+  },
+  {
+    uid: '2',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'http://www.baidu.com/yyy.png',
+  },
+  {
+    uid: '3',
+    name: 'zzz.png',
+    status: 'error',
+    response: 'Server Error 500', // custom error message to show
+    url: 'http://www.baidu.com/zzz.png',
+  },
+]);
+</script>
+Uploadxxx.png完全控制的上传列表使用 fileList 对列表进行完全控制，可以实现各种自定义功能，以下演示二种情况：
+
+
+上传列表数量的限制。
+
+
+读取远程路径并显示链接。
+
+TS<template>
+  <a-upload
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :multiple="true"
+    :file-list="fileList"
+    @change="handleChange"
+  >
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Upload
+    </a-button>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { UploadOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+import type { UploadChangeParam, UploadProps } from 'ant-design-vue';
+const fileList = ref<UploadProps['fileList']>([
+  {
+    uid: '-1',
+    name: 'xxx.png',
+    status: 'done',
+    url: 'http://www.baidu.com/xxx.png',
+  },
+]);
+const handleChange = (info: UploadChangeParam) => {
+  let resFileList = [...info.fileList];
+
+  // 1. Limit the number of uploaded files
+  //    Only to show two recent uploaded files, and old ones will be replaced by the new
+  resFileList = resFileList.slice(-2);
+
+  // 2. read from response and show file link
+  resFileList = resFileList.map(file => {
+    if (file.response) {
+      // Component will show file.url as link
+      file.url = file.response.url;
+    }
+    return file;
+  });
+
+  fileList.value = resFileList;
+};
+</script>
+uploadxxx.pngyyy.pnguploadxxx.pngyyy.png图片列表样式上传文件为图片，可展示本地缩略图。TS<template>
+  <div>
+    <a-upload
+      v-model:file-list="fileList"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      list-type="picture"
+    >
+      <a-button>
+        <upload-outlined></upload-outlined>
+        upload
+      </a-button>
+    </a-upload>
+    <br />
+    <br />
+    <a-upload
+      v-model:file-list="fileList1"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      list-type="picture"
+      class="upload-list-inline"
+    >
+      <a-button>
+        <upload-outlined></upload-outlined>
+        upload
+      </a-button>
+    </a-upload>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadProps } from 'ant-design-vue';
+const fileList = ref<UploadProps['fileList']>([
+  {
+    uid: '-1',
+    name: 'xxx.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-2',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+]);
+const fileList1 = ref<UploadProps['fileList']>([
+  {
+    uid: '-1',
+    name: 'xxx.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-2',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+]);
+</script>
+<style scoped>
+/* tile uploaded pictures */
+.upload-list-inline :deep(.ant-upload-list-item) {
+  float: left;
+  width: 200px;
+  margin-right: 8px;
+}
+.upload-list-inline [class*='-upload-list-rtl'] :deep(.ant-upload-list-item) {
+  float: right;
+}
+</style>
+Upload Directory文件夹上传支持上传一个文件夹里的所有文件。TS<template>
+  <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" directory>
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Upload Directory
+    </a-button>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { UploadOutlined } from '@ant-design/icons-vue';
+</script>
+Upload上传前转换文件使用 beforeUpload 转换上传的文件（例如添加水印）。TS<template>
+  <div>
+    <a-upload
+      v-model:file-list="fileList"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      :before-upload="beforeUpload"
+    >
+      <a-button>
+        <upload-outlined></upload-outlined>
+        Upload
+      </a-button>
+    </a-upload>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadProps } from 'ant-design-vue';
+
+const beforeUpload: UploadProps['beforeUpload'] = file => {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const img: HTMLImageElement = document.createElement('img');
+      img.src = reader.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        ctx.fillStyle = 'red';
+        ctx.textBaseline = 'middle';
+        ctx.font = '33px Arial';
+        ctx.fillText('Ant Design Vue', 20, 20);
+        canvas.toBlob(resolve);
+      };
+    };
+  });
+};
+
+const fileList = ref<UploadProps['fileList']>([]);
+</script>
+Upload (Max: 1)Upload (Max: 3)限制数量通过 maxCount 限制上传数量。当为 1 时，始终用最新上传的代替当前。TS<template>
+  <a-space direction="vertical" style="width: 100%" size="large">
+    <a-upload
+      v-model:file-list="fileList"
+      list-type="picture"
+      :max-count="1"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    >
+      <a-button>
+        <upload-outlined></upload-outlined>
+        Upload (Max: 1)
+      </a-button>
+    </a-upload>
+    <a-upload
+      v-model:file-list="fileList2"
+      list-type="picture"
+      :max-count="3"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    >
+      <a-button>
+        <upload-outlined></upload-outlined>
+        Upload (Max: 3)
+      </a-button>
+    </a-upload>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadProps } from 'ant-design-vue';
+const fileList = ref<UploadProps['fileList']>([]);
+const fileList2 = ref<UploadProps['fileList']>([]);
+</script>
+Upload png onlyxxx.pngyyy.pngzzz.png只上传 png 图片beforeUpload 返回 false 或 Promise.reject 时，只用于拦截上传行为，不会阻止文件进入上传列表（原因）。如果需要阻止列表展现，可以通过返回 Upload.LIST_IGNORE 实现。TS<template>
+  <a-upload
+    v-model:file-list="fileList"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :before-upload="beforeUpload"
+    @change="handleChange"
+  >
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Upload png only
+    </a-button>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadChangeParam, UploadProps } from 'ant-design-vue';
+import { message, Upload } from 'ant-design-vue';
+const fileList = ref<UploadProps['fileList']>([
+  {
+    uid: '1',
+    name: 'xxx.png',
+    status: 'done',
+    response: 'Server Error 500', // custom error message to show
+    url: 'http://www.baidu.com/xxx.png',
+  },
+  {
+    uid: '2',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'http://www.baidu.com/yyy.png',
+  },
+  {
+    uid: '3',
+    name: 'zzz.png',
+    status: 'error',
+    response: 'Server Error 500', // custom error message to show
+    url: 'http://www.baidu.com/zzz.png',
+  },
+]);
+
+const handleChange = ({ file, fileList }: UploadChangeParam) => {
+  if (file.status !== 'uploading') {
+    console.log(file, fileList);
+  }
+};
+const beforeUpload: UploadProps['beforeUpload'] = file => {
+  const isPNG = file.type === 'image/png';
+  if (!isPNG) {
+    message.error(`${file.name} is not a png file`);
+  }
+  return isPNG || Upload.LIST_IGNORE;
+};
+</script>
+Upload用户头像点击上传用户头像，并使用 beforeUpload 限制用户上传的图片格式和大小。
+
+beforeUpload 的返回值可以是一个 Promise 以支持异步处理，如服务端校验等：可参考react版本示例。
+TS<template>
+  <a-upload
+    v-model:file-list="fileList"
+    name="avatar"
+    list-type="picture-card"
+    class="avatar-uploader"
+    :show-upload-list="false"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :before-upload="beforeUpload"
+    @change="handleChange"
+  >
+    <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+    <div v-else>
+      <loading-outlined v-if="loading"></loading-outlined>
+      <plus-outlined v-else></plus-outlined>
+      <div class="ant-upload-text">Upload</div>
+    </div>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
+import type { UploadChangeParam, UploadProps } from 'ant-design-vue';
+
+function getBase64(img: Blob, callback: (base64Url: string) => void) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result as string));
+  reader.readAsDataURL(img);
+}
+
+const fileList = ref([]);
+const loading = ref<boolean>(false);
+const imageUrl = ref<string>('');
+
+const handleChange = (info: UploadChangeParam) => {
+  if (info.file.status === 'uploading') {
+    loading.value = true;
+    return;
+  }
+  if (info.file.status === 'done') {
+    // Get this url from response in real world.
+    getBase64(info.file.originFileObj, (base64Url: string) => {
+      imageUrl.value = base64Url;
+      loading.value = false;
+    });
+  }
+  if (info.file.status === 'error') {
+    loading.value = false;
+    message.error('upload error');
+  }
+};
+
+const beforeUpload = (file: UploadProps['fileList'][number]) => {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJpgOrPng && isLt2M;
+};
+</script>
+<style scoped>
+.avatar-uploader > .ant-upload {
+  width: 128px;
+  height: 128px;
+}
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
+</style>
+image.pngimage.pngimage.pngimage.png文件上传中image.pngimage.pngUpload照片墙用户可以上传图片并在列表中显示缩略图。当上传照片数到达限制后，上传按钮消失。TS<template>
+  <div class="clearfix">
+    <a-upload
+      v-model:file-list="fileList"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      list-type="picture-card"
+      @preview="handlePreview"
+    >
+      <div v-if="fileList.length < 8">
+        <plus-outlined />
+        <div style="margin-top: 8px">Upload</div>
+      </div>
+    </a-upload>
+    <a-modal :open="previewVisible" :title="previewTitle" :footer="null" @cancel="handleCancel">
+      <img alt="example" style="width: 100%" :src="previewImage" />
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { PlusOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+import type { UploadProps } from 'ant-design-vue';
+
+function getBase64(file: File) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
+const previewVisible = ref(false);
+const previewImage = ref('');
+const previewTitle = ref('');
+
+const fileList = ref<UploadProps['fileList']>([
+  {
+    uid: '-1',
+    name: 'image.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-2',
+    name: 'image.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-3',
+    name: 'image.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-4',
+    name: 'image.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-xxx',
+    percent: 50,
+    name: 'image.png',
+    status: 'uploading',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-5',
+    name: 'image.png',
+    status: 'error',
+  },
+]);
+
+const handleCancel = () => {
+  previewVisible.value = false;
+  previewTitle.value = '';
+};
+const handlePreview = async (file: UploadProps['fileList'][number]) => {
+  if (!file.url && !file.preview) {
+    file.preview = (await getBase64(file.originFileObj)) as string;
+  }
+  previewImage.value = file.url || file.preview;
+  previewVisible.value = true;
+  previewTitle.value = file.name || file.url.substring(file.url.lastIndexOf('/') + 1);
+};
+</script>
+<style scoped>
+/* you can make up upload button and sample style by using stylesheets */
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
+</style>
+Click or drag file to this area to upload Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files 拖拽上传把文件拖入指定区域，完成上传，同样支持点击上传。
+设置 multiple 后，可以一次上传多个文件。TS<template>
+  <a-upload-dragger
+    v-model:fileList="fileList"
+    name="file"
+    :multiple="true"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    @change="handleChange"
+    @drop="handleDrop"
+  >
+    <p class="ant-upload-drag-icon">
+      <inbox-outlined></inbox-outlined>
+    </p>
+    <p class="ant-upload-text">Click or drag file to this area to upload</p>
+    <p class="ant-upload-hint">
+      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+      band files
+    </p>
+  </a-upload-dragger>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { InboxOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
+import type { UploadChangeParam } from 'ant-design-vue';
+const fileList = ref([]);
+const handleChange = (info: UploadChangeParam) => {
+  const status = info.file.status;
+  if (status !== 'uploading') {
+    console.log(info.file, info.fileList);
+  }
+  if (status === 'done') {
+    message.success(`${info.file.name} file uploaded successfully.`);
+  } else if (status === 'error') {
+    message.error(`${info.file.name} file upload failed.`);
+  }
+};
+function handleDrop(e: DragEvent) {
+  console.log(e);
+}
+</script>
+Select FileStart Upload手动上传beforeUpload 返回 false 后，手动上传文件。TS<template>
+  <div class="clearfix">
+    <a-upload :file-list="fileList" :before-upload="beforeUpload" @remove="handleRemove">
+      <a-button>
+        <upload-outlined></upload-outlined>
+        Select File
+      </a-button>
+    </a-upload>
+    <a-button
+      type="primary"
+      :disabled="fileList.length === 0"
+      :loading="uploading"
+      style="margin-top: 16px"
+      @click="handleUpload"
+    >
+      {{ uploading ? 'Uploading' : 'Start Upload' }}
+    </a-button>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import request from 'umi-request';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
+import type { UploadProps } from 'ant-design-vue';
+
+const fileList = ref<UploadProps['fileList']>([]);
+const uploading = ref<boolean>(false);
+
+const handleRemove: UploadProps['onRemove'] = file => {
+  const index = fileList.value.indexOf(file);
+  const newFileList = fileList.value.slice();
+  newFileList.splice(index, 1);
+  fileList.value = newFileList;
+};
+
+const beforeUpload: UploadProps['beforeUpload'] = file => {
+  fileList.value = [...(fileList.value || []), file];
+  return false;
+};
+
+const handleUpload = () => {
+  const formData = new FormData();
+  fileList.value.forEach((file: UploadProps['fileList'][number]) => {
+    formData.append('files[]', file as any);
+  });
+  uploading.value = true;
+
+  // You can use any AJAX library you like
+  request('https://www.mocky.io/v2/5cc8019d300000980a055e76', {
+    method: 'post',
+    data: formData,
+  })
+    .then(() => {
+      fileList.value = [];
+      uploading.value = false;
+      message.success('upload successfully.');
+    })
+    .catch(() => {
+      uploading.value = false;
+      message.error('upload failed.');
+    });
+};
+</script>
+Upload自定义预览自定义本地预览，用于处理非图片格式文件（例如视频文件）。TS<template>
+  <div>
+    <a-upload
+      v-model:file-list="fileList"
+      list-type="picture"
+      action="//jsonplaceholder.typicode.com/posts/"
+      :preview-file="previewFile"
+    >
+      <a-button>
+        <upload-outlined></upload-outlined>
+        Upload
+      </a-button>
+    </a-upload>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadProps } from 'ant-design-vue';
+
+const previewFile: UploadProps['previewFile'] = async file => {
+  console.log('Your upload file:', file);
+  // Your process logic. Here we just mock to the same file
+  const res = await fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
+    method: 'POST',
+    body: file,
+  });
+  const { thumbnail } = await res.json();
+  return thumbnail;
+};
+const fileList = ref([]);
+</script>
+Click to Upload自定义进度条样式使用 progress 属性自定义进度条样式。TS<template>
+  <a-upload
+    v-model:file-list="fileList"
+    name="file"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :headers="headers"
+    :progress="progress"
+    @change="handleChange"
+  >
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Click to Upload
+    </a-button>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+import type { UploadChangeParam, UploadProps } from 'ant-design-vue';
+const handleChange = (info: UploadChangeParam) => {
+  if (info.file.status !== 'uploading') {
+    console.log(info.file, info.fileList);
+  }
+  if (info.file.status === 'done') {
+    message.success(`${info.file.name} file uploaded successfully`);
+  } else if (info.file.status === 'error') {
+    message.error(`${info.file.name} file upload failed.`);
+  }
+};
+
+const fileList = ref([]);
+const progress: UploadProps['progress'] = {
+  strokeColor: {
+    '0%': '#108ee9',
+    '100%': '#87d068',
+  },
+  strokeWidth: 3,
+  format: percent => `${parseFloat(percent.toFixed(2))}%`,
+  class: 'test',
+};
+const headers = { authorization: 'authorization-text' };
+</script>
+Uploadxxx.pngdownloadyyy.pngdownloadzzz.png自定义交互图标使用相应插槽设置列表交互图标。TS<template>
+  <a-upload
+    v-model:file-list="fileList"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :show-upload-list="{ showDownloadIcon: true, showRemoveIcon: true }"
+    @change="handleChange"
+  >
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Upload
+    </a-button>
+    <template #downloadIcon>download</template>
+    <template #removeIcon><StarOutlined @click="handleClick"></StarOutlined></template>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadOutlined, StarOutlined } from '@ant-design/icons-vue';
+import type { UploadChangeParam, UploadProps } from 'ant-design-vue';
+
+const fileList = ref<UploadProps['fileList']>([
+  {
+    uid: '1',
+    name: 'xxx.png',
+    status: 'done',
+    response: 'Server Error 500', // custom error message to show
+    url: 'http://www.baidu.com/xxx.png',
+  },
+  {
+    uid: '2',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'http://www.baidu.com/yyy.png',
+  },
+  {
+    uid: '3',
+    name: 'zzz.png',
+    status: 'error',
+    response: 'Server Error 500', // custom error message to show
+    url: 'http://www.baidu.com/zzz.png',
+  },
+]);
+
+const handleChange = ({ file, fileList }: UploadChangeParam) => {
+  if (file.status !== 'uploading') {
+    console.log(file, fileList);
+  }
+};
+function handleClick(e: MouseEvent) {
+  console.log(e, 'custom removeIcon event');
+}
+</script>
+Click to Uploadxxx.pngdownloaddeleteyyy.pngdownloaddeletezzz.pngdownloaddelete自定义上传列表使用 itemRender 插槽进行完全自定义列表TS<template>
+  <a-upload
+    v-model:file-list="fileList"
+    name="file"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :headers="headers"
+    @change="handleChange"
+  >
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Click to Upload
+    </a-button>
+    <template #itemRender="{ file, actions }">
+      <a-space>
+        <span :style="file.status === 'error' ? 'color: red' : ''">{{ file.name }}</span>
+        <a href="javascript:;" @click="actions.download">download</a>
+        <a href="javascript:;" @click="actions.remove">delete</a>
+      </a-space>
+    </template>
+  </a-upload>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { message } from 'ant-design-vue';
+import { UploadOutlined } from '@ant-design/icons-vue';
+import type { UploadChangeParam, UploadProps } from 'ant-design-vue';
+
+const handleChange = (info: UploadChangeParam) => {
+  if (info.file.status !== 'uploading') {
+    console.log(info.file, info.fileList);
+  }
+  if (info.file.status === 'done') {
+    message.success(`${info.file.name} file uploaded successfully`);
+  } else if (info.file.status === 'error') {
+    message.error(`${info.file.name} file upload failed.`);
+  }
+};
+
+const fileList = ref<UploadProps['fileList']>([
+  {
+    uid: '-1',
+    name: 'xxx.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-2',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '3',
+    name: 'zzz.png',
+    status: 'error',
+    response: 'Server Error 500', // custom error message to show
+    url: 'http://www.baidu.com/zzz.png',
+  },
+]);
+const headers = { authorization: 'authorization-text' };
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+
+accept
+接受上传的文件类型, 详见 input accept Attribute
+string
+-
+
+
+
+
+action
+上传的地址
+string|(file) => Promise
+-
+
+
+
+
+beforeUpload
+上传文件之前的钩子，参数为上传的文件，若返回 false 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传（ resolve 传入 File 或 Blob 对象则上传 resolve 传入对象）。
+(file, fileList) => boolean | Promise
+-
+
+
+
+
+customRequest
+通过覆盖默认的上传行为，可以自定义自己的上传实现
+function
+-
+
+
+
+
+data
+上传所需参数或返回上传参数的方法
+object|(file) => object
+-
+
+
+
+
+directory
+支持上传文件夹（caniuse）
+boolean
+false
+3.0
+
+
+
+disabled
+是否禁用
+boolean
+-
+
+
+
+
+downloadIcon
+自定义下载 icon
+v-slot:iconRender="{file: UploadFile}"
+-
+3.0
+
+
+
+fileList
+已经上传的文件列表（受控）
+object[]
+-
+
+
+
+
+headers
+设置上传的请求头部，IE10 以上有效
+object
+-
+
+
+
+
+iconRender
+自定义显示 icon
+v-slot:iconRender="{file: UploadFile, listType?: UploadListType}"
+-
+3.0
+
+
+
+isImageUrl
+自定义缩略图是否使用 <img /> 标签进行显示
+(file: UploadFile) => boolean
+-
+3.0
+
+
+
+itemRender
+自定义上传列表项
+v-slot:itemRender="{originNode: VNode, file: UploadFile, fileList: object[], actions: { download: function, preview: function, remove: function }"
+-
+3.0
+
+
+
+listType
+上传列表的内建样式，支持三种基本样式 text, picture 和 picture-card
+string
+text
+
+
+
+
+maxCount
+限制上传数量。当为 1 时，始终用最新上传的文件代替当前文件
+number
+-
+3.0
+
+
+
+method
+上传请求的 http method
+string
+post
+1.5.0
+
+
+
+multiple
+是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。
+boolean
+false
+
+
+
+
+name
+发到后台的文件参数名
+string
+file
+
+
+
+
+openFileDialogOnClick
+点击打开文件对话框
+boolean
+true
+3.0
+
+
+
+previewFile
+自定义文件预览逻辑
+(file: File | Blob) => Promise<dataURL: string>
+-
+1.5.0
+
+
+
+previewIcon
+自定义预览 icon
+v-slot:iconRender="{file: UploadFile}"
+-
+3.0
+
+
+
+progress
+自定义进度条样式
+ProgressProps（仅支持 type="line"）
+{ strokeWidth: 2, showInfo: false }
+3.0
+
+
+
+removeIcon
+自定义删除 icon
+v-slot:iconRender="{file: UploadFile}"
+-
+3.0
+
+
+
+showUploadList
+是否展示 uploadList, 可设为一个对象，用于单独设定 showPreviewIcon, showRemoveIcon 和 showDownloadIcon
+boolean | { showPreviewIcon?: boolean, showRemoveIcon?: boolean, showDownloadIcon?: boolean }
+true
+showDownloadIcon(3.0)
+
+
+
+supportServerRender
+服务端渲染时需要打开这个
+boolean
+false
+
+
+
+
+withCredentials
+上传请求时是否携带 cookie
+boolean
+false
+
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+
+change
+上传文件改变时的状态，详见 change
+function
+-
+
+
+
+download
+点击下载文件时的回调，如果没有指定，则默认跳转到文件 url 对应的标签页。
+function(file): void
+跳转新标签页
+1.5.0
+
+
+drop
+当文件被拖入上传区域时执行的回调功能
+(event: DragEvent) => void
+-
+3.0
+
+
+preview
+点击文件链接或预览图标时的回调
+function(file)
+-
+
+
+
+reject
+拖拽文件不符合 accept 类型时的回调
+function(fileList)
+-
+
+
+
+remove
+点击移除文件时的回调，返回值为 false 时不移除。支持返回一个 Promise 对象，Promise 对象 resolve(false) 或 reject 时不移除
+function(file): boolean | Promise
+-
+3.0
+
+
+
+UploadFile 
+          #
+        
+继承自 File，附带额外属性用于渲染。
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+crossOrigin
+CORS 属性设置
+'anonymous' | 'use-credentials' | ''
+-
+3.3.0
+
+
+name
+文件名
+string
+-
+-
+
+
+percent
+上传进度
+number
+-
+-
+
+
+status
+上传状态，不同状态展示颜色也会有所不同
+error | success | done | uploading | removed
+-
+-
+
+
+thumbUrl
+缩略图地址
+string
+-
+-
+
+
+uid
+唯一标识符，不设置时会自动生成
+string
+-
+-
+
+
+url
+下载地址
+string
+-
+-
+
+
+
+change 
+          #
+        
+
+上传中、完成、失败都会调用这个函数。
+
+文件状态改变的回调，返回为：
+{
+  file: { /* ... */ },
+  fileList: [ /* ... */ ],
+  event: { /* ... */ },
+}
+
+
+
+file 当前操作的文件对象。
+{
+   uid: 'uid',      // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+   name: 'xx.png',   // 文件名
+   status: 'done', // 状态有：uploading done error removed
+   response: '{"status": "success"}', // 服务端响应内容
+   linkProps: '{"download": "image"}', // 下载链接额外的 HTML 属性
+   xhr: 'XMLHttpRequest{ ... }', // XMLHttpRequest Header
+}
+
+
+
+fileList 当前的文件列表。
+
+
+event 上传中的服务端响应内容，包含了上传进度等信息，高级浏览器支持。
+
+
+FAQ 
+          #
+        
+服务端如何实现？ 
+          #
+        
+
+服务端上传接口实现可以参考 jQuery-File-Upload。
+如果要做本地 mock 可以参考这个 express 的例子。
+
+手机设备如何选择相册或文件夹？ 
+          #
+        
+你可以设置 :capture="null"
+如何显示下载链接？ 
+          #
+        
+请使用 fileList 属性设置数组项的 url 属性进行展示控制。
+customRequest 怎么使用？ 
+          #
+        
+请参考 https://github.com/react-component/upload#customrequest。
+为何 fileList 受控时，上传不在列表中的文件不会触发 onChange 后续的 status 更新事件？ 
+          #
+        
+onChange 事件仅会作用于在列表中的文件，因而 fileList 不存在对应文件时后续事件会被忽略。请注意，在 3.0.0-beta.10 版本之前受控状态存在 bug 导致不在列表中的文件也会触发。
+onChange 为什么有时候返回 File 有时候返回 { originFileObj: File }？ 
+          #
+        
+历史原因，在 beforeUpload 返回 false 时，会返回 File 对象。在下个大版本我们会统一返回 { originFileObj: File } 对象。当前版本已经兼容所有场景下 info.file.originFileObj 获取原 File 写法。你可以提前切换。
+为何有时 Chrome 点击 Upload 无法弹出文件选择框？ 
+          #
+        
+与 antd 无关，原生上传也会失败。请重启 Chrome 浏览器，让其完成升级工作。相关 issue：
+
+#32672
+#32913
+#33988
+
+
+      最后更新 : 2024/06/21排版水印Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

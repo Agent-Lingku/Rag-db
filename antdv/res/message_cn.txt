@@ -1,0 +1,386 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 Hooks 调用（推荐） 修改延时 加载中 更新消息内容 普通提示 其他提示类型 Promise 接口 自定义样式 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Message 全局提示全局展示操作反馈信息。
+何时使用 
+          #
+        
+
+可提供成功、警告和错误等反馈信息。
+顶部居中显示并自动消失，是一种不打断用户操作的轻量级提示方式。
+
+代码演示Display normal messageHooks 调用（推荐）通过 message.useMessage 创建支持读取 context 的 contextHolder。请注意，我们推荐通过顶层注册的方式代替 message 静态方法，因为静态方法无法消费上下文，因而 ConfigProvider 的数据也不会生效。TS<template>
+  <context-holder />
+  <a-button type="primary" @click="info">Display normal message</a-button>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const [messageApi, contextHolder] = message.useMessage();
+
+const info = () => {
+  messageApi.info('Hello, Ant Design Vue!');
+};
+</script>
+Customized display duration修改延时自定义时长 10s，默认时长为 3s。TS<template>
+  <a-button @click="success">Customized display duration</a-button>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const success = () => {
+  message.success('This is a prompt message for success, and it will disappear in 10 seconds', 10);
+};
+</script>
+Display a loading indicator加载中进行全局 loading，异步自行移除。TS<template>
+  <a-button @click="success">Display a loading indicator</a-button>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const success = () => {
+  const hide = message.loading('Action in progress..', 0);
+  setTimeout(hide, 2500);
+};
+</script>
+Open the message box (update by key)Open the message box (update by reactive)更新消息内容可以通过唯一的 key 来更新内容、或者响应式数据。TS<template>
+  <a-button type="primary" @click="openMessage">Open the message box (update by key)</a-button>
+  <br />
+  <br />
+  <a-button type="primary" @click="openMessage2">
+    Open the message box (update by reactive)
+  </a-button>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+import { ref } from 'vue';
+const key = 'updatable';
+const openMessage = () => {
+  message.loading({ content: 'Loading...', key });
+  setTimeout(() => {
+    message.success({ content: 'Loaded!', key, duration: 2 });
+  }, 1000);
+};
+const content = ref('Loading...');
+const openMessage2 = () => {
+  // content must use function
+  message.loading({ content: () => content.value });
+  setTimeout(() => {
+    content.value = 'Loaded!';
+  }, 1000);
+};
+</script>
+Display normal message普通提示信息提醒反馈。TS<template>
+  <a-button type="primary" @click="info">Display normal message</a-button>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const info = () => {
+  message.info('This is a normal message');
+};
+</script>
+SuccessErrorWarning其他提示类型包括成功、失败、警告。TS<template>
+  <a-space>
+    <a-button @click="success">Success</a-button>
+    <a-button @click="error">Error</a-button>
+    <a-button @click="warning">Warning</a-button>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const success = () => {
+  message.success('This is a success message');
+};
+const error = () => {
+  message.error('This is an error message');
+};
+const warning = () => {
+  message.warning('This is a warning message');
+};
+</script>
+Display a sequence of messagePromise 接口可以通过 then 接口在关闭后运行 callback 。以上用例将在每个 message 将要结束时通过 then 显示新的 message 。TS<template>
+  <a-button @click="success">Display a sequence of message</a-button>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const success = () => {
+  message
+    .loading('Action in progress..', 2.5)
+    .then(
+      () => message.success('Loading finished', 2.5),
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      () => {},
+    )
+    .then(() => message.info('Loading finished is finished', 2.5));
+};
+</script>
+Customized style自定义样式使用 style 和 class 来定义样式。TS<template>
+  <a-button @click="success">Customized style</a-button>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const success = () => {
+  message.success({
+    content: () => 'This is a prompt message with custom className and style',
+    class: 'custom-class',
+    style: {
+      marginTop: '20vh',
+    },
+  });
+};
+</script>
+<style>
+.custom-class {
+  color: red;
+}
+</style>
+
+      API#
+      
+          #
+        
+组件提供了一些静态方法，使用方式和参数如下：
+
+message.success(content, [duration], onClose)
+message.error(content, [duration], onClose)
+message.info(content, [duration], onClose)
+message.warning(content, [duration], onClose)
+message.warn(content, [duration], onClose) // alias of warning
+message.loading(content, [duration], onClose)
+
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+content
+提示内容
+string| VNode | () => VNode
+-
+
+
+duration
+自动关闭的延时，单位秒。设为 0 时不自动关闭。
+number
+3
+
+
+onClose
+关闭时触发的回调函数
+function
+-
+
+
+
+组件同时提供 promise 接口
+
+message[level](content, [duration]).then(afterClose)
+message[level](content, [duration], onClose).then(afterClose)
+
+其中message[level] 是组件已经提供的静态方法。then 接口返回值是 Promise 。
+也可以对象的形式传递参数：
+
+message.open(config)
+message.success(config)
+message.error(config)
+message.info(config)
+message.warning(config)
+message.warn(config) // alias of warning
+message.loading(config)
+
+config 对象属性如下：
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+class
+自定义 CSS class
+string
+-
+
+
+
+content
+提示内容
+string| VNode | ()=> VNode
+-
+
+
+
+duration
+自动关闭的延时，单位秒。设为 0 时不自动关闭。
+number
+3
+
+
+
+icon
+自定义图标
+VNode | () => VNode
+-
+
+
+
+key
+当前提示的唯一标志
+string | number
+-
+
+
+
+style
+自定义内联样式
+CSSProperties
+-
+
+
+
+onClick
+点击 message 时触发的回调函数
+function
+-
+
+
+
+onClose
+关闭时触发的回调函数
+function
+-
+
+
+
+
+全局方法 
+          #
+        
+还提供了全局配置和全局销毁方法：
+
+message.config(options)
+message.destroy()
+message.useMessage()
+
+message.config 
+          #
+        
+message.config({
+  top: `100px`,
+  duration: 2,
+  maxCount: 3,
+  rtl: true,
+  prefixCls: 'my-message',
+});
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+
+duration
+默认自动关闭延时，单位秒
+number
+3
+
+
+
+
+getContainer
+配置渲染节点的输出位置
+() => HTMLElement
+() => document.body
+
+
+
+
+maxCount
+最大显示数, 超过限制时，最早的消息会被自动关闭
+number
+-
+
+
+
+
+prefixCls
+消息节点的 className 前缀
+string
+ant-message
+3.0
+
+
+
+rtl
+是否开启 RTL 模式
+boolean
+false
+
+
+
+
+top
+消息距离顶部的位置
+string
+8px
+
+
+
+
+
+FAQ 
+          #
+        
+为什么 message 不能获取 context、Pinia 的内容和 ConfigProvider 的 locale/prefixCls/theme 等配置？ 
+          #
+        
+直接调用 message 方法，antdv 会通过 Vue.render 动态创建新的 Vue 实体。其 context 与当前代码所在 context 并不相同，因而无法获取 context 信息。
+当你需要 context 信息（例如 ConfigProvider 配置的内容）时，可以通过 message.useMessage 方法会返回 api 实体以及 contextHolder 节点。将其插入到你需要获取 context 位置即可：
+<template>
+  <contextHolder />
+  <!-- <component :is='contextHolder'/> -->
+</template>
+<script setup>
+  import { message } from 'ant-design-vue';
+  const [messageApi, contextHolder] = message.useMessage();
+  messageApi.open({
+    // ...
+  });
+</script>
+
+异同：通过 hooks 创建的 contextHolder 必须插入到子元素节点中才会生效，当你不需要上下文信息时请直接调用。
+
+可通过 App 包裹组件 简化 useMessage 等方法需要手动植入 contextHolder 的问题。
+
+静态方法如何设置 prefixCls ？ 
+          #
+        
+你可以通过 ConfigProvider.config 进行设置。
+
+      导航菜单对话框Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

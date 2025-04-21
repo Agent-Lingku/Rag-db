@@ -1,0 +1,148 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 水平分割线 垂直分割线 带文字的分割线 样式自定义 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Divider 分割线区隔内容的分割线。
+何时使用 
+          #
+        
+
+对不同章节的文本段落进行分割。
+对行内文字/链接进行分割，例如表格的操作列。
+
+代码演示 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo. With Text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo. 水平分割线默认为水平分割线，可在中间加入文字。TS<template>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider />
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider>With Text</a-divider>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider dashed />
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+</template>
+ Text LinkLink垂直分割线使用 type="vertical" 设置为行内的垂直分割线。TS<template>
+  <div>
+    Text
+    <a-divider type="vertical" />
+    <a href="#">Link</a>
+    <a-divider type="vertical" />
+    <a href="#">Link</a>
+  </div>
+</template>
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo. Text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo. Left Text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo. Right Text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.  Left Text with 0 orientationMargin  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.  Right Text with 50px orientationMargin  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo. 带文字的分割线分割线中带有文字，可以用 orientation 指定文字位置。TS<template>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider>Text</a-divider>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider orientation="left">Left Text</a-divider>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider orientation="right">Right Text</a-divider>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider orientation="left" orientation-margin="0px">
+    Left Text with 0 orientationMargin
+  </a-divider>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+  <a-divider orientation="right" orientation-margin="50px">
+    Right Text with 50px orientationMargin
+  </a-divider>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista
+    probare, quae sunt a te dicta? Refert tamen, quo modo.
+  </p>
+</template>
+样式自定义测试一些 style 修改样式的行为。TS<template>
+  <a-divider style="height: 2px; background-color: #7cb305" />
+  <a-divider style="border-color: #7cb305" dashed />
+  <a-divider type="vertical" style="height: 60px; background-color: #7cb305" />
+  <a-divider type="vertical" style="height: 60px; border-color: #7cb305" dashed />
+</template>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+dashed
+是否虚线
+boolean
+false
+
+
+
+orientation
+分割线标题的位置
+left | right | center
+center
+
+
+
+orientationMargin
+标题和最近 left/right 边框之间的距离，去除了分割线，同时 orientation 必须为 left 或 right
+string | number
+-
+3.0
+
+
+plain
+文字是否显示为普通正文样式
+boolean
+false
+2.2.0
+
+
+type
+水平还是垂直类型
+horizontal | vertical
+horizontal
+
+
+
+
+
+      最后更新 : 2024/01/12描述列表抽屉Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

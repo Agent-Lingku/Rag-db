@@ -1,0 +1,1398 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本使用 标签 自动分词 多选 分组 带搜索框 后缀图标 扩展菜单 大数据 弹出位置 三种大小 最多显示多少个选项及选项最大长度 获得选项的文本 联动 搜索框 搜索用户 隐藏已选择选项 定制回填内容 自定义 label、value、options 字段 自定义状态 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Select 选择器下拉选择器。
+何时使用 
+          #
+        
+
+弹出一个下拉菜单给用户选择操作，用于代替原生的选择器，或者需要一个更优雅的多选器时。
+当选项少时（少于 5 项），建议直接将选项平铺，使用 Radio 是更好的选择。
+
+代码演示use a-select-optionLucyLucyLucyuse options (recommend)LucyLucyLucy基本使用基本使用。TS<template>
+  <h2>use a-select-option</h2>
+  <a-space>
+    <a-select
+      ref="select"
+      v-model:value="value1"
+      style="width: 120px"
+      @focus="focus"
+      @change="handleChange"
+    >
+      <a-select-option value="jack">Jack</a-select-option>
+      <a-select-option value="lucy">Lucy</a-select-option>
+      <a-select-option value="disabled" disabled>Disabled</a-select-option>
+      <a-select-option value="Yiminghe">yiminghe</a-select-option>
+    </a-select>
+    <a-select v-model:value="value2" style="width: 120px" disabled>
+      <a-select-option value="lucy">Lucy</a-select-option>
+    </a-select>
+    <a-select v-model:value="value3" style="width: 120px" loading>
+      <a-select-option value="lucy">Lucy</a-select-option>
+    </a-select>
+  </a-space>
+  <h2 style="margin-top: 10px">use options (recommend)</h2>
+  <a-space>
+    <a-select
+      ref="select"
+      v-model:value="value1"
+      style="width: 120px"
+      :options="options1"
+      @focus="focus"
+      @change="handleChange"
+    ></a-select>
+    <a-select v-model:value="value2" style="width: 120px" disabled :options="options2"></a-select>
+    <a-select v-model:value="value3" style="width: 120px" loading :options="options3"></a-select>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { SelectProps } from 'ant-design-vue';
+const value1 = ref('lucy');
+const value2 = ref('lucy');
+const value3 = ref('lucy');
+const options1 = ref<SelectProps['options']>([
+  {
+    value: 'jack',
+    label: 'Jack',
+  },
+  {
+    value: 'lucy',
+    label: 'Lucy',
+  },
+  {
+    value: 'disabled',
+    label: 'Disabled',
+    disabled: true,
+  },
+  {
+    value: 'yiminghe',
+    label: 'Yiminghe',
+  },
+]);
+const options2 = ref<SelectProps['options']>([
+  {
+    value: 'lucy',
+    label: 'Lucy',
+  },
+]);
+const options3 = ref<SelectProps['options']>([
+  {
+    value: 'lucy',
+    label: 'Lucy',
+  },
+]);
+const focus = () => {
+  console.log('focus');
+};
+
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
+</script>
+ Tags Mode标签tags select，随意输入的内容（scroll the menu）TS<template>
+  <a-select
+    v-model:value="value"
+    mode="tags"
+    style="width: 100%"
+    placeholder="Tags Mode"
+    :options="options"
+    @change="handleChange"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
+const value = ref([]);
+const options = [...Array(25)].map((_, i) => ({ value: (i + 10).toString(36) + (i + 1) }));
+</script>
+ Automatic tokenization自动分词试下复制 露西,杰克 到输入框里。只在 tags 和 multiple 模式下可用。TS<template>
+  <a-select
+    v-model:value="value"
+    mode="tags"
+    style="width: 100%"
+    :token-separators="[',']"
+    placeholder="Automatic tokenization"
+    :options="options"
+    @change="handleChange"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+import type { SelectProps } from 'ant-design-vue';
+const options = ref<SelectProps['options']>([
+  {
+    value: 'a1',
+    label: 'a1',
+  },
+]);
+const value = ref<string[]>([]);
+const handleChange = (value: []) => {
+  console.log(`selected ${value}`);
+};
+watch(value, () => {
+  console.log('value', value.value);
+});
+</script>
+a1b2 多选多选，从已有条目中选择（scroll the menu）TS<template>
+  <a-select
+    v-model:value="value"
+    mode="multiple"
+    style="width: 100%"
+    placeholder="Please select"
+    :options="[...Array(25)].map((_, i) => ({ value: (i + 10).toString(36) + (i + 1) }))"
+    @change="handleChange"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const handleChange = (value: string[]) => {
+  console.log(`selected ${value}`);
+};
+const value = ref(['a1', 'b2']);
+</script>
+LucyLucy分组用 OptGroup 或 options.options 进行选项分组。TS<template>
+  <a-space>
+    <a-select v-model:value="value" style="width: 200px" @change="handleChange">
+      <a-select-opt-group>
+        <template #label>
+          <span>
+            <user-outlined />
+            Manager
+          </span>
+        </template>
+        <a-select-option value="jack">Jack</a-select-option>
+        <a-select-option value="lucy">Lucy</a-select-option>
+      </a-select-opt-group>
+      <a-select-opt-group label="Engineer">
+        <a-select-option value="Yiminghe">yiminghe</a-select-option>
+        <a-select-option value="Yiminghe1">yiminghe1</a-select-option>
+      </a-select-opt-group>
+    </a-select>
+    <a-select
+      v-model:value="value"
+      :options="options"
+      style="width: 200px"
+      @change="handleChange"
+    ></a-select>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UserOutlined } from '@ant-design/icons-vue';
+import type { SelectProps } from 'ant-design-vue';
+
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
+
+const options = ref<SelectProps['options']>([
+  {
+    label: 'Manager',
+    options: [
+      {
+        value: 'jack',
+        label: 'Jack',
+      },
+      {
+        value: 'lucy',
+        label: 'Lucy',
+      },
+    ],
+  },
+  {
+    label: 'Engineer',
+    options: [
+      {
+        value: 'yiminghe',
+        label: 'Yiminghe',
+      },
+    ],
+  },
+]);
+
+const value = ref(['lucy']);
+</script>
+Select a person带搜索框展开后可对选项进行搜索。TS<template>
+  <a-select
+    v-model:value="value"
+    show-search
+    placeholder="Select a person"
+    style="width: 200px"
+    :options="options"
+    :filter-option="filterOption"
+    @focus="handleFocus"
+    @blur="handleBlur"
+    @change="handleChange"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import type { SelectProps } from 'ant-design-vue';
+import { ref } from 'vue';
+const options = ref<SelectProps['options']>([
+  { value: 'jack', label: 'Jack' },
+  { value: 'lucy', label: 'Lucy' },
+  { value: 'tom', label: 'Tom' },
+]);
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
+const handleBlur = () => {
+  console.log('blur');
+};
+const handleFocus = () => {
+  console.log('focus');
+};
+const filterOption = (input: string, option: any) => {
+  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+};
+
+const value = ref<string | undefined>(undefined);
+</script>
+LucyLucy后缀图标基本使用。TS<template>
+  <a-space>
+    <a-select
+      v-model:value="value1"
+      style="width: 120px"
+      :options="options1"
+      @change="handleChange"
+    >
+      <template #suffixIcon><smile-outlined class="ant-select-suffix" /></template>
+    </a-select>
+    <a-select v-model:value="value2" style="width: 120px" disabled :options="options2">
+      <template #suffixIcon><meh-outlined class="ant-select-suffix" /></template>
+    </a-select>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { SmileOutlined, MehOutlined } from '@ant-design/icons-vue';
+import type { SelectProps } from 'ant-design-vue';
+import { ref } from 'vue';
+
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
+
+const options1 = ref<SelectProps['options']>([
+  {
+    value: 'jack',
+    label: 'Jack',
+  },
+  {
+    value: 'lucy',
+    label: 'Lucy',
+  },
+  {
+    value: 'disabled',
+    label: 'Disabled',
+    disabled: true,
+  },
+  {
+    value: 'yiminghe',
+    label: 'Yiminghe',
+  },
+]);
+const options2 = ref<SelectProps['options']>([
+  {
+    value: 'lucy',
+    label: 'Lucy',
+  },
+]);
+const value1 = ref('lucy');
+const value2 = ref('lucy');
+</script>
+custom dropdown render扩展菜单使用 dropdownRender 对下拉菜单进行自由扩展。TS<template>
+  <a-select
+    v-model:value="value"
+    placeholder="custom dropdown render"
+    style="width: 300px"
+    :options="items.map(item => ({ value: item }))"
+  >
+    <template #dropdownRender="{ menuNode: menu }">
+      <v-nodes :vnodes="menu" />
+      <a-divider style="margin: 4px 0" />
+      <a-space style="padding: 4px 8px">
+        <a-input ref="inputRef" v-model:value="name" placeholder="Please enter item" />
+        <a-button type="text" @click="addItem">
+          <template #icon>
+            <plus-outlined />
+          </template>
+          Add item
+        </a-button>
+      </a-space>
+    </template>
+  </a-select>
+</template>
+<script lang="ts" setup>
+import { PlusOutlined } from '@ant-design/icons-vue';
+import { defineComponent, ref } from 'vue';
+
+const VNodes = defineComponent({
+  props: {
+    vnodes: {
+      type: Object,
+      required: true,
+    },
+  },
+  render() {
+    return this.vnodes;
+  },
+});
+
+let index = 0;
+const items = ref(['jack', 'lucy']);
+const value = ref();
+const inputRef = ref();
+const name = ref();
+
+const addItem = e => {
+  e.preventDefault();
+  console.log('addItem');
+  items.value.push(name.value || `New item ${(index += 1)}`);
+  name.value = '';
+  setTimeout(() => {
+    inputRef.value?.focus();
+  }, 0);
+};
+</script>
+100000 Itemsa10c12 大数据Select 使用了虚拟滚动技术，因而获得了比 1.x 更好的性能TS<template>
+  <h2>{{ options.length }} Items</h2>
+  <a-select
+    v-model:value="value"
+    mode="multiple"
+    style="width: 100%"
+    placeholder="Please select"
+    :options="options"
+  />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const options: { value: string; disabled: boolean }[] = [];
+for (let i = 0; i < 100000; i++) {
+  const value = `${i.toString(36)}${i}`;
+  options.push({
+    value,
+    disabled: i === 10,
+  });
+}
+
+const value = ref(['a10', 'c12']);
+</script>
+topLefttopRightbottomLeftbottomRightHangZhou #310000弹出位置可以通过 placement 手动指定弹出的位置。TS<template>
+  <a-radio-group v-model:value="placement">
+    <a-radio-button value="topLeft">topLeft</a-radio-button>
+    <a-radio-button value="topRight">topRight</a-radio-button>
+    <a-radio-button value="bottomLeft">bottomLeft</a-radio-button>
+    <a-radio-button value="bottomRight">bottomRight</a-radio-button>
+  </a-radio-group>
+  <br />
+  <br />
+  <a-select
+    v-model:value="value"
+    style="width: 120px"
+    :dropdown-match-select-width="false"
+    :placement="placement"
+  >
+    <a-select-option value="HangZhou">HangZhou #310000</a-select-option>
+    <a-select-option value="NingBo">NingBo #315000</a-select-option>
+    <a-select-option value="WenZhou">WenZhou #325000</a-select-option>
+  </a-select>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const placement = ref('topLeft' as const);
+const value = ref('HangZhou');
+</script>
+LargeMiddleSmalla1a1b2 a1b2 三种大小三种大小的选择框，当 size 分别为 large 和 small 时，输入框高度为 40px 和 24px ，默认高度为 32px。TS<template>
+  <a-radio-group v-model:value="size">
+    <a-radio-button value="large">Large</a-radio-button>
+    <a-radio-button value="middle">Middle</a-radio-button>
+    <a-radio-button value="small">Small</a-radio-button>
+  </a-radio-group>
+  <br />
+  <br />
+  <a-space direction="vertical">
+    <a-select
+      v-model:value="value1"
+      :size="size"
+      style="width: 200px"
+      :options="options"
+    ></a-select>
+    <a-select
+      v-model:value="value2"
+      :options="options"
+      mode="multiple"
+      :size="size"
+      placeholder="Please select"
+      style="width: 200px"
+      @popupScroll="popupScroll"
+    ></a-select>
+    <a-select
+      v-model:value="value3"
+      :options="options"
+      mode="tags"
+      :size="size"
+      placeholder="Please select"
+      style="width: 200px"
+    ></a-select>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { SelectProps } from 'ant-design-vue';
+const popupScroll = () => {
+  console.log('popupScroll');
+};
+const size = ref<SelectProps['size']>('middle');
+const value1 = ref('a1');
+const value2 = ref(['a1', 'b2']);
+const value3 = ref(['a1', 'b2']);
+const options = [...Array(25)].map((_, i) => ({ value: (i + 10).toString(36) + (i + 1) }));
+</script>
+maxTagCount++maxTagCount--maxTagCount: 2Long Label: a10Long Label: c12+ 3 ... maxTagCount: responsiveLong Label: a10Long Label: c12Long Label: h17Long Label: j19Long Label: k20+ 3 ... maxTagTextLength++maxTagTextLength--maxTagTextLength: 10Long Label...Long Label...Long Label...Long Label...Long Label... 最多显示多少个选项及选项最大长度设置一个数字，超过后自动折叠。
+maxTagCount 也可以设置成响应式，但响应式对性能有所消耗，不推荐在大表单场景下使用。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-space>
+      <a-button type="primary" @click="maxTagCount++">maxTagCount++</a-button>
+      <a-button type="primary" @click="maxTagCount--">maxTagCount--</a-button>
+    </a-space>
+
+    <h2>maxTagCount: {{ maxTagCount }}</h2>
+    <a-select
+      v-model:value="value"
+      mode="multiple"
+      style="width: 100%"
+      placeholder="Select Item..."
+      :max-tag-count="maxTagCount"
+      :options="options"
+    >
+      <template #maxTagPlaceholder="omittedValues">
+        <span style="color: red">+ {{ omittedValues.length }} ...</span>
+      </template>
+    </a-select>
+    <h2>maxTagCount: responsive</h2>
+    <a-select
+      v-model:value="value"
+      mode="multiple"
+      style="width: 100%"
+      placeholder="Select Item..."
+      max-tag-count="responsive"
+      :options="options"
+    ></a-select>
+    <a-space>
+      <a-button type="primary" @click="maxTagTextLength++">maxTagTextLength++</a-button>
+      <a-button type="primary" @click="maxTagTextLength--">maxTagTextLength--</a-button>
+    </a-space>
+    <h2>maxTagTextLength: {{ maxTagTextLength }}</h2>
+    <a-select
+      v-model:value="value"
+      mode="multiple"
+      style="width: 100%"
+      placeholder="Select Item..."
+      :max-tag-text-length="maxTagTextLength"
+      :options="options"
+    ></a-select>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import type { SelectProps } from 'ant-design-vue';
+import { ref } from 'vue';
+const options = ref<SelectProps['options']>([]);
+
+for (let i = 10; i < 36; i++) {
+  const value = i.toString(36) + i;
+  options.value.push({
+    label: `Long Label: ${value}`,
+    value,
+  });
+}
+const maxTagCount = ref(2);
+const maxTagTextLength = ref(10);
+const value = ref(['a10', 'c12', 'h17', 'j19', 'k20']);
+</script>
+Lucy (101)获得选项的文本默认情况下 onChange 里只能拿到 value，如果需要拿到选中的节点文本 label，可以使用 labelInValue 属性。
+选中项的 label 会被包装到 value 中传递给 onChange 等函数，此时 value 是一个对象。TS<template>
+  <a-select
+    v-model:value="value"
+    label-in-value
+    style="width: 120px"
+    :options="options"
+    @change="handleChange"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import type { SelectProps } from 'ant-design-vue';
+import { ref } from 'vue';
+const options = ref<SelectProps['options']>([
+  {
+    value: 'jack',
+    label: 'Jack (100)',
+  },
+  {
+    value: 'lucy',
+    label: 'Lucy (101)',
+  },
+]);
+const handleChange: SelectProps['onChange'] = value => {
+  console.log(value); // { key: "lucy", label: "Lucy (101)" }
+};
+
+const value = ref({ value: 'lucy', label: 'Lucy (101)' });
+</script>
+ZhejiangHangzhou联动省市联动是典型的例子。
+推荐使用 Cascader 组件。TS<template>
+  <a-space>
+    <a-select
+      v-model:value="province"
+      style="width: 120px"
+      :options="provinceData.map(pro => ({ value: pro }))"
+    ></a-select>
+    <a-select
+      v-model:value="secondCity"
+      style="width: 120px"
+      :options="cities.map(city => ({ value: city }))"
+    ></a-select>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { computed, ref, watch } from 'vue';
+const provinceData = ['Zhejiang', 'Jiangsu'];
+const cityData = {
+  Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
+  Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
+};
+const province = ref(provinceData[0]);
+const secondCity = ref(cityData[province.value][0]);
+const cities = computed(() => {
+  return cityData[province.value];
+});
+
+watch(province, val => {
+  secondCity.value = cityData[val][0];
+});
+</script>
+input search text搜索框搜索和远程数据结合。TS<template>
+  <a-select
+    v-model:value="value"
+    show-search
+    placeholder="input search text"
+    style="width: 200px"
+    :default-active-first-option="false"
+    :show-arrow="false"
+    :filter-option="false"
+    :not-found-content="null"
+    :options="data"
+    @search="handleSearch"
+    @change="handleChange"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import jsonp from 'fetch-jsonp';
+
+let timeout: any;
+let currentValue = '';
+
+function fetch(value: string, callback: any) {
+  if (timeout) {
+    clearTimeout(timeout);
+    timeout = null;
+  }
+  currentValue = value;
+
+  function fake() {
+    const params = new URLSearchParams({
+      code: 'utf-8',
+      q: value,
+    });
+    jsonp(`https://suggest.taobao.com/sug?${params}`)
+      .then(response => response.json())
+      .then(d => {
+        if (currentValue === value) {
+          const result = d.result;
+          const data: any[] = [];
+          result.forEach((r: any) => {
+            data.push({
+              value: r[0],
+              label: r[0],
+            });
+          });
+          callback(data);
+        }
+      });
+  }
+
+  timeout = setTimeout(fake, 300);
+}
+
+const data = ref<any[]>([]);
+const value = ref();
+
+const handleSearch = (val: string) => {
+  fetch(val, (d: any[]) => (data.value = d));
+};
+const handleChange = (val: string) => {
+  console.log(val);
+  value.value = val;
+  fetch(val, (d: any[]) => (data.value = d));
+};
+</script>
+ Select users搜索用户一个带有远程搜索，节流控制，请求时序控制，加载状态的多选示例。TS<template>
+  <a-select
+    v-model:value="state.value"
+    mode="multiple"
+    label-in-value
+    placeholder="Select users"
+    style="width: 100%"
+    :filter-option="false"
+    :not-found-content="state.fetching ? undefined : null"
+    :options="state.data"
+    @search="fetchUser"
+  >
+    <template v-if="state.fetching" #notFoundContent>
+      <a-spin size="small" />
+    </template>
+  </a-select>
+</template>
+<script lang="ts" setup>
+import { reactive, watch } from 'vue';
+import { debounce } from 'lodash-es';
+let lastFetchId = 0;
+
+const state = reactive({
+  data: [],
+  value: [],
+  fetching: false,
+});
+
+const fetchUser = debounce(value => {
+  console.log('fetching user', value);
+  lastFetchId += 1;
+  const fetchId = lastFetchId;
+  state.data = [];
+  state.fetching = true;
+  fetch('https://randomuser.me/api/?results=5')
+    .then(response => response.json())
+    .then(body => {
+      if (fetchId !== lastFetchId) {
+        // for fetch callback order
+        return;
+      }
+      const data = body.results.map(user => ({
+        label: `${user.name.first} ${user.name.last}`,
+        value: user.login.username,
+      }));
+      state.data = data;
+      state.fetching = false;
+    });
+}, 300);
+
+watch(state.value, () => {
+  state.data = [];
+  state.fetching = false;
+});
+</script>
+ Inserted are removed隐藏已选择选项隐藏下拉列表中已选择的选项。TS<template>
+  <a-select
+    v-model:value="selectedItems"
+    mode="multiple"
+    placeholder="Inserted are removed"
+    style="width: 100%"
+    :options="filteredOptions.map(item => ({ value: item }))"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import { computed, ref } from 'vue';
+
+const OPTIONS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+const selectedItems = ref<string[]>([]);
+
+const filteredOptions = computed(() => OPTIONS.filter(o => !selectedItems.value.includes(o)));
+</script>
+🇨🇳   China (中国)  China (中国) Note: v-slot:option support from v2.2.5China (中国)   🇨🇳 Note: v-slot:tagRender support from v3.0定制回填内容使用 optionLabelProp 指定回填到选择框的 Option 属性。
+或者使用 tagRender 插槽自定义渲染节点TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-select
+      v-model:value="value"
+      mode="multiple"
+      style="width: 100%"
+      placeholder="select one country"
+      option-label-prop="children"
+    >
+      <a-select-option value="china" label="China">
+        <span role="img" aria-label="China">🇨🇳</span>
+        &nbsp;&nbsp;China (中国)
+      </a-select-option>
+      <a-select-option value="usa" label="USA">
+        <span role="img" aria-label="USA">🇺🇸</span>
+        &nbsp;&nbsp;USA (美国)
+      </a-select-option>
+      <a-select-option value="japan" label="Japan">
+        <span role="img" aria-label="Japan">🇯🇵</span>
+        &nbsp;&nbsp;Japan (日本)
+      </a-select-option>
+      <a-select-option value="korea" label="Korea">
+        <span role="img" aria-label="Korea">🇰🇷</span>
+        &nbsp;&nbsp;Korea (韩国)
+      </a-select-option>
+    </a-select>
+
+    <a-select
+      v-model:value="value"
+      mode="multiple"
+      style="width: 100%"
+      placeholder="select one country"
+      option-label-prop="label"
+      :options="options"
+    >
+      <template #option="{ value: val, label, icon }">
+        <span role="img" :aria-label="val">{{ icon }}</span>
+        &nbsp;&nbsp;{{ label }}
+      </template>
+    </a-select>
+    <span>Note: v-slot:option support from v2.2.5</span>
+  </a-space>
+  <br />
+  <br />
+  <a-space direction="vertical" style="width: 100%">
+    <a-select
+      v-model:value="value"
+      mode="multiple"
+      style="width: 100%"
+      placeholder="select one country"
+      :options="options"
+    >
+      <template #option="{ value: val, label, icon }">
+        <span role="img" :aria-label="val">{{ icon }}</span>
+        &nbsp;&nbsp;{{ label }}
+      </template>
+      <template #tagRender="{ value: val, label, closable, onClose, option }">
+        <a-tag :closable="closable" style="margin-right: 3px" @close="onClose">
+          {{ label }}&nbsp;&nbsp;
+          <span role="img" :aria-label="val">{{ option.icon }}</span>
+        </a-tag>
+      </template>
+    </a-select>
+    <span>Note: v-slot:tagRender support from v3.0</span>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+const value = ref(['china']);
+
+const options = ref([
+  {
+    value: 'china',
+    label: 'China (中国)',
+    icon: '🇨🇳',
+  },
+  {
+    value: 'usa',
+    label: 'USA (美国)',
+    icon: '🇺🇸',
+  },
+  {
+    value: 'japan',
+    label: 'Japan (日本)',
+    icon: '🇯🇵',
+  },
+  {
+    value: 'korea',
+    label: 'Korea (韩国)',
+    icon: '🇨🇰',
+  },
+]);
+watch(value, val => {
+  console.log(`selected:`, val);
+});
+</script>
+Lucy自定义 label、value、options 字段方便数据结构转换。
+仅支持 options 传递，不支持 a-select-option 构造节点。TS<template>
+  <a-select
+    ref="select"
+    v-model:value="value"
+    style="width: 120px"
+    :options="options"
+    :field-names="{ label: 'name', value: 'id', options: 'children' }"
+    @focus="focus"
+    @change="handleChange"
+  ></a-select>
+</template>
+<script lang="ts" setup>
+import type { SelectProps } from 'ant-design-vue';
+import { ref } from 'vue';
+const value = ref('lucy');
+const options = ref<SelectProps['options']>([
+  {
+    id: 'jack',
+    name: 'Jack',
+    children: [
+      {
+        id: 'small jack',
+        name: 'samll Jack',
+      },
+    ],
+  },
+  {
+    id: 'lucy',
+    name: 'Lucy',
+  },
+  {
+    id: 'disabled',
+    name: 'Disabled',
+    disabled: true,
+  },
+  {
+    id: 'yiminghe',
+    name: 'Yiminghe',
+  },
+]);
+
+const focus = () => {
+  console.log('focus');
+};
+
+const handleChange = (value: string) => {
+  console.log(`selected ${value}`);
+};
+</script>
+自定义状态使用 status 为 DatePicker 添加状态，可选 error 或者 warning。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-select status="error" style="width: 100%" />
+    <a-select status="warning" style="width: 100%" />
+  </a-space>
+</template>
+
+<style scoped>
+#components-select-demo-status .ant-select {
+  margin: 0;
+}
+</style>
+
+      API#
+      
+          #
+        
+<a-select>
+  <a-select-option value="lucy">lucy</a-select-option>
+</a-select>
+
+Select props 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+allowClear
+支持清除
+boolean
+false
+
+
+
+autoClearSearchValue
+是否在选中项后清空搜索框，只在 mode 为 multiple 或 tags 时有效。
+boolean
+true
+
+
+
+autofocus
+默认获取焦点
+boolean
+false
+
+
+
+bordered
+是否有边框
+boolean
+true
+
+
+
+clearIcon
+自定义的多选框清空图标
+VNode | slot
+-
+
+
+
+defaultActiveFirstOption
+是否默认高亮第一个选项。
+boolean
+true
+
+
+
+defaultOpen
+是否默认展开下拉菜单
+boolean
+-
+
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+popupClassName
+下拉菜单的 className 属性
+string
+-
+4.0
+
+
+dropdownMatchSelectWidth
+下拉菜单和选择器同宽。默认将设置 min-width，当值小于选择框宽度时会被忽略。false 时会关闭虚拟滚动
+boolean | number
+true
+
+
+
+dropdownMenuStyle
+dropdown 菜单自定义样式
+object
+-
+
+
+
+dropdownRender
+自定义下拉框内容
+({menuNode: VNode, props}) => VNode | v-slot
+-
+
+
+
+dropdownStyle
+下拉菜单的 style 属性
+object
+-
+
+
+
+fieldNames
+自定义节点 label、value、options 的字段
+object
+{ label: label, value: value, options: options }
+3.0
+
+
+filterOption
+是否根据输入项进行筛选。当其为一个函数时，会接收 inputValue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false。
+boolean | function(inputValue, option)
+true
+
+
+
+filterSort
+搜索时对筛选结果项的排序函数, 类似Array.sort里的 compareFunction
+(optionA: Option, optionB: Option) => number
+-
+3.0
+
+
+firstActiveValue
+默认高亮的选项
+string | string[]
+-
+
+
+
+getPopupContainer
+菜单渲染父节点。默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位。
+function(triggerNode)
+() => document.body
+
+
+
+labelInValue
+是否把每个选项的 label 包装到 value 中，会把 Select 的 value 类型从 string 变为 {key: string, label: vNodes, originLabel: any} 的格式, originLabel（3.1） 保持原始类型，如果通过 a-select-option children 构造的节点，该值是是个函数（即 a-select-option 的默认插槽）
+boolean
+false
+
+
+
+listHeight
+设置弹窗滚动高度
+number
+256
+
+
+
+maxTagCount
+最多显示多少个 tag
+number
+-
+
+
+
+maxTagPlaceholder
+隐藏 tag 时显示的内容
+slot | function(omittedValues)
+-
+
+
+
+maxTagTextLength
+最大显示的 tag 文本长度
+number
+-
+
+
+
+menuItemSelectedIcon
+自定义当前选中的条目图标
+VNode | slot
+-
+
+
+
+mode
+设置 Select 的模式为多选或标签
+'multiple' | 'tags' | 'combobox'
+-
+
+
+
+notFoundContent
+当下拉列表为空时显示的内容
+string|slot
+Not Found
+
+
+
+open
+是否展开下拉菜单
+boolean
+-
+
+
+
+option
+通过 option 插槽，自定义节点
+v-slot:option="{value, label, [disabled, key, title]}"
+-
+2.2.5
+
+
+optionFilterProp
+搜索时过滤对应的 option 属性，不支持 children
+string
+value
+
+
+
+optionLabelProp
+回填到选择框的 Option 的属性值，默认是 Option 的子元素。比如在子元素需要高亮效果时，此值可以设为 value。
+string
+children | label(设置 options 时)
+
+
+
+options
+options 数据，如果设置则不需要手动构造 selectOption 节点
+Array<{value, label, [disabled, key, title]}>
+[]
+
+
+
+placeholder
+选择框默认文字
+string|slot
+-
+
+
+
+placement
+选择框弹出的位置
+bottomLeft bottomRight topLeft topRight
+bottomLeft
+3.3.0
+
+
+removeIcon
+自定义的多选框清除图标
+VNode | slot
+-
+
+
+
+searchValue
+控制搜索文本
+string
+-
+
+
+
+showArrow
+是否显示下拉小箭头
+boolean
+单选为 true,多选为 false
+
+
+
+showSearch
+配置是否可搜索
+boolean
+单选为 false,多选为 true
+
+
+
+size
+选择框大小，可选 large small
+string
+default
+
+
+
+status
+设置校验状态
+'error' | 'warning'
+-
+3.3.0
+
+
+suffixIcon
+自定义的选择框后缀图标
+VNode | slot
+-
+
+
+
+tagRender
+自定义 tag 内容 render，仅在 mode 为 multiple 或 tags 时生效
+slot | (props) => any
+-
+3.0
+
+
+tokenSeparators
+自动分词的分隔符，仅在 mode="tags" 时生效
+string[]
+-
+
+
+
+value(v-model)
+指定当前选中的条目
+string|string[]|number|number[]
+-
+
+
+
+virtual
+设置 false 时关闭虚拟滚动
+boolean
+true
+3.0
+
+
+
+
+注意，如果发现下拉菜单跟随页面滚动，或者需要在其他弹层中触发 Select，请尝试使用 getPopupContainer={triggerNode => triggerNode.parentNode} 将下拉弹层渲染节点固定在触发器的父元素中。
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+blur
+失去焦点的时回调
+function
+
+
+change
+选中 option，或 input 的 value 变化（combobox 模式下）时，调用此函数
+function(value, option:Option | Array<Option>)
+
+
+deselect
+取消选中时调用，参数为选中项的 value (或 key) 值，仅在 multiple 或 tags 模式下生效
+function(value，option:Option)
+
+
+dropdownVisibleChange
+展开下拉菜单的回调
+function(open)
+
+
+focus
+获得焦点时回调
+function
+
+
+inputKeyDown
+键盘按下时回调
+function
+
+
+mouseenter
+鼠标移入时回调
+function
+
+
+mouseleave
+鼠标移出时回调
+function
+
+
+popupScroll
+下拉列表滚动时的回调
+function
+
+
+search
+文本框值变化时回调
+function(value: string)
+
+
+select
+被选中时调用，参数为选中项的 value (或 key) 值
+function(value, option:Option)
+
+
+
+Select Methods 
+          #
+        
+
+
+
+名称
+说明
+
+
+
+
+blur()
+取消焦点
+
+
+focus()
+获取焦点
+
+
+
+Option props 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+class
+Option 器类名
+string
+-
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+key
+和 value 含义一致。如果 Vue 需要你设置此项，此项值与 value 的值相同，然后可以省略 value 设置
+string
+
+
+
+title
+选中该 Option 后，Select 的 title
+string
+-
+
+
+value
+默认根据此属性值进行筛选
+string|number
+-
+
+
+
+OptGroup props 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+key
+
+string
+-
+
+
+label
+组名
+string|function(h)|slot
+-
+
+
+
+FAQ 
+          #
+        
+点击 dropdownRender 里的内容浮层关闭怎么办？ 
+          #
+        
+自定义内容点击时会关闭浮层，如果不喜欢关闭，可以通过取消点击事件的默认行为进行阻止。 看下 dropdownRender 例子 里的说明。
+为什么 placeholder 不显示 ？ 
+          #
+        
+placeholder 只有在 value = undefined 才会显示，对于其它的 null、0、'' 等等对于 JS 语言都是有意义的值。
+你可以查看 JS 语言规范 进一步了解详情。
+也可以查看 antd issue 查看讨论情况。
+
+      最后更新 : 2025/02/17分段控制器骨架屏Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

@@ -1,0 +1,220 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 文字和图标 加载中 不可用 两种大小 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Switch 开关开关选择器。
+何时使用 
+          #
+        
+
+需要表示开关状态/两种状态之间的切换时；
+和 checkbox 的区别是，切换 switch 会直接触发状态改变，而 checkbox 一般用于状态标记，需要和提交操作配合。
+
+代码演示基本用法最简单的用法。TS<template>
+  <a-switch v-model:checked="checked" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const checked = ref<boolean>(false);
+</script>
+开关10文字和图标带有文字和图标。TS<template>
+  <a-space direction="vertical">
+    <a-switch v-model:checked="state.checked1" checked-children="开" un-checked-children="关" />
+    <a-switch v-model:checked="state.checked2" checked-children="1" un-checked-children="0" />
+    <a-switch v-model:checked="state.checked3">
+      <template #checkedChildren><check-outlined /></template>
+      <template #unCheckedChildren><close-outlined /></template>
+    </a-switch>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons-vue';
+const state = reactive({
+  checked1: true,
+  checked2: false,
+  checked3: false,
+});
+</script>
+加载中标识开关操作仍在执行中。TS<template>
+  <a-space direction="vertical">
+    <a-switch v-model:checked="state.checked1" loading />
+    <a-switch v-model:checked="state.checked2" size="small" loading />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+const state = reactive({
+  checked1: true,
+  checked2: false,
+});
+</script>
+Toggle disabled不可用Switch 失效状态。TS<template>
+  <a-space direction="vertical">
+    <a-switch v-model:checked="checked" :disabled="disabled" />
+    <a-button type="primary" @click="onToggle">Toggle disabled</a-button>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const checked = ref<boolean>(true);
+const disabled = ref<boolean>(true);
+
+const onToggle = () => {
+  disabled.value = !disabled.value;
+};
+</script>
+两种大小size="small" 表示小号开关。TS<template>
+  <a-space direction="vertical">
+    <a-switch v-model:checked="state.checked1" />
+    <a-switch v-model:checked="state.checked2" size="small" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+const state = reactive({
+  checked1: true,
+  checked2: false,
+});
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+autofocus
+组件自动获取焦点
+boolean
+false
+
+
+
+checked(v-model)
+指定当前是否选中
+checkedValue | unCheckedValue
+false
+
+
+
+checkedChildren
+选中时的内容
+string|slot
+
+
+
+
+checkedValue
+选中时的值
+boolean | string | number
+true
+2.2.1
+
+
+disabled
+是否禁用
+boolean
+false
+
+
+
+loading
+加载中的开关
+boolean
+false
+
+
+
+size
+开关大小，可选值：default small
+string
+default
+
+
+
+unCheckedChildren
+非选中时的内容
+string|slot
+
+
+
+
+unCheckedValue
+非选中时的值
+boolean | string | number
+false
+2.2.1
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+
+change
+变化时回调函数
+Function(checked: boolean | string | number, event: Event)
+
+
+
+click
+点击时回调函数
+Function(checked: boolean | string | number, event: Event)
+
+
+
+
+方法 
+          #
+        
+
+
+
+名称
+描述
+
+
+
+
+blur()
+移除焦点
+
+
+focus()
+获取焦点
+
+
+
+
+      步骤条表格Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

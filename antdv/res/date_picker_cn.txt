@@ -1,0 +1,1215 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 无边框 日期时间选择 不可选择日期和时间 预设范围 三种大小 受控面板 后缀图标 弹出位置 范围选择器 日期格式 禁用 选择不超过七天的范围 额外的页脚 定制日期单元格 切换不同的选择器 自定义状态 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中DatePicker 日期选择框输入或选择日期的控件。
+何时使用 
+          #
+        
+当用户需要输入一个日期，可以点击标准输入框，弹出日期面板进行选择。
+代码演示基本用法最简单的用法，在浮层中可以选择或者输入日期。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-date-picker v-model:value="value1" />
+    <a-date-picker v-model:value="value2" picker="week" />
+    <a-date-picker v-model:value="value3" picker="month" />
+    <a-date-picker v-model:value="value4" picker="quarter" />
+    <a-date-picker v-model:value="value5" picker="year" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { Dayjs } from 'dayjs';
+const value1 = ref<Dayjs>();
+const value2 = ref<Dayjs>();
+const value3 = ref<Dayjs>();
+const value4 = ref<Dayjs>();
+const value5 = ref<Dayjs>();
+</script>
+无边框无边框样式。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-date-picker v-model:value="value1" :bordered="false" />
+    <a-date-picker v-model:value="value2" picker="week" :bordered="false" />
+    <a-date-picker v-model:value="value3" picker="month" :bordered="false" />
+    <a-date-picker v-model:value="value4" picker="quarter" :bordered="false" />
+    <a-date-picker v-model:value="value5" picker="year" :bordered="false" />
+
+    <a-range-picker v-model:value="value6" :bordered="false" />
+    <a-range-picker v-model:value="value7" picker="week" :bordered="false" />
+    <a-range-picker v-model:value="value8" picker="month" :bordered="false" />
+    <a-range-picker v-model:value="value9" picker="year" :bordered="false" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { Dayjs } from 'dayjs';
+const value1 = ref<Dayjs>();
+const value2 = ref<Dayjs>();
+const value3 = ref<Dayjs>();
+const value4 = ref<Dayjs>();
+const value5 = ref<Dayjs>();
+const value6 = ref<[Dayjs, Dayjs]>();
+const value7 = ref<[Dayjs, Dayjs]>();
+const value8 = ref<[Dayjs, Dayjs]>();
+const value9 = ref<[Dayjs, Dayjs]>();
+</script>
+日期时间选择增加选择时间功能，当 showTime 为一个对象时，其属性会传递给内建的 TimePicker。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-date-picker show-time placeholder="Select Time" @change="onChange" @ok="onOk" />
+    <a-range-picker
+      :show-time="{ format: 'HH:mm' }"
+      format="YYYY-MM-DD HH:mm"
+      :placeholder="['Start Time', 'End Time']"
+      @change="onRangeChange"
+      @ok="onRangeOk"
+    />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { Dayjs } from 'dayjs';
+
+const onChange = (value: Dayjs, dateString: string) => {
+  console.log('Selected Time: ', value);
+  console.log('Formatted Selected Time: ', dateString);
+};
+
+const onOk = (value: Dayjs) => {
+  console.log('onOk: ', value);
+};
+
+const onRangeChange = (value: [Dayjs, Dayjs], dateString: [string, string]) => {
+  console.log('Selected Time: ', value);
+  console.log('Formatted Selected Time: ', dateString);
+};
+
+const onRangeOk = (value: [Dayjs, Dayjs]) => {
+  console.log('onOk: ', value);
+};
+</script>
+不可选择日期和时间可用 disabledDate 和 disabledTime 分别禁止选择部分日期和时间，其中 disabledTime 需要和 showTime 一起使用。TS<template>
+  <a-space direction="vertical">
+    <a-date-picker
+      v-model:value="value1"
+      format="YYYY-MM-DD HH:mm:ss"
+      :disabled-date="disabledDate"
+      :disabled-time="disabledDateTime"
+      :show-time="{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }"
+    />
+    <a-date-picker v-model:value="value2" :disabled-date="disabledDate" picker="month" />
+    <a-range-picker v-model:value="value3" :disabled-date="disabledDate" />
+    <a-range-picker
+      v-model:value="value4"
+      style="width: 400px"
+      :disabled-date="disabledDate"
+      :disabled-time="disabledRangeTime"
+      :show-time="{
+        hideDisabledOptions: true,
+        defaultValue: [dayjs('00:00:00', 'HH:mm:ss'), dayjs('11:59:59', 'HH:mm:ss')],
+      }"
+      format="YYYY-MM-DD HH:mm:ss"
+    />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import dayjs, { Dayjs } from 'dayjs';
+import { ref } from 'vue';
+const range = (start: number, end: number) => {
+  const result = [];
+
+  for (let i = start; i < end; i++) {
+    result.push(i);
+  }
+
+  return result;
+};
+
+const disabledDate = (current: Dayjs) => {
+  // Can not select days before today and today
+  return current && current < dayjs().endOf('day');
+};
+
+const disabledDateTime = () => {
+  return {
+    disabledHours: () => range(0, 24).splice(4, 20),
+    disabledMinutes: () => range(30, 60),
+    disabledSeconds: () => [55, 56],
+  };
+};
+
+const disabledRangeTime = (_: Dayjs, type: 'start' | 'end') => {
+  if (type === 'start') {
+    return {
+      disabledHours: () => range(0, 60).splice(4, 20),
+      disabledMinutes: () => range(30, 60),
+      disabledSeconds: () => [55, 56],
+    };
+  }
+  return {
+    disabledHours: () => range(0, 60).splice(20, 4),
+    disabledMinutes: () => range(0, 31),
+    disabledSeconds: () => [55, 56],
+  };
+};
+
+const value1 = ref<Dayjs>();
+const value2 = ref<Dayjs>();
+const value3 = ref<[Dayjs, Dayjs]>();
+const value4 = ref<[Dayjs, Dayjs]>();
+</script>
+预设范围可以预设常用的日期范围以提高用户体验。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-date-picker :presets="presets" @change="onChange" />
+    <a-range-picker :presets="rangePresets" @change="onRangeChange" />
+    <a-range-picker
+      style="width: 400px"
+      show-time
+      format="YYYY/MM/DD HH:mm:ss"
+      :presets="rangePresets"
+      @change="onRangeChange"
+    />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import dayjs, { Dayjs } from 'dayjs';
+import { ref } from 'vue';
+type RangeValue = [Dayjs, Dayjs];
+const onChange = (date: Dayjs) => {
+  if (date) {
+    console.log('Date: ', date);
+  } else {
+    console.log('Clear');
+  }
+};
+const onRangeChange = (dates: RangeValue, dateStrings: string[]) => {
+  if (dates) {
+    console.log('From: ', dates[0], ', to: ', dates[1]);
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+  } else {
+    console.log('Clear');
+  }
+};
+
+const presets = ref([
+  { label: 'Yesterday', value: dayjs().add(-1, 'd') },
+  { label: 'Last Week', value: dayjs().add(-7, 'd') },
+  { label: 'Last Month', value: dayjs().add(-1, 'month') },
+]);
+
+const rangePresets = ref([
+  { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
+  { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
+  { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
+  { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+]);
+</script>
+LargeDefaultSmall三种大小三种大小的输入框，若不设置，则为 default。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-radio-group v-model:value="size">
+      <a-radio-button value="large">Large</a-radio-button>
+      <a-radio-button value="default">Default</a-radio-button>
+      <a-radio-button value="small">Small</a-radio-button>
+    </a-radio-group>
+    <a-date-picker :size="size" />
+    <a-date-picker :size="size" placeholder="Select Month" picker="month" />
+    <a-range-picker :size="size" />
+    <a-date-picker :size="size" placeholder="Select Week" picker="week" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const size = ref<any>('default');
+</script>
+受控面板通过组合 mode 与 onPanelChange 控制要展示的面板。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-date-picker
+      :mode="mode1"
+      show-time
+      @openChange="handleOpenChange1"
+      @panelChange="handlePanelChange1"
+    />
+    <a-range-picker
+      :placeholder="['Start month', 'End month']"
+      format="YYYY-MM"
+      :value="value"
+      :mode="mode2"
+      @panelChange="handlePanelChange2"
+      @change="handleChange"
+    />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { Dayjs } from 'dayjs';
+const mode1 = ref<any>('time');
+const mode2 = ref<any>(['month', 'month']);
+const value = ref<[Dayjs, Dayjs]>();
+
+const handleOpenChange1 = (open: boolean) => {
+  if (open) {
+    mode1.value = 'time';
+  }
+};
+
+const handleChange = (val: [Dayjs, Dayjs]) => {
+  value.value = val;
+};
+
+const handlePanelChange1 = (_val: [Dayjs, Dayjs], mode: any) => {
+  mode1.value = mode;
+};
+
+const handlePanelChange2 = (val: [Dayjs, Dayjs], mode: any[]) => {
+  value.value = val;
+  mode2.value = [mode[0] === 'date' ? 'month' : mode[0], mode[1] === 'date' ? 'month' : mode[1]];
+};
+</script>
+abababab后缀图标通过 suffixIcon 自定义后缀图标TS<template>
+  <a-space direction="vertical">
+    <a-date-picker @change="onChange">
+      <template #suffixIcon>
+        <SmileOutlined />
+      </template>
+    </a-date-picker>
+    <a-date-picker placeholder="Select month" picker="month" @change="onChange">
+      <template #suffixIcon>
+        <SmileOutlined />
+      </template>
+    </a-date-picker>
+    <a-range-picker @change="onRangeChange">
+      <template #suffixIcon>
+        <SmileOutlined />
+      </template>
+    </a-range-picker>
+    <a-date-picker placeholder="Select week" picker="week" @change="onChange">
+      <template #suffixIcon>
+        <SmileOutlined />
+      </template>
+    </a-date-picker>
+    <a-date-picker suffix-icon="ab" @change="onChange" />
+    <a-date-picker suffix-icon="ab" placeholder="Select month" picker="month" @change="onChange" />
+    <a-range-picker suffix-icon="ab" @change="onRangeChange" />
+    <a-date-picker suffix-icon="ab" placeholder="Select week" picker="week" @change="onChange" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { SmileOutlined } from '@ant-design/icons-vue';
+import { Dayjs } from 'dayjs';
+const onChange = (date: Dayjs | string, dateString: string) => {
+  console.log(date, dateString);
+};
+
+const onRangeChange = (date: [Dayjs, Dayjs], dateString: [string, string]) => {
+  console.log(date, dateString);
+};
+</script>
+topLefttopRightbottomLeftbottomRight弹出位置可以通过 placement 手动指定弹出的位置。TS<template>
+  <a-radio-group v-model:value="placement">
+    <a-radio-button value="topLeft">topLeft</a-radio-button>
+    <a-radio-button value="topRight">topRight</a-radio-button>
+    <a-radio-button value="bottomLeft">bottomLeft</a-radio-button>
+    <a-radio-button value="bottomRight">bottomRight</a-radio-button>
+  </a-radio-group>
+  <br />
+  <br />
+  <a-space direction="vertical" :size="12">
+    <a-date-picker v-model:value="value1" :placement="placement" />
+    <a-range-picker v-model:value="value2" :placement="placement" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { Dayjs } from 'dayjs';
+const placement = ref('topLeft' as const);
+const value1 = ref<Dayjs>();
+const value2 = ref<[Dayjs, Dayjs]>();
+</script>
+范围选择器通过设置 picker 属性，指定范围选择器类型。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-range-picker v-model:value="value1" />
+    <a-range-picker v-model:value="value2" show-time />
+    <a-range-picker v-model:value="value3" picker="week" />
+    <a-range-picker v-model:value="value4" picker="month" />
+    <a-range-picker v-model:value="value5" picker="year" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { Dayjs } from 'dayjs';
+type RangeValue = [Dayjs, Dayjs];
+const value1 = ref<RangeValue>();
+const value2 = ref<RangeValue>();
+const value3 = ref<RangeValue>();
+const value4 = ref<RangeValue>();
+const value5 = ref<RangeValue>();
+</script>
+日期格式使用 format 属性，可以自定义日期显示格式。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-date-picker v-model:value="value1" :format="dateFormat" />
+    <a-date-picker v-model:value="value2" :format="dateFormatList" />
+    <a-date-picker v-model:value="value3" :format="monthFormat" picker="month" />
+    <a-range-picker v-model:value="value4" :format="dateFormat" />
+    <a-date-picker v-model:value="value5" :format="customFormat" />
+    <a-date-picker v-model:value="value6" :format="customWeekStartEndFormat" picker="week" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import dayjs, { Dayjs } from 'dayjs';
+import { ref } from 'vue';
+const dateFormat = 'YYYY/MM/DD';
+const weekFormat = 'MM/DD';
+const monthFormat = 'YYYY/MM';
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+
+const customWeekStartEndFormat = value =>
+  `${dayjs(value).startOf('week').format(weekFormat)} ~ ${dayjs(value)
+    .endOf('week')
+    .format(weekFormat)}`;
+const value1 = ref<Dayjs>(dayjs('2015/01/01', dateFormat));
+const value2 = ref<Dayjs>(dayjs('01/01/2015', dateFormatList[0]));
+const value3 = ref<Dayjs>(dayjs('2015/01', monthFormat));
+const value4 = ref<[Dayjs, Dayjs]>([
+  dayjs('2015/01/01', dateFormat),
+  dayjs('2015/01/01', dateFormat),
+]);
+const value5 = ref<Dayjs>(dayjs('2015/01/01', dateFormat));
+const value6 = ref<Dayjs>(dayjs());
+const customFormat = value => `custom format: ${value.format(dateFormat)}`;
+</script>
+禁用选择框的不可用状态。TS<template>
+  <a-space direction="vertical">
+    <a-date-picker v-model:value="value1" />
+    <a-date-picker v-model:value="value2" disabled picker="month" />
+    <a-range-picker v-model:value="value3" disabled />
+    <a-range-picker v-model:value="value4" :disabled="[false, true]" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import dayjs, { Dayjs } from 'dayjs';
+import { ref } from 'vue';
+const dateFormat = 'YYYY-MM-DD';
+const value1 = ref<Dayjs>(dayjs('2015-06-06', dateFormat));
+const value2 = ref<Dayjs>(dayjs('2015-06', 'YYYY-MM'));
+const value3 = ref<[Dayjs, Dayjs]>([
+  dayjs('2015-06-06', dateFormat),
+  dayjs('2015-06-06', dateFormat),
+]);
+const value4 = ref<[Dayjs, Dayjs]>([
+  dayjs('2019-09-03', dateFormat),
+  dayjs('2019-11-22', dateFormat),
+]);
+</script>
+选择不超过七天的范围这里举例如何用 onCalendarChange 和 disabledDate 来限制动态的日期区间选择。TS<template>
+  <a-range-picker
+    :value="hackValue || value"
+    :disabled-date="disabledDate"
+    @change="onChange"
+    @openChange="onOpenChange"
+    @calendarChange="onCalendarChange"
+  />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { Dayjs } from 'dayjs';
+type RangeValue = [Dayjs, Dayjs];
+const dates = ref<RangeValue>();
+const value = ref<RangeValue>();
+const hackValue = ref<RangeValue>();
+
+const disabledDate = (current: Dayjs) => {
+  if (!dates.value || (dates.value as any).length === 0) {
+    return false;
+  }
+  const tooLate = dates.value[0] && current.diff(dates.value[0], 'days') > 7;
+  const tooEarly = dates.value[1] && dates.value[1].diff(current, 'days') > 7;
+  return tooEarly || tooLate;
+};
+
+const onOpenChange = (open: boolean) => {
+  if (open) {
+    dates.value = [] as any;
+    hackValue.value = [] as any;
+  } else {
+    hackValue.value = undefined;
+  }
+};
+
+const onChange = (val: RangeValue) => {
+  value.value = val;
+};
+
+const onCalendarChange = (val: RangeValue) => {
+  dates.value = val;
+};
+</script>
+额外的页脚在浮层中加入额外的页脚，以满足某些定制信息的需求。TS<template>
+  <a-space direction="vertical">
+    <a-date-picker>
+      <template #renderExtraFooter>extra footer</template>
+    </a-date-picker>
+    <a-date-picker show-time>
+      <template #renderExtraFooter>extra footer</template>
+    </a-date-picker>
+    <a-range-picker>
+      <template #renderExtraFooter>extra footer</template>
+    </a-range-picker>
+    <a-range-picker show-time>
+      <template #renderExtraFooter>extra footer</template>
+    </a-range-picker>
+    <a-date-picker placeholder="Select month" picker="month">
+      <template #renderExtraFooter>extra footer</template>
+    </a-date-picker>
+  </a-space>
+</template>
+定制日期单元格使用 dateRender 可以自定义日期单元格的内容和样式。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-date-picker v-model:value="value1">
+      <template #dateRender="{ current }">
+        <div class="ant-picker-cell-inner" :style="getCurrentStyle(current)">
+          {{ current.date() }}
+        </div>
+      </template>
+    </a-date-picker>
+    <a-range-picker v-model:value="value2">
+      <template #dateRender="{ current }">
+        <div class="ant-picker-cell-inner" :style="getCurrentStyle(current)">
+          {{ current.date() }}
+        </div>
+      </template>
+    </a-range-picker>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import type { Dayjs } from 'dayjs';
+import { ref } from 'vue';
+import type { CSSProperties } from 'vue';
+const getCurrentStyle = (current: Dayjs) => {
+  const style: CSSProperties = {};
+
+  if (current.date() === 1) {
+    style.border = '1px solid #1890ff';
+    style.borderRadius = '50%';
+  }
+
+  return style;
+};
+const value1 = ref<Dayjs>();
+const value2 = ref<[Dayjs, Dayjs]>();
+</script>
+Time切换不同的选择器提供选择器，自由切换不同类型的日期选择器，常用于日期筛选场合。TS<template>
+  <a-space direction="vertical" :size="12">
+    <a-select v-model:value="type">
+      <a-select-option value="time">Time</a-select-option>
+      <a-select-option value="date">Date</a-select-option>
+      <a-select-option value="week">Week</a-select-option>
+      <a-select-option value="month">Month</a-select-option>
+      <a-select-option value="quarter">Quarter</a-select-option>
+      <a-select-option value="year">Year</a-select-option>
+    </a-select>
+    <template v-if="type === 'time'">
+      <a-time-picker />
+    </template>
+    <template v-else>
+      <a-date-picker :picker="type" />
+    </template>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const type = ref<any>('time');
+</script>
+自定义状态使用 status 为 DatePicker 添加状态，可选 error 或者 warning。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-date-picker status="error" />
+    <a-date-picker status="warning" />
+    <a-range-picker status="error" />
+    <a-range-picker status="warning" />
+  </a-space>
+</template>
+
+      API#
+      
+          #
+        
+日期类组件包括以下五种形式。
+
+DatePicker
+DatePicker[picker="month"]
+DatePicker[picker="week"]
+DatePicker[picker="year"]
+DatePicker[picker="quarter"]
+RangePicker
+
+国际化配置 
+          #
+        
+默认配置为 en-US，如果你需要设置其他语言，推荐在入口处使用我们提供的国际化组件，详见：ConfigProvider 国际化。
+如有特殊需求（仅修改单一组件的语言），请使用 locale 参数，参考：默认配置。
+<template>
+  <a-date-picker v-model:value="value" :locale="locale" />
+</template>
+<script>
+  import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+  import { defineComponent } from 'vue';
+  export default defineComponent({
+    setup() {
+      return {
+        locale,
+        value: null,
+      };
+    },
+  });
+</script>
+
+<template>
+  <a-config-provider :locale="locale">
+    <a-date-picker v-model:value="value" />
+  </a-config-provider>
+</template>
+<script>
+  // 默认语言为 en-US，如果你需要设置其他语言，推荐在入口文件全局设置 locale
+  import dayjs from 'dayjs';
+  import 'dayjs/locale/zh-cn';
+  import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+  import { defineComponent } from 'vue';
+  dayjs.locale('zh-cn');
+  export default defineComponent({
+    setup() {
+      return {
+        value: dayjs('2015-01-01', 'YYYY-MM-DD')
+        dayjs,
+        locale
+      };
+    },
+  });
+</script>
+
+共同的 API 
+          #
+        
+以下 API 为 DatePicker、 RangePicker 共享的 API。
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+allowClear
+是否显示清除按钮
+boolean
+true
+
+
+
+autofocus
+自动获取焦点
+boolean
+false
+
+
+
+bordered
+是否有边框
+boolean
+true
+
+
+
+dateRender
+自定义日期单元格的内容
+v-slot:dateRender="{current, today}"
+-
+
+
+
+disabled
+禁用
+boolean
+false
+
+
+
+disabledDate
+不可选择的日期
+(currentDate: dayjs) => boolean
+-
+
+
+
+format
+设置日期格式，为数组时支持多格式匹配，展示以第一个为准。配置参考 dayjs，支持自定义格式
+formatType
+YYYY-MM-DD
+
+
+
+popupClassName
+额外的弹出日历 className
+string
+-
+
+
+
+getPopupContainer
+定义浮层的容器，默认为 body 上新建 div
+function(trigger)
+-
+
+
+
+inputReadOnly
+设置输入框为只读（避免在移动设备上打开虚拟键盘）
+boolean
+false
+
+
+
+locale
+国际化配置
+object
+默认配置
+-
+
+
+mode
+日期面板的状态
+time | date | month | year | decade
+-
+
+
+
+nextIcon
+自定义下一个图标
+slot
+-
+3.0
+
+
+open
+控制弹层是否展开
+boolean
+-
+
+
+
+picker
+设置选择器类型
+date | week | month | quarter | year
+date
+quarter
+
+
+placeholder
+输入框提示文字
+string | [string, string]
+-
+
+
+
+placement
+选择框弹出的位置
+bottomLeft bottomRight topLeft topRight
+bottomLeft
+3.3.0
+
+
+popupStyle
+额外的弹出日历样式
+CSSProperties
+{}
+
+
+
+prevIcon
+自定义上一个图标
+slot
+-
+3.0
+
+
+presets
+预设时间范围快捷选择
+{ label: slot, value: dayjs }[]
+-
+4.0
+
+
+size
+输入框大小，large 高度为 40px，small 为 24px，默认是 32px
+large | middle | small
+-
+
+
+
+status
+设置校验状态
+'error' | 'warning'
+-
+3.3.0
+
+
+suffixIcon
+自定义的选择框后缀图标
+v-slot:suffixIcon
+-
+
+
+
+superNextIcon
+自定义 << 切换图标
+slot
+-
+3.0
+
+
+superPrevIcon
+自定义 >> 切换图标
+slot
+-
+3.0
+
+
+valueFormat
+可选，绑定值的格式，对 value、defaultValue、defaultPickerValue 起作用。不指定则绑定值为 dayjs 对象
+string，具体格式
+-
+
+
+
+
+共有的事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+
+openChange
+弹出日历和关闭日历的回调
+function(status)
+
+
+
+panelChange
+日期面板变化时的回调
+function(value, mode)
+-
+
+
+
+共同的方法 
+          #
+        
+
+
+
+名称
+描述
+
+
+
+
+blur()
+移除焦点
+
+
+focus()
+获取焦点
+
+
+
+DatePicker 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+defaultPickerValue
+默认面板日期
+dayjs
+-
+
+
+
+disabledTime
+不可选择的时间
+function(date)
+-
+
+
+
+format
+展示的日期格式，配置参考 dayjs
+formatType
+YYYY-MM-DD
+
+
+
+renderExtraFooter
+在面板中添加额外的页脚
+v-slot:renderExtraFooter="mode"
+-
+
+
+
+showNow
+当设定了 showTime 的时候，面板是否显示“此刻”按钮
+boolean
+-
+
+
+
+showTime
+增加时间选择功能
+Object | boolean
+TimePicker Options
+
+
+
+showTime.defaultValue
+设置用户选择日期时默认的时分秒，例子
+dayjs
+dayjs()
+
+
+
+showToday
+是否展示“今天”按钮
+boolean
+true
+
+
+
+value(v-model)
+日期
+dayjs
+-
+
+
+
+
+DatePicker 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+change
+时间发生变化的回调
+function(date: dayjs | string, dateString: string)
+
+
+ok
+点击确定按钮的回调
+function(date: dayjs | string)
+
+
+
+DatePicker[picker=year] 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+format
+展示的日期格式，配置参考 dayjs
+formatType
+YYYY
+
+
+
+
+DatePicker[picker=quarter] 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+format
+展示的日期格式，配置参考 dayjs
+formatType
+YYYY-\QQ
+
+
+
+
+DatePicker[picker=month] 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+format
+展示的日期格式，配置参考 dayjs
+formatType
+YYYY-MM
+
+
+
+monthCellRender
+自定义的月份内容渲染方法
+v-slot:monthCellRender="{current, locale}"
+-
+
+
+
+
+DatePicker[picker=week] 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+format
+展示的日期格式，配置参考 dayjs
+formatType
+YYYY-wo
+
+
+
+
+RangePicker 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+allowEmpty
+允许起始项部分为空
+[boolean, boolean]
+[false, false]
+
+
+
+dateRender
+自定义日期单元格的内容。
+v-slot:dateRender="{current: dayjs, today: dayjs, info: { range: start | end }}"
+-
+
+
+
+defaultPickerValue
+默认面板日期
+dayjs[]
+-
+
+
+
+disabled
+禁用起始项
+[boolean, boolean]
+-
+
+
+
+disabledTime
+不可选择的时间
+function(date: dayjs, partial: start | end)
+-
+
+
+
+format
+展示的日期格式
+formatType
+YYYY-MM-DD HH:mm:ss
+
+
+
+presets
+预设时间范围快捷选择
+{ label: slot, value: dayjs[] }[]
+-
+4.0
+
+
+ranges
+预设时间范围快捷选择
+{ [range: string]: dayjs[] } | { [range: string]: () => dayjs[] }
+-
+
+
+
+renderExtraFooter
+在面板中添加额外的页脚
+v-slot:renderExtraFooter="mode"
+-
+
+
+
+separator
+设置分隔符
+string | v-slot:separator
+<SwapRightOutlined />
+
+
+
+showTime
+增加时间选择功能
+Object|boolean
+TimePicker Options
+
+
+
+showTime.defaultValue
+设置用户选择日期时默认的时分秒，例子
+dayjs[]
+[dayjs(), dayjs()]
+
+
+
+value(v-model)
+日期
+dayjs[]
+-
+
+
+
+
+RangePicker 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+calendarChange
+待选日期发生变化的回调
+function(dates: [dayjs, dayjs] | [string, string], dateStrings: [string, string], info: { range:start|end })
+
+
+change
+日期范围发生变化的回调
+function(dates: [dayjs, dayjs] | [string, string], dateStrings: [string, string])
+
+
+ok
+点击确定按钮的回调
+function(dates: [dayjs, dayjs] | [string, string])
+
+
+
+formatType 
+          #
+        
+import type { Dayjs } from 'dayjs';
+
+type Generic = string;
+type GenericFn = (value: Dayjs) => string;
+
+export type FormatType = Generic | GenericFn | Array<Generic | GenericFn>;
+
+FAQ 
+          #
+        
+如何在 DatePicker 中使用自定义日期库（如 moment.js | dayjs | date-fns）？ 
+          #
+        
+请参考《自定义日期库》
+为何全局修改 dayjs.locale 不生效？ 
+          #
+        
+DatePicker 默认 locale 为 en。你可以通过 DatePicker 的 locale 属性来单独设置，也可以通过 ConfigProvider locale 属性来配置。
+如何修改周的起始日？ 
+          #
+        
+请使用正确的语言包（#5605），或者修改 dayjs 的 locale 配置：https://codesandbox.io/s/dayjs-day-of-week-x9tuj2?file=/demo.tsx
+import dayjs from 'dayjs';
+import updateLocale from 'dayjs/plugin/updateLocale';
+import 'dayjs/locale/zh-cn';
+
+dayjs.extend(updateLocale);
+dayjs.updateLocale('zh-cn', {
+  weekStart: 0,
+});
+
+
+      最后更新 : 2024/06/04全局化配置描述列表Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

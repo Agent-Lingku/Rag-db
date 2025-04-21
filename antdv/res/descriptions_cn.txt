@@ -1,0 +1,337 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 带边框的 自定义尺寸 响应式 垂直 垂直带边框的 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Descriptions 描述列表成组展示多个只读字段。
+何时使用 
+          #
+        
+常见于详情页的信息展示。
+代码演示User InfoUserNameZhou MaomaoTelephone1810000000LiveHangzhou, ZhejiangRemarkemptyAddress No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China 基本简单的展示。TS<template>
+  <a-descriptions title="User Info">
+    <a-descriptions-item label="UserName">Zhou Maomao</a-descriptions-item>
+    <a-descriptions-item label="Telephone">1810000000</a-descriptions-item>
+    <a-descriptions-item label="Live">Hangzhou, Zhejiang</a-descriptions-item>
+    <a-descriptions-item label="Remark">empty</a-descriptions-item>
+    <a-descriptions-item label="Address">
+      No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+    </a-descriptions-item>
+  </a-descriptions>
+</template>
+User InfoProductCloud DatabaseBilling ModePrepaidAutomatic RenewalYESOrder time2018-04-24 18:00:00Usage Time2019-04-24 18:00:00StatusRunningNegotiated Amount$80.00Discount$20.00Official Receipts$60.00Config Info Data disk type: MongoDB  Database version: 3.4  Package: dds.mongo.mid  Storage space: 10 GB  Replication factor: 3  Region: East China 1 带边框的带边框和背景颜色列表。TS<template>
+  <a-descriptions title="User Info" bordered>
+    <a-descriptions-item label="Product">Cloud Database</a-descriptions-item>
+    <a-descriptions-item label="Billing Mode">Prepaid</a-descriptions-item>
+    <a-descriptions-item label="Automatic Renewal">YES</a-descriptions-item>
+    <a-descriptions-item label="Order time">2018-04-24 18:00:00</a-descriptions-item>
+    <a-descriptions-item label="Usage Time" :span="2">2019-04-24 18:00:00</a-descriptions-item>
+    <a-descriptions-item label="Status" :span="3">
+      <a-badge status="processing" text="Running" />
+    </a-descriptions-item>
+    <a-descriptions-item label="Negotiated Amount">$80.00</a-descriptions-item>
+    <a-descriptions-item label="Discount">$20.00</a-descriptions-item>
+    <a-descriptions-item label="Official Receipts">$60.00</a-descriptions-item>
+    <a-descriptions-item label="Config Info">
+      Data disk type: MongoDB
+      <br />
+      Database version: 3.4
+      <br />
+      Package: dds.mongo.mid
+      <br />
+      Storage space: 10 GB
+      <br />
+      Replication factor: 3
+      <br />
+      Region: East China 1
+      <br />
+    </a-descriptions-item>
+  </a-descriptions>
+</template>
+defaultmiddlesmallCustom SizeEditProductCloud DatabaseBillingPrepaidTime18:00:00Amount$80.00Discount$20.00Official$60.00Config Info Data disk type: MongoDB  Database version: 3.4  Package: dds.mongo.mid  Storage space: 10 GB  Replication factor: 3  Region: East China 1 Custom SizeEditProductCloud DatabaseBillingPrepaidTime18:00:00Amount$80.00Discount$20.00Official$60.00自定义尺寸自定义尺寸，适应在各种容器中展示。TS<template>
+  <div>
+    <a-radio-group v-model:value="size" @change="onChange">
+      <a-radio value="default">default</a-radio>
+      <a-radio value="middle">middle</a-radio>
+      <a-radio value="small">small</a-radio>
+    </a-radio-group>
+    <br />
+    <br />
+    <a-descriptions bordered title="Custom Size" :size="size">
+      <template #extra>
+        <a-button type="primary">Edit</a-button>
+      </template>
+      <a-descriptions-item label="Product">Cloud Database</a-descriptions-item>
+      <a-descriptions-item label="Billing">Prepaid</a-descriptions-item>
+      <a-descriptions-item label="Time">18:00:00</a-descriptions-item>
+      <a-descriptions-item label="Amount">$80.00</a-descriptions-item>
+      <a-descriptions-item label="Discount">$20.00</a-descriptions-item>
+      <a-descriptions-item label="Official">$60.00</a-descriptions-item>
+      <a-descriptions-item label="Config Info">
+        Data disk type: MongoDB
+        <br />
+        Database version: 3.4
+        <br />
+        Package: dds.mongo.mid
+        <br />
+        Storage space: 10 GB
+        <br />
+        Replication factor: 3
+        <br />
+        Region: East China 1
+        <br />
+      </a-descriptions-item>
+    </a-descriptions>
+    <br />
+    <br />
+    <a-descriptions title="Custom Size" :size="size">
+      <template #extra>
+        <a-button type="primary">Edit</a-button>
+      </template>
+      <a-descriptions-item label="Product">Cloud Database</a-descriptions-item>
+      <a-descriptions-item label="Billing">Prepaid</a-descriptions-item>
+      <a-descriptions-item label="Time">18:00:00</a-descriptions-item>
+      <a-descriptions-item label="Amount">$80.00</a-descriptions-item>
+      <a-descriptions-item label="Discount">$20.00</a-descriptions-item>
+      <a-descriptions-item label="Official">$60.00</a-descriptions-item>
+    </a-descriptions>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { DescriptionsProps } from 'ant-design-vue';
+const size = ref<DescriptionsProps['size']>('default');
+const onChange = (e: any) => {
+  console.log('size checked', e.target.value);
+  size.value = e.target.value;
+};
+</script>
+Responsive DescriptionsProductCloud DatabaseBillingPrepaidTime18:00:00Amount$80.00Discount$20.00Official$60.00Config Info Data disk type: MongoDB  Database version: 3.4  Package: dds.mongo.mid  Storage space: 10 GB  Replication factor: 3  Region: East China 1 响应式通过响应式的配置可以实现在小屏幕设备上的完美呈现。TS<template>
+  <a-descriptions
+    title="Responsive Descriptions"
+    bordered
+    :column="{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }"
+  >
+    <a-descriptions-item label="Product">Cloud Database</a-descriptions-item>
+    <a-descriptions-item label="Billing">Prepaid</a-descriptions-item>
+    <a-descriptions-item label="Time">18:00:00</a-descriptions-item>
+    <a-descriptions-item label="Amount">$80.00</a-descriptions-item>
+    <a-descriptions-item label="Discount">$20.00</a-descriptions-item>
+    <a-descriptions-item label="Official">$60.00</a-descriptions-item>
+    <a-descriptions-item label="Config Info">
+      Data disk type: MongoDB
+      <br />
+      Database version: 3.4
+      <br />
+      Package: dds.mongo.mid
+      <br />
+      Storage space: 10 GB
+      <br />
+      Replication factor: 3
+      <br />
+      Region: East China 1
+    </a-descriptions-item>
+  </a-descriptions>
+</template>
+User InfoUserNameTelephoneLiveZhou Maomao1810000000Hangzhou, ZhejiangAddressRemark No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China empty垂直垂直的列表。TS<template>
+  <a-descriptions title="User Info" layout="vertical">
+    <a-descriptions-item label="UserName">Zhou Maomao</a-descriptions-item>
+    <a-descriptions-item label="Telephone">1810000000</a-descriptions-item>
+    <a-descriptions-item label="Live">Hangzhou, Zhejiang</a-descriptions-item>
+    <a-descriptions-item label="Address" :span="2">
+      No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+    </a-descriptions-item>
+    <a-descriptions-item label="Remark">empty</a-descriptions-item>
+  </a-descriptions>
+</template>
+User InfoProductBilling ModeAutomatic RenewalCloud DatabasePrepaidYESOrder timeUsage Time2018-04-24 18:00:002019-04-24 18:00:00StatusRunningNegotiated AmountDiscountOfficial Receipts$80.00$20.00$60.00Config Info Data disk type: MongoDB  Database version: 3.4  Package: dds.mongo.mid  Storage space: 10 GB  Replication factor: 3  Region: East China 1 垂直带边框的垂直带边框和背景颜色的列表。TS<template>
+  <a-descriptions title="User Info" layout="vertical" bordered>
+    <a-descriptions-item label="Product">Cloud Database</a-descriptions-item>
+    <a-descriptions-item label="Billing Mode">Prepaid</a-descriptions-item>
+    <a-descriptions-item label="Automatic Renewal">YES</a-descriptions-item>
+    <a-descriptions-item label="Order time">2018-04-24 18:00:00</a-descriptions-item>
+    <a-descriptions-item label="Usage Time" :span="2">2019-04-24 18:00:00</a-descriptions-item>
+    <a-descriptions-item label="Status" :span="3">
+      <a-badge status="processing" text="Running" />
+    </a-descriptions-item>
+    <a-descriptions-item label="Negotiated Amount">$80.00</a-descriptions-item>
+    <a-descriptions-item label="Discount">$20.00</a-descriptions-item>
+    <a-descriptions-item label="Official Receipts">$60.00</a-descriptions-item>
+    <a-descriptions-item label="Config Info">
+      Data disk type: MongoDB
+      <br />
+      Database version: 3.4
+      <br />
+      Package: dds.mongo.mid
+      <br />
+      Storage space: 10 GB
+      <br />
+      Replication factor: 3
+      <br />
+      Region: East China 1
+      <br />
+    </a-descriptions-item>
+  </a-descriptions>
+</template>
+
+      API#
+      
+          #
+        
+Descriptions props 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+
+
+bordered
+是否展示边框
+boolean
+false
+
+
+
+
+
+colon
+配置 Descriptions.Item 的 colon 的默认值
+boolean
+true
+
+
+
+
+
+column
+一行的 DescriptionItems 数量，可以写成像素值或支持响应式的对象写法 { xs: 8, sm: 16, md: 24}
+number
+3
+
+
+
+
+
+contentStyle
+自定义内容样式
+CSSProperties
+-
+2.2.0
+
+
+
+
+extra
+描述列表的操作区域，显示在右上方
+string | VNode | slot
+-
+2.0.0
+
+
+
+
+labelStyle
+自定义标签样式
+CSSProperties
+-
+2.2.0
+
+
+
+
+layout
+描述布局
+horizontal | vertical
+horizontal
+
+
+
+
+
+size
+设置列表的大小。可以设置为 middle 、small, 或不填（只有设置 bordered={true} 生效）
+default | middle | small
+default
+
+
+
+
+
+title
+描述列表的标题，显示在最顶部
+string | VNode | slot
+-
+
+
+
+
+
+
+Item props 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+contentStyle
+自定义内容样式
+CSSProperties
+-
+2.2.0
+
+
+label
+内容的描述
+string | VNode | slot
+-
+
+
+
+labelStyle
+自定义标签样式
+CSSProperties
+-
+2.2.0
+
+
+span
+包含列的数量
+number
+1
+
+
+
+
+
+span 是 Descriptions.Item 的数量。 span={2} 会占用两个 DescriptionsItem 的宽度。
+
+
+      最后更新 : 2023/07/14日期选择框分割线Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

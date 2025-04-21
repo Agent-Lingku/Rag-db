@@ -1,0 +1,1075 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 国际化 组件尺寸 方向 主题 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中ConfigProvider 全局化配置为组件提供统一的全局化配置。
+使用 
+          #
+        
+ConfigProvider 使用 Vue 的 provide / inject 特性，只需在应用外围包裹一次即可全局生效。
+<template>
+  <a-config-provider :getPopupContainer="getPopupContainer">
+    <app />
+  </a-config-provider>
+</template>
+<script>
+  export default {
+    methods: {
+      getPopupContainer(el, dialogContext) {
+        if (dialogContext) {
+          return dialogContext.getDialogWrap();
+        } else {
+          return document.body;
+        }
+      },
+    },
+  };
+</script>
+
+Content Security Policy 
+          #
+        
+部分组件为了支持波纹效果，使用了动态样式。如果开启了 Content Security Policy (CSP)，你可以通过 csp 属性来进行配置：
+<a-config-provider :csp="{ nonce: 'YourNonceCode' }">
+  <a-button>My Button</a-button>
+</a-config-provider>
+
+代码演示Change locale of components:English中文1234510 / pageShow ModalShow infoShow confirmClick to confirm0 itemNo data0 itemNo data2025AprMonthYearSuMoTuWeThFrSa303101020304050607080910111213141516171819202122232425262728293001020304050607080910UserNameAgesubmitNameAgeNo dataQR code expiredRefreshPreviewimage.pngUploading...image.pngimage.pngTourBegin Touruploadsave国际化此处列出 Ant Design Vue 中需要国际化支持的组件，你可以在演示里切换语言。TS<template>
+  <div style="margin-bottom: 16px">
+    <span style="margin-right: 16px">Change locale of components:</span>
+    <a-radio-group v-model:value="locale">
+      <a-radio-button key="en" :value="enUS.locale">English</a-radio-button>
+      <a-radio-button key="cn" :value="zhCN.locale">中文</a-radio-button>
+    </a-radio-group>
+  </div>
+  <a-config-provider :locale="locale === 'en' ? enUS : zhCN">
+    <a-space
+      direction="vertical"
+      :size="[0, 16]"
+      :style="{ width: '100%', paddingTop: '16px', borderTop: `1px solid ${token.colorBorder}` }"
+    >
+      <a-pagination :total="50" show-size-changer />
+      <a-space wrap>
+        <a-select show-search style="width: 200px">
+          <a-select-option value="jack">jack</a-select-option>
+          <a-select-option value="lucy">lucy</a-select-option>
+        </a-select>
+        <a-date-picker />
+        <a-time-picker />
+        <a-range-picker style="width: 200px" />
+      </a-space>
+      <a-space wrap>
+        <a-button type="primary" @click="visible = true">Show Modal</a-button>
+        <a-button @click="info">Show info</a-button>
+        <a-button @click="confirm">Show confirm</a-button>
+        <a-popconfirm title="Question?">
+          <a href="#">Click to confirm</a>
+        </a-popconfirm>
+      </a-space>
+      <a-transfer :data-source="[]" show-search :target-keys="[]" :render="item => item.title" />
+      <div
+        :style="{
+          width: '320px',
+          border: `1px solid ${token.colorBorder}`,
+          'border-radius': '8px',
+        }"
+      >
+        <a-calendar :fullscreen="false" />
+      </div>
+      <a-form
+        name="basic"
+        :model="formModel"
+        auto-complete="off"
+        :label-col="{ sm: { span: 4 } }"
+        :wrapper-col="{ span: 6 }"
+      >
+        <a-form-item label="UserName" name="username" :rules="[{ required: true }]">
+          <a-input v-model:value="formModel.username" :width="200" />
+        </a-form-item>
+        <a-form-item label="Age" name="age" :rules="[{ type: 'number', min: 0, max: 99 }]">
+          <a-input-number v-model:value="formModel.age" :width="200" />
+        </a-form-item>
+        <a-form-item :wrapper-col="{ offset: 2, span: 6 }">
+          <a-button type="primary" html-type="submit">submit</a-button>
+        </a-form-item>
+      </a-form>
+      <a-table :data-source="[]" :columns="columns" />
+      <a-modal v-model:open="visible" title="Locale Modal">
+        <p>Locale Modal</p>
+      </a-modal>
+      <a-space wrap :size="80">
+        <a-qrcode
+          value="https://antdv.com"
+          status="expired"
+          @refresh="() => console.log('refresh')"
+        />
+        <a-image
+          :width="160"
+          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        />
+      </a-space>
+      <a-upload list-type="picture-card" :file-list="fileList" />
+      <a-divider orientation="left">Tour</a-divider>
+      <a-button type="primary" @click="() => (tourOpen = true)">Begin Tour</a-button>
+      <a-space>
+        <a-button ref="ref1">upload</a-button>
+        <a-button ref="ref2" type="primary">save</a-button>
+        <a-button ref="ref3">
+          <template #icon>
+            <ellipsis-outlined />
+          </template>
+        </a-button>
+      </a-space>
+      <a-tour
+        v-model:current="current"
+        :open="tourOpen"
+        :steps="steps"
+        @close="() => (tourOpen = false)"
+      ></a-tour>
+    </a-space>
+  </a-config-provider>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+import { Modal, theme } from 'ant-design-vue';
+import type { TourProps, UploadFile } from 'ant-design-vue';
+import { EllipsisOutlined } from '@ant-design/icons-vue';
+import enUS from 'ant-design-vue/es/locale/en_US';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+
+dayjs.locale('en');
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    filters: [
+      {
+        text: 'filter1',
+        value: 'filter1',
+      },
+    ],
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+  },
+];
+
+const visible = ref(false);
+const locale = ref(enUS.locale);
+watch(locale, val => {
+  dayjs.locale(val);
+});
+const info = () => {
+  Modal.info({
+    title: 'some info',
+    content: 'some info',
+  });
+};
+const confirm = () => {
+  Modal.confirm({
+    title: 'some info',
+    content: 'some info',
+  });
+};
+
+const formModel = ref({
+  username: '',
+  age: '100',
+});
+
+const { token } = theme.useToken();
+
+const fileList: UploadFile[] = [
+  {
+    uid: '-1',
+    name: 'image.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-2',
+    percent: 50,
+    name: 'image.png',
+    status: 'uploading',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-3',
+    name: 'image.png',
+    status: 'error',
+  },
+];
+
+const ref1 = ref(null);
+const ref2 = ref(null);
+const ref3 = ref(null);
+const current = ref(0);
+const tourOpen = ref(false);
+const steps: TourProps['steps'] = [
+  {
+    title: 'Upload File',
+    description: 'Put your files here.',
+    target: () => ref1.value && ref1.value.$el,
+  },
+  {
+    title: 'Save',
+    description: 'Save your changes.',
+    target: () => ref2.value && ref2.value.$el,
+  },
+  {
+    title: 'Other Actions',
+    description: 'Click to see other actions.',
+    target: () => ref3.value && ref3.value.$el,
+  },
+];
+</script>
+SmallMiddleLargeTab 1Tab 2Tab 3Content of Tab Pane 1select valueButtonCardNameAgeJohn Brown32Jim Green42Joe Black321组件尺寸修改默认组件尺寸。TS<template>
+  <a-radio-group v-model:value="componentSize">
+    <a-radio-button value="small">Small</a-radio-button>
+    <a-radio-button value="middle">Middle</a-radio-button>
+    <a-radio-button value="large">Large</a-radio-button>
+  </a-radio-group>
+  <a-divider />
+  <a-config-provider :component-size="componentSize">
+    <div class="example">
+      <a-input />
+    </div>
+    <div class="example">
+      <a-tabs>
+        <a-tab-pane key="1" tab="Tab 1">Content of Tab Pane 1</a-tab-pane>
+        <a-tab-pane key="2" tab="Tab 2">Content of Tab Pane 2</a-tab-pane>
+        <a-tab-pane key="3" tab="Tab 3">Content of Tab Pane 3</a-tab-pane>
+      </a-tabs>
+    </div>
+    <div class="example">
+      <a-input-search allow-clear />
+    </div>
+    <div class="example">
+      <a-textarea allow-clear />
+    </div>
+    <div class="example">
+      <a-select style="width: 100px" placeholder="select value" :options="[{ value: 'demo' }]" />
+    </div>
+    <div class="example">
+      <a-datePicker />
+    </div>
+    <div class="example">
+      <a-range-picker />
+    </div>
+    <div class="example">
+      <a-button>Button</a-button>
+    </div>
+    <div class="example">
+      <a-card title="Card">
+        <a-table :columns="columns" :data-source="dataSource" />
+      </a-card>
+    </div>
+  </a-config-provider>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+type SizeType = 'small' | 'middle' | 'large';
+
+const componentSize = ref<SizeType>('small');
+const columns = [
+  { title: 'Name', dataIndex: 'name' },
+  { title: 'Age', dataIndex: 'age' },
+];
+const dataSource = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+  },
+];
+</script>
+<style scoped>
+.example {
+  margin: 16px 0;
+}
+</style>
+Change direction of components:LTRRTLCascader exampleیک مورد انتخاب کنید      With search: Select an itemSwitch exampleRadio Group exampleتهراناصفهانفارسخوزستانButton exampleDownloadDownloadBackwardForwardLoadingLoadingTree exampleparent 1parent 1-0leafleafparent 1-1sssInput (Input Group) exampleOption1SearchSelect exampleمورچه مورچهمورچهSelect a personTreeSelect examplePlease selectModal exampleOpen ModalSteps exampleFinishedThis is a description.In ProgressThis is a description.WaitingThis is a description.1Step 1This is a description.2Step 2This is a description.3Step 3This is a description.Rate example* Note: Half star not implemented in RTL direction. Badge example5Pagination example12345•••5010 条/页Grid System example* Note: Every calculation in RTL grid system is from right side (offset, push, etc.) col-8col-8col-6 col-offset-6col-6 col-offset-6col-12 col-offset-6col-18 col-push-6col-6 col-pull-18方向这里列出了支持 rtl 方向的组件，您可以在演示中切换方向。TS<template>
+  <span style="margin-right: 16px">Change direction of components:</span>
+  <a-radio-group v-model:value="state.direction">
+    <a-radio-button value="ltr">LTR</a-radio-button>
+    <a-radio-button value="rtl">RTL</a-radio-button>
+  </a-radio-group>
+  <a-divider />
+  <a-config-provider :direction="state.direction">
+    <a-space direction="vertical" class="direction-components">
+      <a-row>
+        <a-col :span="24">
+          <a-divider orientation="left">Cascader example</a-divider>
+          <a-cascader
+            :options="cascaderOptions"
+            placeholder="یک مورد انتخاب کنید"
+            :placement="state.popupPlacement"
+            @change="onCascaderChange"
+          >
+            <template #suffixIcon><SearchIcon /></template>
+          </a-cascader>
+          &nbsp;&nbsp;&nbsp;&nbsp; With search:
+          <a-cascader
+            :options="cascaderOptions"
+            placeholder="Select an item"
+            :placement="state.popupPlacement"
+            :show-search="{ filter: cascaderFilter }"
+            @change="onCascaderChange"
+          >
+            <template #suffixIcon><SmileOutlined /></template>
+          </a-cascader>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-divider orientation="left">Switch example</a-divider>
+          <a-space>
+            <a-switch default-checked />
+            <a-switch loading default-checked />
+            <a-switch size="small" loading />
+          </a-space>
+        </a-col>
+        <a-col :span="12">
+          <a-divider orientation="left">Radio Group example</a-divider>
+          <a-radio-group default-value="c" button-style="solid">
+            <a-radio-button value="a">تهران</a-radio-button>
+            <a-radio-button value="b" disabled>اصفهان</a-radio-button>
+            <a-radio-button value="c">فارس</a-radio-button>
+            <a-radio-button value="d">خوزستان</a-radio-button>
+          </a-radio-group>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="12">
+          <a-divider orientation="left">Button example</a-divider>
+          <div class="button-demo">
+            <a-button type="primary">
+              <template #icon><DownloadOutlined /></template>
+            </a-button>
+            <a-button type="primary" shape="circle">
+              <template #icon><DownloadOutlined /></template>
+            </a-button>
+            <a-button type="primary" shape="round">
+              <template #icon><DownloadOutlined /></template>
+            </a-button>
+            <a-button type="primary" shape="round">
+              <template #icon><DownloadOutlined /></template>
+              Download
+            </a-button>
+            <a-button type="primary">
+              <template #icon><DownloadOutlined /></template>
+              Download
+            </a-button>
+            <br />
+            <a-button-group>
+              <a-button type="primary">
+                <LeftOutlined />
+                Backward
+              </a-button>
+              <a-button type="primary">
+                Forward
+                <RightOutlined />
+              </a-button>
+            </a-button-group>
+            <a-button type="primary" loading>Loading</a-button>
+            <a-button type="primary" size="small" loading>Loading</a-button>
+          </div>
+        </a-col>
+        <a-col :span="12">
+          <a-divider orientation="left">Tree example</a-divider>
+          <a-tree
+            v-model:expandedKeys="expandedKeys"
+            v-model:selectedKeys="selectedKeys"
+            v-model:checkedKeys="checkedKeys"
+            show-line
+            checkable
+            :tree-data="treeData"
+          >
+            <template #title="{ title, key }">
+              <span v-if="key === '0-0-1-0'" style="color: #1890ff">{{ title }}</span>
+              <template v-else>{{ title }}</template>
+            </template>
+          </a-tree>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-divider orientation="left">Input (Input Group) example</a-divider>
+          <a-space direction="vertical" style="width: 100%">
+            <a-input-group size="large">
+              <a-row :gutter="8">
+                <a-col :span="5">
+                  <a-input default-value="0571" />
+                </a-col>
+                <a-col :span="8">
+                  <a-input default-value="26888888" />
+                </a-col>
+              </a-row>
+            </a-input-group>
+            <a-input-group compact>
+              <a-input style="width: 20%" default-value="0571" />
+              <a-input style="width: 30%" default-value="26888888" />
+            </a-input-group>
+            <a-input-group compact>
+              <a-select default-value="Option1">
+                <a-select-option value="Option1">Option1</a-select-option>
+                <a-select-option value="Option2">Option2</a-select-option>
+              </a-select>
+              <a-input style="width: 50%" default-value="input content" />
+              <a-inputNumber />
+            </a-input-group>
+            <a-input-search placeholder="input search text" enter-button="Search" size="large" />
+            <div style="margin-bottom: 16px">
+              <a-input default-value="mysite">
+                <template #selectBefore>
+                  <a-select default-value="Http://" style="width: 90px">
+                    <a-select-option value="Http://">Http://</a-select-option>
+                    <a-select-option value="Https://">Https://</a-select-option>
+                  </a-select>
+                </template>
+                <template #selectAfter>
+                  <a-select default-value=".com" style="width: 80px">
+                    <a-select-option value=".com">.com</a-select-option>
+                    <a-select-option value=".jp">.jp</a-select-option>
+                    <a-select-option value=".cn">.cn</a-select-option>
+                    <a-select-option value=".org">.org</a-select-option>
+                  </a-select>
+                </template>
+              </a-input>
+            </div>
+            <a-row>
+              <a-col :span="12">
+                <a-divider orientation="left">Select example</a-divider>
+                <a-space wrap>
+                  <a-select mode="multiple" default-value="مورچه" style="width: 120px">
+                    <a-select-option value="jack">Jack</a-select-option>
+                    <a-select-option value="مورچه">مورچه</a-select-option>
+                    <a-select-option value="disabled" disabled>Disabled</a-select-option>
+                    <a-select-option value="Yiminghe">yiminghe</a-select-option>
+                  </a-select>
+                  <a-select default-value="مورچه" style="width: 120px" disabled>
+                    <a-select-option value="مورچه">مورچه</a-select-option>
+                  </a-select>
+                  <a-select default-value="مورچه" style="width: 120px" loading>
+                    <a-select-option value="مورچه">مورچه</a-select-option>
+                  </a-select>
+                  <a-select
+                    show-search
+                    style="width: 200px"
+                    placeholder="Select a person"
+                    option-filter-prop="children"
+                    :filter-option="
+                      (input, option) =>
+                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    "
+                  >
+                    <a-select-option value="jack">Jack</a-select-option>
+                    <a-select-option value="سعید">سعید</a-select-option>
+                    <a-select-option value="tom">Tom</a-select-option>
+                  </a-select>
+                </a-space>
+              </a-col>
+              <a-col :span="12">
+                <a-divider orientation="left">TreeSelect example</a-divider>
+                <div>
+                  <a-tree-select
+                    show-search
+                    style="width: 100%"
+                    :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                    placeholder="Please select"
+                    allow-clear
+                    tree-default-expand-all
+                    :tree-data="treeSelectData"
+                  ></a-tree-select>
+                </div>
+              </a-col>
+            </a-row>
+            <a-row>
+              <a-col :span="24">
+                <a-divider orientation="left">Modal example</a-divider>
+                <div>
+                  <a-button type="primary" @click="showModal">Open Modal</a-button>
+                  <a-modal v-model:open="state.modalVisible" title="پنچره ساده">
+                    <p>نگاشته‌های خود را اینجا قراردهید</p>
+                    <p>نگاشته‌های خود را اینجا قراردهید</p>
+                    <p>نگاشته‌های خود را اینجا قراردهید</p>
+                  </a-modal>
+                </div>
+              </a-col>
+            </a-row>
+            <a-row>
+              <a-col :span="24">
+                <a-divider orientation="left">Steps example</a-divider>
+                <div>
+                  <a-steps
+                    progress-dot
+                    :current="state.currentStep"
+                    :items="[
+                      {
+                        title: 'Finished',
+                        description: 'This is a description.',
+                      },
+                      {
+                        title: 'In Progress',
+                        description: 'This is a description.',
+                      },
+                      {
+                        title: 'Waiting',
+                        description: 'This is a description.',
+                      },
+                    ]"
+                  ></a-steps>
+                  <br />
+                  <a-steps
+                    :current="state.currentStep"
+                    :items="[
+                      {
+                        title: 'Step 1',
+                        description: 'This is a description.',
+                      },
+                      {
+                        title: 'Step 2',
+                        description: 'This is a description.',
+                      },
+                      {
+                        title: 'Step 3',
+                        description: 'This is a description.',
+                      },
+                    ]"
+                    @change="onStepsChange"
+                  ></a-steps>
+                </div>
+              </a-col>
+            </a-row>
+            <a-row>
+              <a-col :span="12">
+                <a-divider orientation="left">Rate example</a-divider>
+                <div>
+                  <a-rate v-model:value="rateValue" />
+                  <br />
+                  <strong>* Note:</strong>
+                  Half star not implemented in RTL direction.
+                </div>
+              </a-col>
+              <a-col :span="12">
+                <a-divider orientation="left">Badge example</a-divider>
+                <div>
+                  <div>
+                    <a-badge :count="state.badgeCount">
+                      <a href="#" class="head-example" />
+                    </a-badge>
+                    <a-button-group>
+                      <a-button @click="declineBadge">
+                        <MinusOutlined />
+                      </a-button>
+                      <a-button @click="increaseBadge">
+                        <PlusOutlined />
+                      </a-button>
+                    </a-button-group>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <a-badge :dot="state.showBadge">
+                      <a href="#" class="head-example" />
+                    </a-badge>
+                    <a-switch :checked="state.showBadge" @change="onChangeBadge" />
+                  </div>
+                </div>
+              </a-col>
+            </a-row>
+          </a-space>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-divider orientation="left">Pagination example</a-divider>
+          <a-pagination show-size-changer :default-current="3" :total="500" />
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-col :span="24">
+          <a-divider orientation="left">Grid System example</a-divider>
+          <div class="grid-demo">
+            <div class="code-box-demo">
+              <p>
+                <strong>* Note:</strong>
+                Every calculation in RTL grid system is from right side (offset, push, etc.)
+              </p>
+              <a-row>
+                <a-col :span="8">col-8</a-col>
+                <a-col :span="8" :offset="8">col-8</a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="6" :offset="6">col-6 col-offset-6</a-col>
+                <a-col :span="6" :offset="6">col-6 col-offset-6</a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="12" :offset="6">col-12 col-offset-6</a-col>
+              </a-row>
+              <a-row>
+                <a-col :span="18" :push="6">col-18 col-push-6</a-col>
+                <a-col :span="6" :pull="18">col-6 col-pull-18</a-col>
+              </a-row>
+            </div>
+          </div>
+        </a-col>
+      </a-row>
+    </a-space>
+  </a-config-provider>
+</template>
+<script lang="ts" setup>
+import { reactive, watch, ref } from 'vue';
+
+import {
+  SearchOutlined as SearchIcon,
+  SmileOutlined,
+  DownloadOutlined,
+  LeftOutlined,
+  RightOutlined,
+  MinusOutlined,
+  PlusOutlined,
+} from '@ant-design/icons-vue';
+import type { TreeProps, TreeSelectProps, CascaderProps } from 'ant-design-vue';
+
+const state = reactive({
+  currentStep: 0,
+  modalVisible: false,
+
+  badgeCount: 5,
+  showBadge: true,
+  direction: 'ltr' as 'ltr' | 'rtl',
+  popupPlacement: 'bottomLeft' as CascaderProps['placement'],
+});
+const expandedKeys = ref<string[]>(['0-0-0', '0-0-1']);
+const selectedKeys = ref<string[]>(['0-0-0', '0-0-1']);
+const checkedKeys = ref<string[]>(['0-0-0', '0-0-1']);
+
+const treeData: TreeProps['treeData'] = [
+  {
+    title: 'parent 1',
+    key: '0-0',
+    children: [
+      {
+        title: 'parent 1-0',
+        key: '0-0-0',
+        disabled: true,
+        children: [
+          { title: 'leaf', key: '0-0-0-0', disableCheckbox: true },
+          { title: 'leaf', key: '0-0-0-1' },
+        ],
+      },
+      {
+        title: 'parent 1-1',
+        key: '0-0-1',
+        children: [{ key: '0-0-1-0', title: 'sss' }],
+      },
+    ],
+  },
+];
+
+const treeSelectData = ref<TreeSelectProps['treeData']>([
+  {
+    title: 'parent 1',
+    value: 'parent 1',
+    children: [
+      {
+        title: 'parent 1-0',
+        value: 'parent 1-0',
+        children: [
+          {
+            title: 'my leaf',
+            value: 'leaf1',
+          },
+          {
+            title: 'your leaf',
+            value: 'leaf2',
+          },
+        ],
+      },
+      {
+        title: 'parent 1-1',
+        value: 'parent 1-1',
+      },
+    ],
+  },
+]);
+watch(
+  () => state.direction,
+  directionValue => {
+    if (directionValue === 'rtl') {
+      state.popupPlacement = 'bottomRight';
+    } else {
+      state.popupPlacement = 'bottomLeft';
+    }
+  },
+);
+const cascaderOptions = [
+  {
+    value: 'tehran',
+    label: 'تهران',
+    children: [
+      {
+        value: 'tehran-c',
+        label: 'تهران',
+        children: [
+          {
+            value: 'saadat-abad',
+            label: 'سعادت آیاد',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'ardabil',
+    label: 'اردبیل',
+    children: [
+      {
+        value: 'ardabil-c',
+        label: 'اردبیل',
+        children: [
+          {
+            value: 'primadar',
+            label: 'پیرمادر',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'gilan',
+    label: 'گیلان',
+    children: [
+      {
+        value: 'rasht',
+        label: 'رشت',
+        children: [
+          {
+            value: 'district-3',
+            label: 'منطقه ۳',
+          },
+        ],
+      },
+    ],
+  },
+];
+
+// ==== Cascader ====
+const cascaderFilter = (inputValue, path) =>
+  path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+
+const onCascaderChange = value => {
+  console.log(value);
+};
+// ==== End Cascader ====
+
+// ==== Modal ====
+const showModal = () => {
+  state.modalVisible = true;
+};
+
+// ==== End Modal ====
+
+const onStepsChange = currentStep => {
+  console.log('onChange:', currentStep);
+  state.currentStep = currentStep;
+};
+
+// ==== Badge ====
+
+const increaseBadge = () => {
+  const badgeCount = state.badgeCount + 1;
+  state.badgeCount = badgeCount;
+};
+
+const declineBadge = () => {
+  let badgeCount = state.badgeCount - 1;
+  if (badgeCount < 0) {
+    badgeCount = 0;
+  }
+  state.badgeCount = badgeCount;
+};
+
+const onChangeBadge = showBadge => {
+  state.showBadge = showBadge;
+};
+const rateValue = ref(2);
+</script>
+<style lang="less" scoped>
+.direction-components {
+  width: 100%;
+  .button-demo .ant-btn,
+  .button-demo .ant-btn-group {
+    margin-right: 8px;
+    margin-bottom: 12px;
+  }
+  .button-demo .ant-btn-group > .ant-btn,
+  .button-demo .ant-btn-group > span > .ant-btn {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .head-example {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    vertical-align: middle;
+    background: #eee;
+    border-radius: 4px;
+  }
+
+  .ant-badge:not(.ant-badge-not-a-wrapper) {
+    margin-right: 20px;
+  }
+  .ant-badge-rtl:not(.ant-badge-not-a-wrapper) {
+    margin-right: 0;
+    margin-left: 20px;
+  }
+}
+
+[data-theme='dark'] .head-example {
+  background: rgba(255, 255, 255, 0.12);
+}
+</style>
+Primary ColorBorder Radiussubmit主题通过 theme 修改主题。TS<template>
+  <a-config-provider
+    :theme="{ token: { colorPrimary: data.colorPrimary, borderRadius: `${data.borderRadius}px` } }"
+  >
+    <a-form :model="data" name="theme" :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }">
+      <a-form-item name="colorPrimary" label="Primary Color">
+        <input
+          type="color"
+          :value="data.colorPrimary"
+          @input="e => (data.colorPrimary = e.target.value)"
+        />
+      </a-form-item>
+      <a-form-item name="borderRadius" label="Border Radius">
+        <a-input v-model:value="data.borderRadius" />
+      </a-form-item>
+      <a-form-item name="submit" :wrapper-col="{ offset: 4, span: 20 }">
+        <a-button type="primary">submit</a-button>
+      </a-form-item>
+    </a-form>
+  </a-config-provider>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { theme } from 'ant-design-vue';
+
+const defaultData = {
+  borderRadius: 6,
+  colorPrimary: '#1677ff',
+};
+const data = ref(defaultData);
+const { token } = theme.useToken();
+</script>
+<style scoped>
+input[type='color'] {
+  border: 1px solid v-bind('token.colorBorder');
+  background-color: v-bind('token.colorBgBase');
+}
+</style>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+autoInsertSpaceInButton
+设置为 false 时，移除按钮中 2 个汉字之间的空格
+boolean
+true
+
+
+
+componentSize
+设置 antd 组件大小
+small | middle | large
+-
+3.0
+
+
+csp
+设置 Content Security Policy 配置
+{ nonce: string }
+-
+
+
+
+direction
+设置文本展示方向。 示例
+ltr | rtl
+ltr
+3.0
+
+
+dropdownMatchSelectWidth
+下拉菜单和选择器同宽。默认将设置 min-width，当值小于选择框宽度时会被忽略。false 时会关闭虚拟滚动
+boolean | number
+-
+
+
+
+form
+设置 Form 组件的通用属性
+{ validateMessages?: ValidateMessages, requiredMark?: boolean | optional, colon?: boolean}
+-
+3.0
+
+
+getPopupContainer
+弹出框（Select, Tooltip, Menu 等等）渲染父节点，默认渲染到 body 上。
+Function(triggerNode, dialogContext)
+() => document.body
+
+
+
+getTargetContainer
+配置 Affix、Anchor 滚动监听容器。
+() => HTMLElement
+() => window
+3.0
+
+
+input
+设置 Input 组件的通用属性
+{ autocomplete?: string }
+-
+3.0
+
+
+locale
+语言包配置，语言包可到 ant-design-vue/es/locale 目录下寻找
+object
+-
+1.5.0
+
+
+pageHeader
+统一设置 pageHeader 的 ghost，参考 pageHeader
+{ ghost: boolean }
+'true'
+1.5.0
+
+
+prefixCls
+设置统一样式前缀。注意：需要配合 less 变量 @ant-prefix 使用
+string
+ant
+
+
+
+renderEmpty
+自定义组件空状态。参考 空状态
+slot | Function(componentName: string): VNode
+-
+
+
+
+space
+设置 Space 的 size，参考 Space
+{ size: small | middle | large | number }
+-
+3.0
+
+
+transformCellText
+Table 数据渲染前可以再次改变，一般用户空数据的默认配置
+Function({ text, column, record, index }) => any
+-
+1.5.4
+
+
+virtual
+设置 false 时关闭虚拟滚动
+boolean
+-
+3.0
+
+
+wave
+设置水波纹特效
+{ disabled?: boolean }
+-
+4.0.7
+
+
+
+ConfigProvider.config() 3.0.0+ 
+          #
+        
+设置 Modal、Message、Notification rootPrefixCls。
+ConfigProvider.config({
+  prefixCls: 'ant',
+});
+
+or
+// 如下配置支持响应式数据，你可以通过 prefixCls.value = 'other' 直接改变
+const prefixCls = ref('ant');
+ConfigProvider.config({
+  prefixCls,
+});
+
+FAQ 
+          #
+        
+为什么我使用了 ConfigProvider locale，时间类组件的国际化还有问题？ 
+          #
+        
+请检查是否设置了 dayjs.locale('zh-cn')，或者是否有两个版本的 dayjs 共存。
+配置 getPopupContainer 导致 Modal 报错？ 
+          #
+        
+当如下全局设置 getPopupContainer 为触发节点的 parentNode 时，由于 Modal 的用法不存在 triggerNode，这样会导致 triggerNode is undefined 的报错，需要增加一个判断条件。
+ <ConfigProvider
+-  getPopupContainer={triggerNode => triggerNode.parentNode}
++  getPopupContainer={node => {
++    if (node) {
++      return node.parentNode;
++    }
++    return document.body;
++  }}
+ >
+   <App />
+ </ConfigProvider>
+
+为什么 message.info、notification.open 或 Modal.confirm 等方法内的 VueNode 无法继承 ConfigProvider 的属性？比如 prefixCls 和 theme。 
+          #
+        
+静态方法是使用 Vue.render 重新渲染一个 Vue 根节点上，和主应用的 Vue 节点是脱离的。
+
+      最后更新 : 2024/06/04评论日期选择框Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

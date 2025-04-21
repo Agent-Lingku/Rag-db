@@ -1,0 +1,157 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 选择图片 自定义 全局化配置 无描述 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Empty 空状态空状态时的展示占位图。
+何时使用 
+          #
+        
+
+当目前没有数据时，用于显式的用户提示。
+初始化场景时的引导创建流程。
+
+代码演示暂无数据基本用法简单的展示。TS<template>
+  <a-empty />
+</template>
+暂无数据选择图片可以通过设置 image 为 Empty.PRESENTED_IMAGE_SIMPLE 选择另一种风格的图片。TS<template>
+  <a-empty :image="simpleImage" />
+</template>
+<script lang="ts" setup>
+import { Empty } from 'ant-design-vue';
+const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
+</script>
+ Customize DescriptionCreate Now自定义自定义图片、描述、附属内容。TS<template>
+  <a-empty
+    image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+    :image-style="{
+      height: '60px',
+    }"
+  >
+    <template #description>
+      <span>
+        Customize
+        <a href="#api">Description</a>
+      </span>
+    </template>
+    <a-button type="primary">Create Now</a-button>
+  </a-empty>
+</template>
+customizedefaultSelectTreeSelectCascaderTransfer0 项暂无数据0 项暂无数据TableNameAge暂无数据List暂无数据全局化配置自定义全局组件的 Empty 样式。TS<template>
+  <a-switch
+    v-model:checked="customize"
+    un-checked-children="default"
+    checked-children="customize"
+  />
+  <a-divider />
+  <a-config-provider>
+    <template v-if="customize" #renderEmpty>
+      <div style="text-align: center">
+        <smile-outlined style="font-size: 20px" />
+        <p>Data Not Found</p>
+      </div>
+    </template>
+    <div class="config-provider">
+      <h3>Select</h3>
+      <a-select :style="style" :options="[]" />
+
+      <h3>TreeSelect</h3>
+      <a-tree-select :style="style" :tree-data="[]" />
+
+      <h3>Cascader</h3>
+      <a-cascader :style="style" :options="[]" :show-search="true" />
+
+      <h3>Transfer</h3>
+      <a-transfer :data-source="[]" />
+
+      <h3>Table</h3>
+      <a-table style="margin-top: 8px" :columns="columns" :data-source="[]" />
+      <h3>List</h3>
+      <a-list :data-source="[]" />
+    </div>
+  </a-config-provider>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { SmileOutlined } from '@ant-design/icons-vue';
+const customize = ref<boolean>(false);
+
+const style = { width: '200px' };
+const columns = [{ title: 'Name' }, { title: 'Age' }];
+</script>
+<style scoped>
+.code-box-demo .config-provider h3 {
+  font-size: inherit;
+  margin: 16px 0 8px 0;
+}
+</style>
+无描述无描述展示。TS<template>
+  <a-empty :description="null" />
+</template>
+
+      API#
+      
+          #
+        
+<Empty>
+  <Button>创建</Button>
+</Empty>
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+description
+自定义描述内容
+string | v-slot
+-
+
+
+
+image
+设置显示图片，为 string 时表示自定义图片地址
+string | v-slot
+false
+
+
+
+imageStyle
+图片样式
+CSSProperties
+-
+
+
+
+
+内置图片 
+          #
+        
+
+
+Empty.PRESENTED_IMAGE_SIMPLE
+
+
+
+Empty.PRESENTED_IMAGE_DEFAULT
+
+
+
+
+      最后更新 : 2024/09/19下拉菜单弹性布局Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

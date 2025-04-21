@@ -1,0 +1,334 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 封顶数字 状态点 自定义标题 缎带 独立使用 讨嫌的小红点 动态 多彩徽标 可点击 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Badge 徽标数图标右上角的圆形徽标数字。
+何时使用 
+          #
+        
+一般出现在通知图标或头像的右上角，用于显示需要处理的消息条数，通过醒目视觉形式吸引用户处理。
+代码演示50基本简单的徽章展示，当 count 为 0 时，默认不显示，但是可以使用 showZero 修改为显示。TS<template>
+  <a-badge count="5">
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+  <a-badge count="0" show-zero>
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+  <a-badge>
+    <template #count>
+      <clock-circle-outlined style="color: #f5222d" />
+    </template>
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+</template>
+<script lang="ts" setup>
+import { ClockCircleOutlined } from '@ant-design/icons-vue';
+</script>
+9999+10+999+封顶数字超过 overflowCount 的会显示为 ${overflowCount}+，默认的 overflowCount 为 99。TS<template>
+  <a-badge :count="99">
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+  <a-badge :count="100">
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+  <a-badge :count="99" :overflow-count="10">
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+  <a-badge :count="1000" :overflow-count="999">
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+</template>
+SuccessErrorDefaultProcessingwarning状态点用于表示状态的小圆点。TS<template>
+  <a-badge status="success" />
+  <a-badge status="error" />
+  <a-badge status="default" />
+  <a-badge status="processing" />
+  <a-badge status="warning" />
+  <br />
+
+  <a-space direction="vertical">
+    <a-badge status="success" text="Success" />
+    <a-badge status="error" text="Error" />
+    <a-badge status="default" text="Default" />
+    <a-badge status="processing" text="Processing" />
+    <a-badge status="warning" text="warning" />
+  </a-space>
+</template>
+5自定义标题设置鼠标放在状态点上时显示的文字TS<template>
+  <a-badge :count="5" title="Custom hover text">
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+</template>
+Pushes open the windowand raises the spyglass.HippiesPushes open the windowand raises the spyglass.HippiesPushes open the windowand raises the spyglass.HippiesPushes open the windowand raises the spyglass.HippiesPushes open the windowand raises the spyglass.HippiesPushes open the windowand raises the spyglass.HippiesPushes open the windowand raises the spyglass.HippiesPushes open the windowand raises the spyglass.Hippies缎带使用缎带型的徽标。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-badge-ribbon text="Hippies">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+    <a-badge-ribbon text="Hippies" color="pink">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+    <a-badge-ribbon text="Hippies" color="red">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+    <a-badge-ribbon text="Hippies" color="cyan">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+    <a-badge-ribbon text="Hippies" color="green">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+    <a-badge-ribbon text="Hippies" color="purple">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+    <a-badge-ribbon text="Hippies" color="volcano">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+    <a-badge-ribbon text="Hippies" color="magenta">
+      <a-card title="Pushes open the window" size="small">and raises the spyglass.</a-card>
+    </a-badge-ribbon>
+  </a-space>
+</template>
+25499+独立使用不包裹任何元素即是独立使用，可自定样式展现。
+在右上角的 badge 则限定为红色。TS<template>
+  <a-badge count="25" />
+  <a-badge
+    count="4"
+    :number-style="{
+      backgroundColor: '#fff',
+      color: '#999',
+      boxShadow: '0 0 0 1px #d9d9d9 inset',
+    }"
+  />
+  <a-badge count="109" :number-style="{ backgroundColor: '#52c41a' }" />
+</template>
+Link something讨嫌的小红点没有具体的数字。TS<template>
+  <a-badge dot>
+    <notification-outlined style="font-size: 16px" />
+  </a-badge>
+  <a-badge dot>
+    <a href="#">Link something</a>
+  </a-badge>
+</template>
+<script lang="ts" setup>
+import { NotificationOutlined } from '@ant-design/icons-vue';
+</script>
+5动态展示动态变化的效果。TS<template>
+  <div>
+    <a-badge :count="count">
+      <a-avatar shape="square" size="large" />
+    </a-badge>
+    <a-button-group>
+      <a-button @click="decline">
+        <minus-outlined />
+      </a-button>
+      <a-button @click="increase">
+        <plus-outlined />
+      </a-button>
+    </a-button-group>
+  </div>
+  <a-divider />
+  <a-badge :dot="show">
+    <a-avatar shape="square" size="large" />
+  </a-badge>
+  <a-switch v-model:checked="show" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons-vue';
+const count = ref<number>(5);
+const show = ref<boolean>(true);
+const decline = () => {
+  if (count.value >= 1) {
+    count.value--;
+  }
+};
+
+const increase = () => {
+  count.value++;
+};
+</script>
+Presets:pinkredyelloworangecyangreenbluepurplegeekbluemagentavolcanogoldlimeCustom#f50#2db7f5#87d068#108ee9多彩徽标1.5.0 后新增。我们添加了多种预设色彩的徽标样式，用作不同场景使用。如果预设值不能满足你的需求，可以设置为具体的色值。TS<template>
+  <h4 style="margin-bottom: 16px">Presets:</h4>
+  <div>
+    <div v-for="color in colors" :key="color">
+      <a-badge :color="color" :text="color" />
+    </div>
+  </div>
+  <a-divider orientation="left">Custom</a-divider>
+  <a-badge color="#f50" text="#f50" />
+  <br />
+  <a-badge color="#2db7f5" text="#2db7f5" />
+  <br />
+  <a-badge color="#87d068" text="#87d068" />
+  <br />
+  <a-badge color="#108ee9" text="#108ee9" />
+</template>
+<script lang="ts" setup>
+const colors = [
+  'pink',
+  'red',
+  'yellow',
+  'orange',
+  'cyan',
+  'green',
+  'blue',
+  'purple',
+  'geekblue',
+  'magenta',
+  'volcano',
+  'gold',
+  'lime',
+];
+</script>
+5可点击用 a 标签进行包裹即可。TS<template>
+  <a href="#">
+    <a-badge count="5">
+      <a-avatar shape="square" size="large" />
+    </a-badge>
+  </a>
+</template>
+
+      API#
+      
+          #
+        
+<a-badge :count="5">
+  <a href="#" class="head-example" />
+</a-badge>
+
+<a-badge :count="5" />
+
+Badge 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+color
+自定义小圆点的颜色
+string
+-
+1.5.0
+
+
+count
+展示的数字，大于 overflowCount 时显示为 ${overflowCount}+，为 0 时隐藏
+number | string | slot
+
+
+
+
+dot
+不展示数字，只有一个小红点
+boolean
+false
+
+
+
+numberStyle
+设置状态点的样式
+object
+''
+
+
+
+offset
+设置状态点的位置偏移，格式为 [x, y]
+[number|string, number|string]
+-
+
+
+
+overflowCount
+展示封顶的数字值
+number
+99
+
+
+
+showZero
+当数值为 0 时，是否展示 Badge
+boolean
+false
+
+
+
+status
+设置 Badge 为状态点
+Enum{ 'success', 'processing, 'default', 'error', 'warning' }
+''
+
+
+
+text
+在设置了 status 的前提下有效，设置状态点的文本
+string
+''
+
+
+
+title
+设置鼠标放在状态点上时显示的文字
+string
+count
+
+
+
+
+Badge.Ribbon (2.0.1+) 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+color
+自定义缎带的颜色
+string
+-
+
+
+
+placement
+缎带的位置，start 和 end 随文字方向（RTL 或 LTR）变动
+start | end
+end
+
+
+
+text
+缎带中填入的内容
+string | VNode | slot
+-
+
+
+
+
+
+      最后更新 : 2024/06/21警告提示头像Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

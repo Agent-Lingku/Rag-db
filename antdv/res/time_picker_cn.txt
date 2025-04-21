@@ -1,0 +1,471 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 范围选择器 附加内容 选择时分 三种大小 自定义状态 无边框 12 小时制 禁用 步长选项 后缀图标 弹出位置 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中TimePicker 时间选择框输入或选择时间的控件。
+何时使用 
+          #
+        
+当用户需要输入一个时间，可以点击标准输入框，弹出时间面板进行选择。
+代码演示基本点击 TimePicker，然后可以在浮层中选择或者输入某一时间。TS<template>
+  <a-space direction="vertical">
+    <a-time-picker v-model:value="value" />
+    <a-time-picker v-model:value="strValue" value-format="HH:mm:ss" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import dayjs, { Dayjs } from 'dayjs';
+import { ref, watch } from 'vue';
+const value = ref<Dayjs>(dayjs('08:00:00', 'HH:mm:ss'));
+const strValue = ref<string>('09:00:00');
+
+watch(value, () => {
+  console.log(value.value);
+});
+watch(strValue, () => {
+  console.log(strValue.value);
+});
+</script>
+范围选择器通过 TimeRangePicker 使用时间范围选择器。TS<template>
+  <a-time-range-picker />
+</template>
+附加内容在 TimePicker 选择框底部显示自定义的内容。TS<template>
+  <a-space direction="vertical">
+    <a-time-picker v-model:value="value" v-model:open="open" @openChange="handleOpenChange">
+      <template #renderExtraFooter="{ prefixCls }">
+        <a-button size="small" type="primary" @click="handleClose">OK {{ prefixCls }}</a-button>
+      </template>
+    </a-time-picker>
+    <a-time-picker v-model:value="value" v-model:open="open2">
+      <template #renderExtraFooter>
+        <a-button size="small" type="primary" @click="handleClose">OK</a-button>
+      </template>
+    </a-time-picker>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { Dayjs } from 'dayjs';
+const open = ref(false);
+const open2 = ref(false);
+const value = ref<Dayjs>();
+
+const handleOpenChange = (openStatus: boolean) => {
+  console.log('open', openStatus);
+  open.value = openStatus;
+};
+
+const handleClose = () => {
+  open.value = false;
+  open2.value = false;
+};
+</script>
+选择时分TimePicker 浮层中的列会随着 format 变化，当略去 format 中的某部分时，浮层中对应的列也会消失。TS<template>
+  <a-time-picker v-model:value="value" format="HH:mm" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import dayjs from 'dayjs';
+const value = ref(dayjs('12:08', 'HH:mm'));
+</script>
+三种大小三种大小的输入框，大的用在表单中，中的为默认。TS<template>
+  <a-space direction="vertical">
+    <a-time-picker v-model:value="value1" size="large" />
+    <a-time-picker v-model:value="value2" />
+    <a-time-picker v-model:value="value3" size="small" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import dayjs from 'dayjs';
+import { ref } from 'vue';
+const value1 = ref(dayjs('12:08:23', 'HH:mm'));
+const value2 = ref(dayjs('12:08:23', 'HH:mm'));
+const value3 = ref(dayjs('12:08:23', 'HH:mm'));
+</script>
+自定义状态使用 status 为 DatePicker 添加状态，可选 error 或者 warning。TS<template>
+  <a-space direction="vertical" style="width: 100%">
+    <a-time-picker status="error" />
+    <a-time-picker status="warning" />
+    <a-time-range-picker status="error" />
+    <a-time-range-picker status="warning" />
+  </a-space>
+</template>
+无边框无边框样式。TS<template>
+  <a-space direction="vertical">
+    <a-time-picker :bordered="false" />
+    <a-time-range-picker :bordered="false" />
+  </a-space>
+</template>
+12 小时制12 小时制的时间选择器，默认的 format 为 h:mm:ss a。TS<template>
+  <a-space direction="vertical">
+    <a-time-picker v-model:value="value" use12-hours />
+    <a-time-picker v-model:value="value" use12-hours format="h:mm:ss A" style="width: 140px" />
+    <a-time-picker v-model:value="value" use12-hours format="h:mm a" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { Dayjs } from 'dayjs';
+const value = ref<Dayjs>();
+</script>
+禁用禁用时间选择。TS<template>
+  <a-time-picker :value="dayjs('12:08:23', 'HH:mm:ss')" disabled />
+</template>
+<script lang="ts" setup>
+import dayjs from 'dayjs';
+</script>
+步长选项可以使用 hourStep minuteStep secondStep 按步长展示可选的时分秒。TS<template>
+  <a-time-picker v-model:value="value" :minute-step="15" :second-step="10" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref();
+</script>
+后缀图标点击 TimePicker，然后可以在浮层中选择或者输入某一时间。TS<template>
+  <a-time-picker v-model:value="value" :default-value="dayjs('00:00:00', 'HH:mm:ss')">
+    <template #suffixIcon><smile-outlined /></template>
+  </a-time-picker>
+</template>
+<script lang="ts" setup>
+import dayjs, { Dayjs } from 'dayjs';
+import { SmileOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+const value = ref<Dayjs>();
+</script>
+topLefttopRightbottomLeftbottomRight弹出位置可以通过 placement 手动指定弹出的位置。TS<template>
+  <a-radio-group v-model:value="placement">
+    <a-radio-button value="topLeft">topLeft</a-radio-button>
+    <a-radio-button value="topRight">topRight</a-radio-button>
+    <a-radio-button value="bottomLeft">bottomLeft</a-radio-button>
+    <a-radio-button value="bottomRight">bottomRight</a-radio-button>
+  </a-radio-group>
+  <br />
+  <br />
+  <a-space direction="vertical" :size="12">
+    <a-time-picker v-model:value="value1" :placement="placement" />
+    <a-time-range-picker v-model:value="value2" :placement="placement" />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { Dayjs } from 'dayjs';
+const placement = ref('topLeft' as const);
+const value1 = ref<Dayjs>();
+const value2 = ref<[Dayjs, Dayjs]>();
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+allowClear
+是否展示清除按钮
+boolean
+true
+
+
+
+autofocus
+自动获取焦点
+boolean
+false
+
+
+
+bordered
+是否有边框
+boolean
+true
+
+
+
+clearIcon
+自定义的清除图标
+v-slot:clearIcon
+-
+
+
+
+clearText
+清除按钮的提示文案
+string
+clear
+
+
+
+disabled
+禁用全部操作
+boolean
+false
+
+
+
+disabledTime
+不可选择的时间
+DisabledTime
+-
+3.3.0
+
+
+format
+展示的时间格式
+string
+HH:mm:ss
+
+
+
+getPopupContainer
+定义浮层的容器，默认为 body 上新建 div
+function(trigger)
+-
+
+
+
+hideDisabledOptions
+隐藏禁止选择的选项
+boolean
+false
+
+
+
+hourStep
+小时选项间隔
+number
+1
+
+
+
+inputReadOnly
+设置输入框为只读（避免在移动设备上打开虚拟键盘）
+boolean
+false
+
+
+
+minuteStep
+分钟选项间隔
+number
+1
+
+
+
+open(v-model)
+面板是否打开
+boolean
+false
+
+
+
+placeholder
+没有值的时候显示的内容
+string | [string, string]
+请选择时间
+
+
+
+placement
+选择框弹出的位置
+bottomLeft bottomRight topLeft topRight
+bottomLeft
+
+
+
+popupClassName
+弹出层类名
+string
+-
+
+
+
+popupStyle
+弹出层样式对象
+object
+-
+
+
+
+renderExtraFooter
+选择框底部显示自定义的内容
+v-slot:renderExtraFooter
+-
+
+
+
+secondStep
+秒选项间隔
+number
+1
+
+
+
+showNow
+面板是否显示“此刻”按钮
+boolean
+-
+
+
+
+status
+设置校验状态
+'error' | 'warning'
+-
+3.3.0
+
+
+suffixIcon
+自定义的选择框后缀图标
+v-slot:suffixIcon
+-
+
+
+
+use12Hours
+使用 12 小时制，为 true 时 format 默认为 h:mm:ss a
+boolean
+false
+
+
+
+value(v-model)
+当前时间
+dayjs
+-
+
+
+
+valueFormat
+可选，绑定值的格式，对 value、defaultValue 起作用。不指定则绑定值为 dayjs 对象
+string，具体格式
+-
+
+
+
+
+DisabledTime 
+          #
+        
+type DisabledTime = (now: Dayjs) => {
+  disabledHours?: () => number[];
+  disabledMinutes?: (selectedHour: number) => number[];
+  disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[];
+};
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+change
+时间发生变化的回调
+function(time: dayjs | string, timeString: string): void
+
+
+openChange
+面板打开/关闭时的回调
+(open: boolean): void
+
+
+
+方法 
+          #
+        
+
+
+
+名称
+描述
+
+
+
+
+blur()
+移除焦点
+
+
+focus()
+获取焦点
+
+
+
+TimeRangePicker 
+          #
+        
+属性与 DatePicker 的 RangePicker 相同。还包含以下属性：
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+order
+始末时间是否自动排序
+boolean
+true
+
+
+
+disabledTime
+不可选择的时间
+RangeDisabledTime
+-
+3.3.0
+
+
+
+RangeDisabledTime 
+          #
+        
+type RangeDisabledTime = (
+  now: Dayjs,
+  type = 'start' | 'end',
+) => {
+  disabledHours?: () => number[];
+  disabledMinutes?: (selectedHour: number) => number[];
+  disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[];
+};
+
+FAQ 
+          #
+        
+如何在 DatePicker 中使用自定义日期库（如 moment.js | dayjs | date-fns）？ 
+          #
+        
+请参考《自定义日期库》
+
+      最后更新 : 2023/08/06标签时间轴Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

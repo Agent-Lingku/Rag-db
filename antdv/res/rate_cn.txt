@@ -1,0 +1,218 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 文案展现 清除 半星 只读 其他字符 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Rate 评分评分组件。
+何时使用 
+          #
+        
+
+对评价进行展示。
+对事物进行快速的评级操作。
+
+代码演示基本用法最简单的用法。TS<template>
+  <a-rate v-model:value="value" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<number>(2);
+</script>
+normal文案展现给评分组件加上文案展示。TS<template>
+  <span>
+    <a-rate v-model:value="value" :tooltips="desc" />
+    <span class="ant-rate-text">{{ desc[value - 1] }}</span>
+  </span>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<number>(3);
+const desc = ref<string[]>(['terrible', 'bad', 'normal', 'good', 'wonderful']);
+</script>
+allowClear: trueallowClear: false清除支持允许或者禁用清除。TS<template>
+  <div>
+    <a-rate v-model:value="value1" />
+    <span class="ant-rate-text">allowClear: true</span>
+    <br />
+    <a-rate v-model:value="value2" :allow-clear="false" />
+    <span class="ant-rate-text">allowClear: false</span>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<number>(3);
+const value2 = ref<number>(3);
+</script>
+半星支持选中半星。TS<template>
+  <a-rate v-model:value="value" allow-half />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<number>(2.5);
+</script>
+只读只读，无法进行鼠标交互。TS<template>
+  <a-rate :value="2" disabled />
+</template>
+AAAAAAAAAA好好好好好好好好好好其他字符可以将星星替换为其他字符，比如字母，数字，字体图标甚至中文。TS<template>
+  <div>
+    <a-rate v-model:value="value1" allow-half>
+      <template #character>
+        <heart-outlined />
+      </template>
+    </a-rate>
+    <br />
+    <a-rate v-model:value="value2" character="A" allow-half style="font-size: 36px" />
+    <br />
+    <a-rate v-model:value="value3" character="好" allow-half />
+    <br />
+  </div>
+</template>
+<script lang="ts" setup>
+import { HeartOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+const value1 = ref<number>(2);
+const value2 = ref<number>(2.5);
+const value3 = ref<number>(0.5);
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+属性
+说明
+类型
+默认值
+
+
+
+
+allowClear
+是否允许再次点击后清除
+boolean
+true
+
+
+allowHalf
+是否允许半选
+boolean
+false
+
+
+autofocus
+自动获取焦点
+boolean
+false
+
+
+character
+自定义字符
+string | slot
+<StarOutlined />
+
+
+count
+star 总数
+number
+5
+
+
+disabled
+只读，无法进行交互
+boolean
+false
+
+
+tooltips
+自定义每项的提示信息
+string[]
+-
+
+
+value(v-model)
+当前数，受控值
+number
+-
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+
+blur
+失去焦点时的回调
+Function()
+-
+
+
+change
+选择时的回调
+Function(value: number)
+-
+
+
+focus
+获取焦点时的回调
+Function()
+-
+
+
+hoverChange
+鼠标经过时数值变化的回调
+Function(value: number)
+-
+
+
+keydown
+按键回调
+Function(event)
+-
+
+
+
+方法 
+          #
+        
+
+
+
+名称
+描述
+
+
+
+
+blur()
+移除焦点
+
+
+focus()
+获取焦点
+
+
+
+
+      最后更新 : 2024/04/25单选框结果Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

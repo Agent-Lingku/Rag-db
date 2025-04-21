@@ -1,0 +1,1099 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 自定义页脚 信息提示 国际化 自定义位置 确认对话框(promise) 自定义页脚按钮属性 自定义渲染对话框 异步关闭 确认对话框 使用useModal获取上下文 手动更新和移除 销毁确认对话框 自定义模态的宽度 全屏 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Modal 对话框模态对话框。
+何时使用 
+          #
+        
+需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用 Modal 在当前页面正中打开一个浮层，承载相应的操作。
+另外当需要一个简洁的确认框询问用户时，可以使用 Modal.confirm() 等语法糖方法。
+代码演示Open Modal基本用法第一个对话框。TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Open Modal</a-button>
+    <a-modal v-model:open="open" title="Basic Modal" @ok="handleOk">
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+
+const handleOk = (e: MouseEvent) => {
+  console.log(e);
+  open.value = false;
+};
+</script>
+Open Modal with customized footer自定义页脚更复杂的例子，自定义了页脚的按钮，点击提交后进入 loading 状态，完成后关闭。
+不需要默认确定取消按钮时，你可以把 footer 设为 null。TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Open Modal with customized footer</a-button>
+    <a-modal v-model:open="open" title="Title" @ok="handleOk">
+      <template #footer>
+        <a-button key="back" @click="handleCancel">Return</a-button>
+        <a-button key="submit" type="primary" :loading="loading" @click="handleOk">Submit</a-button>
+      </template>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const loading = ref<boolean>(false);
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+
+const handleOk = () => {
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+    open.value = false;
+  }, 2000);
+};
+
+const handleCancel = () => {
+  open.value = false;
+};
+</script>
+InfoSuccessErrorWarning信息提示各种类型的信息提示，只提供一个按钮用于关闭。TS<template>
+  <a-space wrap>
+    <a-button @click="info">Info</a-button>
+    <a-button @click="success">Success</a-button>
+    <a-button @click="error">Error</a-button>
+    <a-button @click="warning">Warning</a-button>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { Modal } from 'ant-design-vue';
+import { h } from 'vue';
+const info = () => {
+  Modal.info({
+    title: 'This is a notification message',
+    content: h('div', {}, [
+      h('p', 'some messages...some messages...'),
+      h('p', 'some messages...some messages...'),
+    ]),
+    onOk() {
+      console.log('ok');
+    },
+  });
+};
+const success = () => {
+  Modal.success({
+    title: 'This is a success message',
+    content: h('div', {}, [
+      h('p', 'some messages...some messages...'),
+      h('p', 'some messages...some messages...'),
+    ]),
+  });
+};
+
+const error = () => {
+  Modal.error({
+    title: 'This is an error message',
+    content: 'some messages...some messages...',
+  });
+};
+
+const warning = () => {
+  Modal.warning({
+    title: 'This is a warning message',
+    content: 'some messages...some messages...',
+  });
+};
+</script>
+ModalConfirm国际化设置 okText 与 cancelText 以自定义按钮文字。TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Modal</a-button>
+    <a-button @click="confirm">Confirm</a-button>
+    <a-modal v-model:open="open" title="Modal" ok-text="确认" cancel-text="取消" @ok="hideModal">
+      <p>Bla bla ...</p>
+      <p>Bla bla ...</p>
+      <p>Bla bla ...</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { ref, createVNode } from 'vue';
+import { Modal } from 'ant-design-vue';
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+const hideModal = () => {
+  open.value = false;
+};
+
+const confirm = () => {
+  Modal.confirm({
+    title: 'Confirm',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: 'Bla bla ...',
+    okText: '确认',
+    cancelText: '取消',
+  });
+};
+</script>
+Display a modal dialog at 20px to TopVertically centered modal dialog自定义位置使用 centered 或类似 style.top 的样式来设置对话框位置。TS<template>
+  <div id="components-modal-demo-position">
+    <a-button type="primary" @click="setModal1Visible(true)">
+      Display a modal dialog at 20px to Top
+    </a-button>
+    <a-modal
+      v-model:open="modal1Visible"
+      title="20px to Top"
+      style="top: 20px"
+      @ok="setModal1Visible(false)"
+    >
+      <p>some contents...</p>
+      <p>some contents...</p>
+      <p>some contents...</p>
+    </a-modal>
+    <br />
+    <br />
+    <a-button type="primary" @click="modal2Visible = true">
+      Vertically centered modal dialog
+    </a-button>
+    <a-modal
+      v-model:open="modal2Visible"
+      title="Vertically centered modal dialog"
+      centered
+      @ok="modal2Visible = false"
+    >
+      <p>some contents...</p>
+      <p>some contents...</p>
+      <p>some contents...</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const modal1Visible = ref<boolean>(false);
+const modal2Visible = ref<boolean>(false);
+
+const setModal1Visible = (open: boolean) => {
+  modal1Visible.value = open;
+};
+</script>
+Confirm确认对话框(promise)使用 confirm() 可以快捷地弹出确认框。onCancel/onOk 返回 promise 可以延迟关闭TS<template>
+  <a-button @click="showConfirm">Confirm</a-button>
+</template>
+<script lang="ts" setup>
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { createVNode } from 'vue';
+import { Modal } from 'ant-design-vue';
+const showConfirm = () => {
+  Modal.confirm({
+    title: 'Do you want to delete these items?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: 'When clicked the OK button, this dialog will be closed after 1 second',
+    onOk() {
+      return new Promise((resolve, reject) => {
+        setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+      }).catch(() => console.log('Oops errors!'));
+    },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onCancel() {},
+  });
+};
+</script>
+Open Modal with customized button props自定义页脚按钮属性传入 okButtonProps 和 cancelButtonProps 可分别自定义确定按钮和取消按钮的 props。TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Open Modal with customized button props</a-button>
+    <a-modal
+      v-model:open="open"
+      title="Basic Modal"
+      :ok-button-props="{ disabled: true }"
+      :cancel-button-props="{ disabled: true }"
+      @ok="handleOk"
+    >
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+
+const handleOk = (e: MouseEvent) => {
+  console.log(e);
+  open.value = false;
+};
+</script>
+Open Modal自定义渲染对话框自定义渲染对话框, 可通过 vueuse 来实现拖拽。TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Open Modal</a-button>
+    <a-modal ref="modalRef" v-model:open="open" :wrap-style="{ overflow: 'hidden' }" @ok="handleOk">
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <template #title>
+        <div ref="modalTitleRef" style="width: 100%; cursor: move">Draggable Modal</div>
+      </template>
+      <template #modalRender="{ originVNode }">
+        <div :style="transformStyle">
+          <component :is="originVNode" />
+        </div>
+      </template>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref, computed, CSSProperties, watch, watchEffect } from 'vue';
+import { useDraggable } from '@vueuse/core';
+const open = ref<boolean>(false);
+const modalTitleRef = ref<HTMLElement>(null);
+const showModal = () => {
+  open.value = true;
+};
+const { x, y, isDragging } = useDraggable(modalTitleRef);
+const handleOk = (e: MouseEvent) => {
+  console.log(e);
+  open.value = false;
+};
+const startX = ref<number>(0);
+const startY = ref<number>(0);
+const startedDrag = ref(false);
+const transformX = ref(0);
+const transformY = ref(0);
+const preTransformX = ref(0);
+const preTransformY = ref(0);
+const dragRect = ref({ left: 0, right: 0, top: 0, bottom: 0 });
+watch([x, y], () => {
+  if (!startedDrag.value) {
+    startX.value = x.value;
+    startY.value = y.value;
+    const bodyRect = document.body.getBoundingClientRect();
+    const titleRect = modalTitleRef.value.getBoundingClientRect();
+    dragRect.value.right = bodyRect.width - titleRect.width;
+    dragRect.value.bottom = bodyRect.height - titleRect.height;
+    preTransformX.value = transformX.value;
+    preTransformY.value = transformY.value;
+  }
+  startedDrag.value = true;
+});
+watch(isDragging, () => {
+  if (!isDragging) {
+    startedDrag.value = false;
+  }
+});
+
+watchEffect(() => {
+  if (startedDrag.value) {
+    transformX.value =
+      preTransformX.value +
+      Math.min(Math.max(dragRect.value.left, x.value), dragRect.value.right) -
+      startX.value;
+    transformY.value =
+      preTransformY.value +
+      Math.min(Math.max(dragRect.value.top, y.value), dragRect.value.bottom) -
+      startY.value;
+  }
+});
+const transformStyle = computed<CSSProperties>(() => {
+  return {
+    transform: `translate(${transformX.value}px, ${transformY.value}px)`,
+  };
+});
+</script>
+Open Modal with async logic异步关闭点击确定后异步关闭对话框，例如提交表单。TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Open Modal with async logic</a-button>
+    <a-modal v-model:open="open" title="Title" :confirm-loading="confirmLoading" @ok="handleOk">
+      <p>{{ modalText }}</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const modalText = ref<string>('Content of the modal');
+const open = ref<boolean>(false);
+const confirmLoading = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+
+const handleOk = () => {
+  modalText.value = 'The modal will be closed after two seconds';
+  confirmLoading.value = true;
+  setTimeout(() => {
+    open.value = false;
+    confirmLoading.value = false;
+  }, 2000);
+};
+</script>
+ConfirmWith promiseDeleteWith extra props确认对话框使用 confirm() 可以快捷地弹出确认框。TS<template>
+  <a-space wrap>
+    <a-button @click="showConfirm">Confirm</a-button>
+    <a-button @click="showPromiseConfirm">With promise</a-button>
+    <a-button type="dashed" @click="showDeleteConfirm">Delete</a-button>
+    <a-button type="dashed" @click="showPropsConfirm">With extra props</a-button>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { createVNode } from 'vue';
+import { Modal } from 'ant-design-vue';
+const showConfirm = () => {
+  Modal.confirm({
+    title: 'Do you Want to delete these items?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: createVNode('div', { style: 'color:red;' }, 'Some descriptions'),
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+    class: 'test',
+  });
+};
+const showDeleteConfirm = () => {
+  Modal.confirm({
+    title: 'Are you sure delete this task?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: 'Some descriptions',
+    okText: 'Yes',
+    okType: 'danger',
+    cancelText: 'No',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
+};
+const showPropsConfirm = () => {
+  Modal.confirm({
+    title: 'Are you sure delete this task?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: 'Some descriptions',
+    okText: 'Yes',
+    okType: 'danger',
+    okButtonProps: {
+      disabled: true,
+    },
+    cancelText: 'No',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
+};
+
+function showPromiseConfirm() {
+  Modal.confirm({
+    title: 'Do you want to delete these items?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: 'When clicked the OK button, this dialog will be closed after 1 second',
+    async onOk() {
+      try {
+        return await new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        });
+      } catch {
+        return console.log('Oops errors!');
+      }
+    },
+    onCancel() {},
+  });
+}
+</script>
+ConfirmWith promiseDeleteWith extra props使用useModal获取上下文通过 Modal.useModal 创建支持读取 context 的 contextHolder。TS<template>
+  <a-space wrap>
+    <a-button @click="showConfirm">Confirm</a-button>
+    <a-button @click="showPromiseConfirm">With promise</a-button>
+    <a-button type="dashed" @click="showDeleteConfirm">Delete</a-button>
+    <a-button type="dashed" @click="showPropsConfirm">With extra props</a-button>
+    <contextHolder />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { Modal } from 'ant-design-vue';
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { h } from 'vue';
+const [modal, contextHolder] = Modal.useModal();
+const showConfirm = () => {
+  modal.confirm({
+    title: 'Do you Want to delete these items?',
+    icon: h(ExclamationCircleOutlined),
+    content: h('div', { style: 'color:red;' }, 'Some descriptions'),
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+    class: 'test',
+  });
+};
+const showDeleteConfirm = () => {
+  modal.confirm({
+    title: 'Are you sure delete this task?',
+    icon: h(ExclamationCircleOutlined),
+    content: 'Some descriptions',
+    okText: 'Yes',
+    okType: 'danger',
+    cancelText: 'No',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
+};
+const showPropsConfirm = () => {
+  modal.confirm({
+    title: 'Are you sure delete this task?',
+    icon: h(ExclamationCircleOutlined),
+    content: 'Some descriptions',
+    okText: 'Yes',
+    okType: 'danger',
+    okButtonProps: {
+      disabled: true,
+    },
+    cancelText: 'No',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
+};
+
+function showPromiseConfirm() {
+  modal.confirm({
+    title: 'Do you want to delete these items?',
+    icon: h(ExclamationCircleOutlined),
+    content: 'When clicked the OK button, this dialog will be closed after 1 second',
+    async onOk() {
+      try {
+        return await new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        });
+      } catch {
+        return console.log('Oops errors!');
+      }
+    },
+    onCancel() {},
+  });
+}
+</script>
+Open modal to close in 5s手动更新和移除手动更新和关闭 Modal.method 方式创建的对话框。TS<template>
+  <a-button @click="countDown">Open modal to close in 5s</a-button>
+</template>
+<script lang="ts" setup>
+import { Modal } from 'ant-design-vue';
+const countDown = () => {
+  let secondsToGo = 5;
+  const modal = Modal.success({
+    title: 'This is a notification message',
+    content: `This modal will be destroyed after ${secondsToGo} second.`,
+  });
+  const interval = setInterval(() => {
+    secondsToGo -= 1;
+    modal.update({
+      content: `This modal will be destroyed after ${secondsToGo} second.`,
+    });
+  }, 1000);
+  setTimeout(() => {
+    clearInterval(interval);
+    modal.destroy();
+  }, secondsToGo * 1000);
+};
+</script>
+Confirm销毁确认对话框使用 Modal.destroyAll() 可以销毁弹出的确认窗。通常用于路由监听当中，处理路由前进、后退不能销毁确认对话框的问题。TS<template>
+  <a-button @click="showConfirm">Confirm</a-button>
+</template>
+<script lang="ts" setup>
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { createVNode } from 'vue';
+import { Modal } from 'ant-design-vue';
+const showConfirm = () => {
+  for (let i = 0; i < 3; i += 1) {
+    setTimeout(() => {
+      Modal.confirm({
+        content: 'destroy all',
+        icon: createVNode(ExclamationCircleOutlined),
+        onOk() {
+          return new Promise((resolve, reject) => {
+            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+          }).catch(() => console.log('Oops errors!'));
+        },
+        cancelText: 'Click to destroy all',
+        onCancel() {
+          Modal.destroyAll();
+        },
+      });
+    }, i * 500);
+  }
+};
+</script>
+Open Modal of 1000px width自定义模态的宽度使用width来设置模态对话框的宽度TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Open Modal of 1000px width</a-button>
+    <a-modal v-model:open="open" width="1000px" title="Basic Modal" @ok="handleOk">
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+
+const handleOk = (e: MouseEvent) => {
+  console.log(e);
+  open.value = false;
+};
+</script>
+Open Modal全屏使用样式定义一个全屏弹窗TS<template>
+  <div>
+    <a-button type="primary" @click="showModal">Open Modal</a-button>
+    <a-modal
+      v-model:open="open"
+      title="Basic Modal"
+      width="100%"
+      wrap-class-name="full-modal"
+      @ok="handleOk"
+    >
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+
+const handleOk = (e: MouseEvent) => {
+  console.log(e);
+  open.value = false;
+};
+</script>
+<style lang="less">
+.full-modal {
+  .ant-modal {
+    max-width: 100%;
+    top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+  .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh);
+  }
+  .ant-modal-body {
+    flex: 1;
+  }
+}
+</style>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+afterClose
+Modal 完全关闭后的回调
+function
+-
+
+
+
+bodyStyle
+Modal body 样式
+object
+{}
+
+
+
+cancelButtonProps
+cancel 按钮 props
+ButtonProps
+-
+
+
+
+cancelText
+取消按钮文字
+string| slot
+取消
+
+
+
+centered
+垂直居中展示 Modal
+boolean
+false
+
+
+
+closable
+是否显示右上角的关闭按钮
+boolean
+true
+
+
+
+closeIcon
+自定义关闭图标
+VNode | slot
+-
+
+
+
+confirmLoading
+确定按钮 loading
+boolean
+-
+
+
+
+destroyOnClose
+关闭时销毁 Modal 里的子元素
+boolean
+false
+
+
+
+footer
+底部内容，当不需要默认底部按钮时，可以设为 :footer="null"
+string|slot
+确定取消按钮
+
+
+
+forceRender
+强制渲染 Modal
+boolean
+false
+
+
+
+getContainer
+指定 Modal 挂载的 HTML 节点
+(instance): HTMLElement
+() => document.body
+
+
+
+keyboard
+是否支持键盘 esc 关闭
+boolean
+true
+
+
+
+mask
+是否展示遮罩
+boolean
+true
+
+
+
+maskClosable
+点击蒙层是否允许关闭
+boolean
+true
+
+
+
+maskStyle
+遮罩样式
+object
+{}
+
+
+
+okButtonProps
+ok 按钮 props
+ButtonProps
+-
+
+
+
+okText
+确认按钮文字
+string|slot
+确定
+
+
+
+okType
+确认按钮类型
+string
+primary
+
+
+
+title
+标题
+string|slot
+-
+
+
+
+open(v-model)
+对话框是否可见
+boolean
+-
+
+
+
+width
+宽度
+string|number
+520
+
+
+
+wrapClassName
+对话框外层容器的类名
+string
+-
+
+
+
+zIndex
+设置 Modal 的 z-index
+number
+1000
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+cancel
+点击遮罩层或右上角叉或取消按钮的回调
+function(e)
+
+
+ok
+点击确定回调
+function(e)
+
+
+
+注意 
+          #
+        
+
+<Modal /> 默认关闭后状态不会自动清空, 如果希望每次打开都是新内容，请设置 destroyOnClose。
+
+Modal.method() 
+          #
+        
+包括：
+
+Modal.info
+Modal.success
+Modal.error
+Modal.warning
+Modal.confirm
+
+以上均为一个函数，参数为 object，具体属性如下：
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+appContext
+弹窗的上下文，一般用于获取全局注册组件、vuex 等内容
+-
+-
+
+
+
+autoFocusButton
+指定自动获得焦点的按钮
+null | ok | cancel
+ok
+
+
+
+cancelButtonProps
+cancel 按钮 props
+ButtonProps
+-
+
+
+
+cancelText
+取消按钮文字
+string
+取消
+
+
+
+centered
+垂直居中展示 Modal
+boolean
+false
+
+
+
+class
+容器类名
+string
+-
+
+
+
+closable
+是否显示右上角的关闭按钮
+boolean
+false
+
+
+
+content
+内容
+string |VNode |function()
+-
+
+
+
+footer
+底部内容，当不需要默认底部按钮时，可以设为 footer: null
+string |VNode |function()
+-
+4.0.0
+
+
+icon
+自定义图标（1.14.0 新增）
+VNode | ()=>VNode
+-
+
+
+
+keyboard
+是否支持键盘 esc 关闭
+boolean
+true
+
+
+
+mask
+是否展示遮罩
+boolean
+true
+
+
+
+maskClosable
+点击蒙层是否允许关闭
+boolean
+false
+
+
+
+okButtonProps
+ok 按钮 props
+ButtonProps
+-
+
+
+
+okText
+确认按钮文字
+string
+确定
+
+
+
+okType
+确认按钮类型
+string
+primary
+
+
+
+title
+标题
+string|VNode |function()
+-
+
+
+
+width
+宽度
+string|number
+416
+
+
+
+wrapClassName
+对话框外层容器的类名
+string
+-
+3.2.3
+
+
+zIndex
+设置 Modal 的 z-index
+number
+1000
+
+
+
+onCancel
+取消回调，参数为关闭函数，返回 promise 时 resolve 后自动关闭
+function
+-
+
+
+
+onOk
+点击确定回调，参数为关闭函数，返回 promise 时 resolve 后自动关闭
+function
+-
+
+
+
+
+以上函数调用后，会返回一个引用，可以通过该引用更新和关闭弹窗。
+const modal = Modal.info();
+
+modal.update({
+  title: '修改的标题',
+  content: '修改的内容',
+});
+
+modal.destroy();
+
+
+Modal.destroyAll
+
+使用 Modal.destroyAll() 可以销毁弹出的确认窗（即上述的 Modal.info、Modal.success、Modal.error、Modal.warning、Modal.confirm）。通常用于路由监听当中，处理路由前进、后退不能销毁确认对话框的问题，而不用各处去使用实例的返回值进行关闭（modal.destroy() 适用于主动关闭，而不是路由这样被动关闭）
+const router = new VueRouter({ ... })
+
+// router change
+router.beforeEach((to, from, next) => {
+  Modal.destroyAll();
+})
+
+Modal.useModal() 
+          #
+        
+当你需要使用 Context 时，可以通过 Modal.useModal 创建一个 contextHolder 插入子节点中。通过 hooks 创建的临时 Modal 将会得到 contextHolder 所在位置的所有上下文。创建的 modal 对象拥有与 Modal.method 相同的创建通知方法。
+<template>
+  <contextHolder />
+  <!-- <component :is='contextHolder'/> -->
+</template>
+<script setup>
+  import { Modal } from 'ant-design-vue';
+  const [modal, contextHolder] = Modal.useModal();
+
+  modal.confirm({
+    // ...
+  });
+</script>
+
+FAQ 
+          #
+        
+为什么 Modal 方法不能获取 全局注册组件、context、vuex 等内容和 ConfigProvider locale/prefixCls/theme 配置， 以及不能响应式更新数据 ？ 
+          #
+        
+直接调用 Modal 方法，组件会通过 Vue.render 动态创建新的 Vue 实体。其 context 与当前代码所在 context 并不相同，因而无法获取 context 信息。
+当你需要 context 信息（例如使用全局注册的组件）时，可以通过 Modal.useModal 方法会返回 modal 实体以及 contextHolder 节点。将其插入到你需要获取 context 位置即可：
+<template>
+  <contextHolder />
+  <!-- <component :is='contextHolder'/> -->
+</template>
+<script setup>
+  import { Modal } from 'ant-design-vue';
+  const [modal, contextHolder] = Modal.useModal();
+
+  modal.confirm({
+    // ...
+  });
+</script>
+
+
+可通过 App 包裹组件 简化useModal等方法需要手动植入 contextHolder 的问题。
+
+
+      全局提示通知提醒框Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

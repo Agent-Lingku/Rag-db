@@ -1,0 +1,2622 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本使用 固定 Label 宽度 内联登录栏 表单布局 表单禁用 内联登录栏 登录框 表单验证 自定义校验规则 动态增减表单项 嵌套结构与校验信息 自定义表单控件 高级搜索 复杂的动态增减表单项 动态增减嵌套字段 动态校验规则 多表单联动 弹出层中的新建表单 时间类控件 校验其他组件 自定义校验 useForm 基本表单 useForm 嵌套表单 useForm 自定义触发时机 useForm 合并错误信息 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Form 表单高性能表单控件，自带数据域管理。包含数据录入、校验以及对应样式。
+何时使用 
+          #
+        
+
+用于创建一个实体或收集信息。
+需要对输入的数据类型进行校验时。
+
+表单 
+          #
+        
+我们为 form 提供了以下三种排列方式：
+
+水平排列：标签和表单控件水平排列；（默认）
+垂直排列：标签和表单控件上下垂直排列；
+行内排列：表单项水平行内排列。
+
+表单域 
+          #
+        
+表单一定会包含表单域，表单域可以是输入控件，标准表单域，标签，下拉菜单，文本域等。
+代码演示UsernamePasswordRemember meSubmit基本使用基本的表单数据域控制展示，包含布局、初始化、验证、提交。TS<template>
+  <a-form
+    :model="formState"
+    name="basic"
+    :label-col="{ span: 8 }"
+    :wrapper-col="{ span: 16 }"
+    autocomplete="off"
+    @finish="onFinish"
+    @finishFailed="onFinishFailed"
+  >
+    <a-form-item
+      label="Username"
+      name="username"
+      :rules="[{ required: true, message: 'Please input your username!' }]"
+    >
+      <a-input v-model:value="formState.username" />
+    </a-form-item>
+
+    <a-form-item
+      label="Password"
+      name="password"
+      :rules="[{ required: true, message: 'Please input your password!' }]"
+    >
+      <a-input-password v-model:value="formState.password" />
+    </a-form-item>
+
+    <a-form-item name="remember" :wrapper-col="{ offset: 8, span: 16 }">
+      <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
+    </a-form-item>
+
+    <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+      <a-button type="primary" html-type="submit">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+
+interface FormState {
+  username: string;
+  password: string;
+  remember: boolean;
+}
+
+const formState = reactive<FormState>({
+  username: '',
+  password: '',
+  remember: true,
+});
+const onFinish = (values: any) => {
+  console.log('Success:', values);
+};
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log('Failed:', errorInfo);
+};
+</script>
+Activity nameInstant deliveryActivity typeOnlinePromotionOfflineResourcesSponsorVenueActivity formCreateCancel固定 Label 宽度通过 labelCol.style 设置固定宽度TS<template>
+  <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-item label="Activity name">
+      <a-input v-model:value="formState.name" />
+    </a-form-item>
+    <a-form-item label="Instant delivery">
+      <a-switch v-model:checked="formState.delivery" />
+    </a-form-item>
+    <a-form-item label="Activity type">
+      <a-checkbox-group v-model:value="formState.type">
+        <a-checkbox value="1" name="type">Online</a-checkbox>
+        <a-checkbox value="2" name="type">Promotion</a-checkbox>
+        <a-checkbox value="3" name="type">Offline</a-checkbox>
+      </a-checkbox-group>
+    </a-form-item>
+    <a-form-item label="Resources">
+      <a-radio-group v-model:value="formState.resource">
+        <a-radio value="1">Sponsor</a-radio>
+        <a-radio value="2">Venue</a-radio>
+      </a-radio-group>
+    </a-form-item>
+    <a-form-item label="Activity form">
+      <a-textarea v-model:value="formState.desc" />
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click="onSubmit">Create</a-button>
+      <a-button style="margin-left: 10px">Cancel</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, toRaw } from 'vue';
+import type { UnwrapRef } from 'vue';
+
+interface FormState {
+  name: string;
+  delivery: boolean;
+  type: string[];
+  resource: string;
+  desc: string;
+}
+const formState: UnwrapRef<FormState> = reactive({
+  name: '',
+  delivery: false,
+  type: [],
+  resource: '',
+  desc: '',
+});
+const onSubmit = () => {
+  console.log('submit!', toRaw(formState));
+};
+const labelCol = { style: { width: '150px' } };
+const wrapperCol = { span: 14 };
+</script>
+Log in内联登录栏水平登录栏，常用在顶部导航栏中。TS<template>
+  <a-form
+    layout="inline"
+    :model="formState"
+    @finish="handleFinish"
+    @finishFailed="handleFinishFailed"
+  >
+    <a-form-item>
+      <a-input v-model:value="formState.user" placeholder="Username">
+        <template #prefix><UserOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-input v-model:value="formState.password" type="password" placeholder="Password">
+        <template #prefix><LockOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-button
+        type="primary"
+        html-type="submit"
+        :disabled="formState.user === '' || formState.password === ''"
+      >
+        Log in
+      </a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+import type { UnwrapRef } from 'vue';
+import type { FormProps } from 'ant-design-vue';
+
+interface FormState {
+  user: string;
+  password: string;
+}
+const formState: UnwrapRef<FormState> = reactive({
+  user: '',
+  password: '',
+});
+const handleFinish: FormProps['onFinish'] = values => {
+  console.log(values, formState);
+};
+const handleFinishFailed: FormProps['onFinishFailed'] = errors => {
+  console.log(errors);
+};
+</script>
+Form LayoutHorizontalVerticalInlineField AField BSubmit表单布局表单有三种布局。TS<template>
+  <a-form :layout="formState.layout" :model="formState" v-bind="formItemLayout">
+    <a-form-item label="Form Layout">
+      <a-radio-group v-model:value="formState.layout">
+        <a-radio-button value="horizontal">Horizontal</a-radio-button>
+        <a-radio-button value="vertical">Vertical</a-radio-button>
+        <a-radio-button value="inline">Inline</a-radio-button>
+      </a-radio-group>
+    </a-form-item>
+    <a-form-item label="Field A">
+      <a-input v-model:value="formState.fieldA" placeholder="input placeholder" />
+    </a-form-item>
+    <a-form-item label="Field B">
+      <a-input v-model:value="formState.fieldB" placeholder="input placeholder" />
+    </a-form-item>
+    <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
+      <a-button type="primary">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { computed, reactive } from 'vue';
+import type { UnwrapRef } from 'vue';
+
+interface FormState {
+  layout: 'horizontal' | 'vertical' | 'inline';
+  fieldA: string;
+  fieldB: string;
+}
+const formState: UnwrapRef<FormState> = reactive({
+  layout: 'horizontal',
+  fieldA: '',
+  fieldB: '',
+});
+const formItemLayout = computed(() => {
+  const { layout } = formState;
+  return layout === 'horizontal'
+    ? {
+        labelCol: { span: 4 },
+        wrapperCol: { span: 14 },
+      }
+    : {};
+});
+const buttonItemLayout = computed(() => {
+  const { layout } = formState;
+  return layout === 'horizontal'
+    ? {
+        wrapperCol: { span: 14, offset: 4 },
+      }
+    : {};
+});
+</script>
+ Form disabled CheckboxcheckboxRadioApplePearInputSelectTreeSelectCascaderDatePickerRangePickerInputNumberTextAreaSwitchUploadUploadButtonButton表单禁用设置表单组件禁用，仅对 antd 组件有效。TS<template>
+  <a-checkbox :checked="componentDisabled" @change="e => (componentDisabled = e.target.checked)">
+    Form disabled
+  </a-checkbox>
+  <a-form
+    :label-col="labelCol"
+    :wrapper-col="wrapperCol"
+    layout="horizontal"
+    :disabled="componentDisabled"
+    style="max-width: 600px"
+  >
+    <a-form-item label="Checkbox">
+      <a-checkbox>checkbox</a-checkbox>
+    </a-form-item>
+    <a-form-item label="Radio">
+      <a-radio-group v-model:value="radioValue">
+        <a-radio value="apple">Apple</a-radio>
+        <a-radio value="pear">Pear</a-radio>
+      </a-radio-group>
+    </a-form-item>
+    <a-form-item label="Input">
+      <a-input />
+    </a-form-item>
+    <a-form-item label="Select">
+      <a-select>
+        <a-select-option value="demo">Demo</a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item label="TreeSelect">
+      <a-tree-select :tree-data="treeData" />
+    </a-form-item>
+    <a-form-item label="Cascader">
+      <a-cascader :options="options" />
+    </a-form-item>
+    <a-form-item label="DatePicker">
+      <a-date-picker />
+    </a-form-item>
+    <a-form-item label="RangePicker">
+      <a-range-picker />
+    </a-form-item>
+    <a-form-item label="InputNumber">
+      <a-input-number />
+    </a-form-item>
+    <a-form-item label="TextArea">
+      <a-textarea :rows="4" />
+    </a-form-item>
+    <a-form-item label="Switch">
+      <a-switch v-model:checked="checked" />
+    </a-form-item>
+    <a-form-item label="Upload">
+      <a-upload action="/upload.do" list-type="picture-card">
+        <div>
+          <PlusOutlined />
+          <div style="margin-top: 8px">Upload</div>
+        </div>
+      </a-upload>
+    </a-form-item>
+    <a-form-item label="Button">
+      <a-button>Button</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { ref, reactive } from 'vue';
+import { PlusOutlined } from '@ant-design/icons-vue';
+import type { TreeSelectProps, CascaderProps } from 'ant-design-vue';
+
+const componentDisabled = ref(true);
+const labelCol = { style: { width: '150px' } };
+const wrapperCol = { span: 14 };
+const radioValue = ref('apple');
+const treeData = reactive<TreeSelectProps['treeData']>([
+  { title: 'Light', value: 'light', children: [{ title: 'Bamboo', value: 'bamboo' }] },
+]);
+const options = reactive<CascaderProps['options']>([
+  {
+    value: 'zhejiang',
+    label: 'Zhejiang',
+    children: [
+      {
+        value: 'hangzhou',
+        label: 'Hangzhou',
+      },
+    ],
+  },
+]);
+const checked = ref(false);
+</script>
+UsernamePasswordLog in内联登录栏内联登录栏，常用在顶部导航栏中。TS<template>
+  <a-form
+    :model="formState"
+    name="horizontal_login"
+    layout="inline"
+    autocomplete="off"
+    @finish="onFinish"
+    @finishFailed="onFinishFailed"
+  >
+    <a-form-item
+      label="Username"
+      name="username"
+      :rules="[{ required: true, message: 'Please input your username!' }]"
+    >
+      <a-input v-model:value="formState.username">
+        <template #prefix>
+          <UserOutlined class="site-form-item-icon" />
+        </template>
+      </a-input>
+    </a-form-item>
+
+    <a-form-item
+      label="Password"
+      name="password"
+      :rules="[{ required: true, message: 'Please input your password!' }]"
+    >
+      <a-input-password v-model:value="formState.password">
+        <template #prefix>
+          <LockOutlined class="site-form-item-icon" />
+        </template>
+      </a-input-password>
+    </a-form-item>
+
+    <a-form-item>
+      <a-button :disabled="disabled" type="primary" html-type="submit">Log in</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, computed } from 'vue';
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+interface FormState {
+  username: string;
+  password: string;
+}
+const formState = reactive<FormState>({
+  username: '',
+  password: '',
+});
+const onFinish = (values: any) => {
+  console.log('Success:', values);
+};
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log('Failed:', errorInfo);
+};
+const disabled = computed(() => {
+  return !(formState.username && formState.password);
+});
+</script>
+UsernamePasswordRemember meForgot passwordLog in Or register now!登录框普通的登录框，可以容纳更多的元素。TS<template>
+  <a-form
+    :model="formState"
+    name="normal_login"
+    class="login-form"
+    @finish="onFinish"
+    @finishFailed="onFinishFailed"
+  >
+    <a-form-item
+      label="Username"
+      name="username"
+      :rules="[{ required: true, message: 'Please input your username!' }]"
+    >
+      <a-input v-model:value="formState.username">
+        <template #prefix>
+          <UserOutlined class="site-form-item-icon" />
+        </template>
+      </a-input>
+    </a-form-item>
+
+    <a-form-item
+      label="Password"
+      name="password"
+      :rules="[{ required: true, message: 'Please input your password!' }]"
+    >
+      <a-input-password v-model:value="formState.password">
+        <template #prefix>
+          <LockOutlined class="site-form-item-icon" />
+        </template>
+      </a-input-password>
+    </a-form-item>
+
+    <a-form-item>
+      <a-form-item name="remember" no-style>
+        <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
+      </a-form-item>
+      <a class="login-form-forgot" href="">Forgot password</a>
+    </a-form-item>
+
+    <a-form-item>
+      <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">
+        Log in
+      </a-button>
+      Or
+      <a href="">register now!</a>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, computed } from 'vue';
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+interface FormState {
+  username: string;
+  password: string;
+  remember: boolean;
+}
+const formState = reactive<FormState>({
+  username: '',
+  password: '',
+  remember: true,
+});
+const onFinish = (values: any) => {
+  console.log('Success:', values);
+};
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log('Failed:', errorInfo);
+};
+const disabled = computed(() => {
+  return !(formState.username && formState.password);
+});
+</script>
+<style scoped>
+#components-form-demo-normal-login .login-form {
+  max-width: 300px;
+}
+#components-form-demo-normal-login .login-form-forgot {
+  float: right;
+}
+#components-form-demo-normal-login .login-form-button {
+  width: 100%;
+}
+</style>
+Activity nameActivity zoneplease select your zoneActivity timeInstant deliveryActivity typeOnlinePromotionOfflineResourcesSponsorVenueActivity formCreateReset表单验证Form 组件提供了表单验证的功能，只需要通过 rules 属性传入约定的验证规则，并将 FormItem 的 name 属性设置为需校验的字段名即可。校验规则参见 async-validatorTS<template>
+  <a-form
+    ref="formRef"
+    :model="formState"
+    :rules="rules"
+    :label-col="labelCol"
+    :wrapper-col="wrapperCol"
+  >
+    <a-form-item ref="name" label="Activity name" name="name">
+      <a-input v-model:value="formState.name" />
+    </a-form-item>
+    <a-form-item label="Activity zone" name="region">
+      <a-select v-model:value="formState.region" placeholder="please select your zone">
+        <a-select-option value="shanghai">Zone one</a-select-option>
+        <a-select-option value="beijing">Zone two</a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item label="Activity time" required name="date1">
+      <a-date-picker
+        v-model:value="formState.date1"
+        show-time
+        type="date"
+        placeholder="Pick a date"
+        style="width: 100%"
+      />
+    </a-form-item>
+    <a-form-item label="Instant delivery" name="delivery">
+      <a-switch v-model:checked="formState.delivery" />
+    </a-form-item>
+    <a-form-item label="Activity type" name="type">
+      <a-checkbox-group v-model:value="formState.type">
+        <a-checkbox value="1" name="type">Online</a-checkbox>
+        <a-checkbox value="2" name="type">Promotion</a-checkbox>
+        <a-checkbox value="3" name="type">Offline</a-checkbox>
+      </a-checkbox-group>
+    </a-form-item>
+    <a-form-item label="Resources" name="resource">
+      <a-radio-group v-model:value="formState.resource">
+        <a-radio value="1">Sponsor</a-radio>
+        <a-radio value="2">Venue</a-radio>
+      </a-radio-group>
+    </a-form-item>
+    <a-form-item label="Activity form" name="desc">
+      <a-textarea v-model:value="formState.desc" />
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click="onSubmit">Create</a-button>
+      <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { Dayjs } from 'dayjs';
+import { reactive, ref, toRaw } from 'vue';
+import type { UnwrapRef } from 'vue';
+import type { Rule } from 'ant-design-vue/es/form';
+
+interface FormState {
+  name: string;
+  region: string | undefined;
+  date1: Dayjs | undefined;
+  delivery: boolean;
+  type: string[];
+  resource: string;
+  desc: string;
+}
+const formRef = ref();
+const labelCol = { span: 5 };
+const wrapperCol = { span: 13 };
+const formState: UnwrapRef<FormState> = reactive({
+  name: '',
+  region: undefined,
+  date1: undefined,
+  delivery: false,
+  type: [],
+  resource: '',
+  desc: '',
+});
+const rules: Record<string, Rule[]> = {
+  name: [
+    { required: true, message: 'Please input Activity name', trigger: 'change' },
+    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+  ],
+  region: [{ required: true, message: 'Please select Activity zone', trigger: 'change' }],
+  date1: [{ required: true, message: 'Please pick a date', trigger: 'change', type: 'object' }],
+  type: [
+    {
+      type: 'array',
+      required: true,
+      message: 'Please select at least one activity type',
+      trigger: 'change',
+    },
+  ],
+  resource: [{ required: true, message: 'Please select activity resource', trigger: 'change' }],
+  desc: [{ required: true, message: 'Please input activity form', trigger: 'blur' }],
+};
+const onSubmit = () => {
+  formRef.value
+    .validate()
+    .then(() => {
+      console.log('values', formState, toRaw(formState));
+    })
+    .catch(error => {
+      console.log('error', error);
+    });
+};
+const resetForm = () => {
+  formRef.value.resetFields();
+};
+</script>
+PasswordConfirmAgeSubmitReset自定义校验规则这个例子中展示了如何使用自定义验证规则来完成密码的二次验证。本例还使用 has-feedback 属性为输入框添加了表示校验结果的反馈图标。
+更多高级用法可参考 async-validatorTS<template>
+  <a-form
+    ref="formRef"
+    name="custom-validation"
+    :model="formState"
+    :rules="rules"
+    v-bind="layout"
+    @finish="handleFinish"
+    @validate="handleValidate"
+    @finishFailed="handleFinishFailed"
+  >
+    <a-form-item has-feedback label="Password" name="pass">
+      <a-input v-model:value="formState.pass" type="password" autocomplete="off" />
+    </a-form-item>
+    <a-form-item has-feedback label="Confirm" name="checkPass">
+      <a-input v-model:value="formState.checkPass" type="password" autocomplete="off" />
+    </a-form-item>
+    <a-form-item has-feedback label="Age" name="age">
+      <a-input-number v-model:value="formState.age" />
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" html-type="submit">Submit</a-button>
+      <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+import type { Rule } from 'ant-design-vue/es/form';
+import type { FormInstance } from 'ant-design-vue';
+interface FormState {
+  pass: string;
+  checkPass: string;
+  age: number | undefined;
+}
+const formRef = ref<FormInstance>();
+const formState = reactive<FormState>({
+  pass: '',
+  checkPass: '',
+  age: undefined,
+});
+const checkAge = async (_rule: Rule, value: number) => {
+  if (!value) {
+    return Promise.reject('Please input the age');
+  }
+  if (!Number.isInteger(value)) {
+    return Promise.reject('Please input digits');
+  } else {
+    if (value < 18) {
+      return Promise.reject('Age must be greater than 18');
+    } else {
+      return Promise.resolve();
+    }
+  }
+};
+const validatePass = async (_rule: Rule, value: string) => {
+  if (value === '') {
+    return Promise.reject('Please input the password');
+  } else {
+    if (formState.checkPass !== '') {
+      formRef.value.validateFields('checkPass');
+    }
+    return Promise.resolve();
+  }
+};
+const validatePass2 = async (_rule: Rule, value: string) => {
+  if (value === '') {
+    return Promise.reject('Please input the password again');
+  } else if (value !== formState.pass) {
+    return Promise.reject("Two inputs don't match!");
+  } else {
+    return Promise.resolve();
+  }
+};
+
+const rules: Record<string, Rule[]> = {
+  pass: [{ required: true, validator: validatePass, trigger: 'change' }],
+  checkPass: [{ validator: validatePass2, trigger: 'change' }],
+  age: [{ validator: checkAge, trigger: 'change' }],
+};
+const layout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 14 },
+};
+const handleFinish = (values: FormState) => {
+  console.log(values, formState);
+};
+const handleFinishFailed = errors => {
+  console.log(errors);
+};
+const resetForm = () => {
+  formRef.value.resetFields();
+};
+const handleValidate = (...args) => {
+  console.log(args);
+};
+</script>
+Add fieldSubmitReset动态增减表单项动态增加、减少表单项。TS<template>
+  <a-form
+    ref="formRef"
+    name="dynamic_form_item"
+    :model="dynamicValidateForm"
+    v-bind="formItemLayoutWithOutLabel"
+  >
+    <a-form-item
+      v-for="(domain, index) in dynamicValidateForm.domains"
+      :key="domain.key"
+      v-bind="index === 0 ? formItemLayout : {}"
+      :label="index === 0 ? 'Domains' : ''"
+      :name="['domains', index, 'value']"
+      :rules="{
+        required: true,
+        message: 'domain can not be null',
+        trigger: 'change',
+      }"
+    >
+      <a-input
+        v-model:value="domain.value"
+        placeholder="please input domain"
+        style="width: 60%; margin-right: 8px"
+      />
+      <MinusCircleOutlined
+        v-if="dynamicValidateForm.domains.length > 1"
+        class="dynamic-delete-button"
+        @click="removeDomain(domain)"
+      />
+    </a-form-item>
+    <a-form-item v-bind="formItemLayoutWithOutLabel">
+      <a-button type="dashed" style="width: 60%" @click="addDomain">
+        <PlusOutlined />
+        Add field
+      </a-button>
+    </a-form-item>
+    <a-form-item v-bind="formItemLayoutWithOutLabel">
+      <a-button type="primary" html-type="submit" @click="submitForm">Submit</a-button>
+      <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
+import type { FormInstance } from 'ant-design-vue';
+
+interface Domain {
+  value: string;
+  key: number;
+}
+const formRef = ref<FormInstance>();
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 20 },
+  },
+};
+const formItemLayoutWithOutLabel = {
+  wrapperCol: {
+    xs: { span: 24, offset: 0 },
+    sm: { span: 20, offset: 4 },
+  },
+};
+const dynamicValidateForm = reactive<{ domains: Domain[] }>({
+  domains: [],
+});
+const submitForm = () => {
+  formRef.value
+    .validate()
+    .then(() => {
+      console.log('values', dynamicValidateForm.domains);
+    })
+    .catch(error => {
+      console.log('error', error);
+    });
+};
+const resetForm = () => {
+  formRef.value.resetFields();
+};
+const removeDomain = (item: Domain) => {
+  const index = dynamicValidateForm.domains.indexOf(item);
+  if (index !== -1) {
+    dynamicValidateForm.domains.splice(index, 1);
+  }
+};
+const addDomain = () => {
+  dynamicValidateForm.domains.push({
+    value: '',
+    key: Date.now(),
+  });
+};
+</script>
+<style scoped>
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+.dynamic-delete-button:hover {
+  color: #777;
+}
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+</style>
+NameEmailAgeWebsiteIntroductionSubmit嵌套结构与校验信息name 属性支持嵌套数据结构。通过 validateMessages 或 message 自定义校验信息模板，模板内容可参考此处。TS<template>
+  <a-form
+    :model="formState"
+    v-bind="layout"
+    name="nest-messages"
+    :validate-messages="validateMessages"
+    @finish="onFinish"
+  >
+    <a-form-item :name="['user', 'name']" label="Name" :rules="[{ required: true }]">
+      <a-input v-model:value="formState.user.name" />
+    </a-form-item>
+    <a-form-item :name="['user', 'email']" label="Email" :rules="[{ type: 'email' }]">
+      <a-input v-model:value="formState.user.email" />
+    </a-form-item>
+    <a-form-item :name="['user', 'age']" label="Age" :rules="[{ type: 'number', min: 0, max: 99 }]">
+      <a-input-number v-model:value="formState.user.age" />
+    </a-form-item>
+    <a-form-item :name="['user', 'website']" label="Website">
+      <a-input v-model:value="formState.user.website" />
+    </a-form-item>
+    <a-form-item :name="['user', 'introduction']" label="Introduction">
+      <a-textarea v-model:value="formState.user.introduction" />
+    </a-form-item>
+    <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 8 }">
+      <a-button type="primary" html-type="submit">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+
+const validateMessages = {
+  required: '${label} is required!',
+  types: {
+    email: '${label} is not a valid email!',
+    number: '${label} is not a valid number!',
+  },
+  number: {
+    range: '${label} must be between ${min} and ${max}',
+  },
+};
+
+const formState = reactive({
+  user: {
+    name: '',
+    age: undefined,
+    email: '',
+    website: '',
+    introduction: '',
+  },
+});
+const onFinish = (values: any) => {
+  console.log('Success:', values);
+};
+</script>
+PriceRMBSubmit自定义表单控件自定义或第三方的表单控件，也可以与 Form 组件一起使用。只要该组件注入 useInjectFormItemContext 并调用相应方法。TS<template>
+  <a-form name="customized_form_controls" layout="inline" :model="formState" @finish="onFinish">
+    <a-form-item name="price" label="Price" :rules="[{ validator: checkPrice }]">
+      <price-input v-model:value="formState.price" />
+    </a-form-item>
+    <a-form-item>
+      <a-button type="primary" html-type="submit">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+// sourceCode https://github.com/vueComponent/ant-design-vue/blob/cb3c002e17f0f4f5b3e8d01846069da0e2645aff/components/form/demo/price-input.vue
+import PriceInput from './price-input.vue';
+import type { Currency } from './price-input.vue';
+
+const formState = reactive({
+  price: {
+    number: 0,
+    currency: 'rmb' as Currency,
+  },
+});
+const onFinish = (values: any) => {
+  console.log('Received values from form: ', values);
+};
+const checkPrice = (_: any, value: { number: number }) => {
+  if (value.number > 0) {
+    return Promise.resolve();
+  }
+  return Promise.reject(new Error('Price must be greater than zero!'));
+};
+</script>
+field-1field-2field-3field-4field-5field-6field-7field-8field-9field-10SearchClear Collapse Search Result List高级搜索三列栅格式的表单排列方式，常用于数据表格的高级搜索。
+有部分定制的样式代码，由于输入标签长度不确定，需要根据具体情况自行调整。TS<template>
+  <div>
+    <a-form
+      ref="formRef"
+      name="advanced_search"
+      class="ant-advanced-search-form"
+      :model="formState"
+      @finish="onFinish"
+    >
+      <a-row :gutter="24">
+        <template v-for="i in 10" :key="i">
+          <a-col v-show="expand || i <= 6" :span="8">
+            <a-form-item
+              :name="`field-${i}`"
+              :label="`field-${i}`"
+              :rules="[{ required: true, message: 'input something' }]"
+            >
+              <a-input v-model:value="formState[`field-${i}`]" placeholder="placeholder"></a-input>
+            </a-form-item>
+          </a-col>
+        </template>
+      </a-row>
+      <a-row>
+        <a-col :span="24" style="text-align: right">
+          <a-button type="primary" html-type="submit">Search</a-button>
+          <a-button style="margin: 0 8px" @click="() => formRef.resetFields()">Clear</a-button>
+          <a style="font-size: 12px" @click="expand = !expand">
+            <template v-if="expand">
+              <UpOutlined />
+            </template>
+            <template v-else>
+              <DownOutlined />
+            </template>
+            Collapse
+          </a>
+        </a-col>
+      </a-row>
+    </a-form>
+    <div class="search-result-list">Search Result List</div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+import { DownOutlined, UpOutlined } from '@ant-design/icons-vue';
+import type { FormInstance } from 'ant-design-vue';
+const expand = ref(false);
+const formRef = ref<FormInstance>();
+const formState = reactive({});
+const onFinish = (values: any) => {
+  console.log('Received values of form: ', values);
+  console.log('formState: ', formState);
+};
+</script>
+<style scoped>
+#components-form-demo-advanced-search .ant-form {
+  max-width: none;
+}
+#components-form-demo-advanced-search .search-result-list {
+  margin-top: 16px;
+  border: 1px dashed #e9e9e9;
+  border-radius: 2px;
+  background-color: #fafafa;
+  min-height: 200px;
+  text-align: center;
+  padding-top: 80px;
+}
+[data-theme='dark'] .ant-advanced-search-form {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #434343;
+  padding: 24px;
+  border-radius: 2px;
+}
+[data-theme='dark'] #components-form-demo-advanced-search .search-result-list {
+  border: 1px dashed #434343;
+  background: rgba(255, 255, 255, 0.04);
+}
+</style>
+AreaAdd sightsSubmit复杂的动态增减表单项这个例子演示了一个表单中包含多个表单控件的情况。TS<template>
+  <a-form
+    ref="formRef"
+    name="dynamic_form_nest_item"
+    :model="dynamicValidateForm"
+    @finish="onFinish"
+  >
+    <a-form-item name="area" label="Area" :rules="[{ required: true, message: 'Missing area' }]">
+      <a-select v-model:value="dynamicValidateForm.area" :options="areas" />
+    </a-form-item>
+    <a-space
+      v-for="(sight, index) in dynamicValidateForm.sights"
+      :key="sight.id"
+      style="display: flex; margin-bottom: 8px"
+      align="baseline"
+    >
+      <a-form-item
+        :name="['sights', index, 'value']"
+        label="Sight"
+        :rules="{
+          required: true,
+          message: 'Missing sight',
+        }"
+      >
+        <a-select
+          v-model:value="sight.value"
+          :disabled="!dynamicValidateForm.area"
+          :options="(sights[dynamicValidateForm.area] || []).map(a => ({ value: a }))"
+          style="width: 130px"
+        ></a-select>
+      </a-form-item>
+      <a-form-item
+        label="Price"
+        :name="['sights', index, 'price']"
+        :rules="{
+          required: true,
+          message: 'Missing price',
+        }"
+      >
+        <a-input v-model:value="sight.price" />
+      </a-form-item>
+      <MinusCircleOutlined @click="removeSight(sight)" />
+    </a-space>
+    <a-form-item>
+      <a-button type="dashed" block @click="addSight">
+        <PlusOutlined />
+        Add sights
+      </a-button>
+    </a-form-item>
+    <a-form-item>
+      <a-button type="primary" html-type="submit">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, ref, watch } from 'vue';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
+import type { FormInstance } from 'ant-design-vue';
+
+interface Sights {
+  value: string;
+  price: string;
+  id: number;
+}
+const areas = [
+  { label: 'Beijing', value: 'Beijing' },
+  { label: 'Shanghai', value: 'Shanghai' },
+];
+
+const sights = {
+  Beijing: ['Tiananmen', 'Great Wall'],
+  Shanghai: ['Oriental Pearl', 'The Bund'],
+};
+
+const formRef = ref<FormInstance>();
+const dynamicValidateForm = reactive<{ sights: Sights[]; area: string }>({
+  sights: [],
+  area: undefined,
+});
+watch(
+  () => dynamicValidateForm.area,
+  () => {
+    dynamicValidateForm.sights = [];
+  },
+);
+const removeSight = (item: Sights) => {
+  const index = dynamicValidateForm.sights.indexOf(item);
+  if (index !== -1) {
+    dynamicValidateForm.sights.splice(index, 1);
+  }
+};
+const addSight = () => {
+  dynamicValidateForm.sights.push({
+    value: undefined,
+    price: undefined,
+    id: Date.now(),
+  });
+};
+const onFinish = values => {
+  console.log('Received values of form:', values);
+  console.log('dynamicValidateForm:', dynamicValidateForm);
+};
+</script>
+Add userSubmit动态增减嵌套字段通过数组 name 绑定嵌套字段TS<template>
+  <a-form
+    ref="formRef"
+    name="dynamic_form_nest_item"
+    :model="dynamicValidateForm"
+    @finish="onFinish"
+  >
+    <a-space
+      v-for="(user, index) in dynamicValidateForm.users"
+      :key="user.id"
+      style="display: flex; margin-bottom: 8px"
+      align="baseline"
+    >
+      <a-form-item
+        :name="['users', index, 'first']"
+        :rules="{
+          required: true,
+          message: 'Missing first name',
+        }"
+      >
+        <a-input v-model:value="user.first" placeholder="First Name" />
+      </a-form-item>
+      <a-form-item
+        :name="['users', index, 'last']"
+        :rules="{
+          required: true,
+          message: 'Missing last name',
+        }"
+      >
+        <a-input v-model:value="user.last" placeholder="Last Name" />
+      </a-form-item>
+      <MinusCircleOutlined @click="removeUser(user)" />
+    </a-space>
+    <a-form-item>
+      <a-button type="dashed" block @click="addUser">
+        <PlusOutlined />
+        Add user
+      </a-button>
+    </a-form-item>
+    <a-form-item>
+      <a-button type="primary" html-type="submit">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
+import type { FormInstance } from 'ant-design-vue';
+
+interface User {
+  first: string;
+  last: string;
+  id: number;
+}
+const formRef = ref<FormInstance>();
+const dynamicValidateForm = reactive<{ users: User[] }>({
+  users: [],
+});
+const removeUser = (item: User) => {
+  const index = dynamicValidateForm.users.indexOf(item);
+  if (index !== -1) {
+    dynamicValidateForm.users.splice(index, 1);
+  }
+};
+const addUser = () => {
+  dynamicValidateForm.users.push({
+    first: '',
+    last: '',
+    id: Date.now(),
+  });
+};
+const onFinish = values => {
+  console.log('Received values of form:', values);
+  console.log('dynamicValidateForm.users:', dynamicValidateForm.users);
+};
+</script>
+UsernameNicknameNickname is requiredCheck动态校验规则根据不同情况执行不同的校验规则。TS<template>
+  <a-form ref="formRef" :model="formState" name="dynamic_rule" v-bind="formItemLayout">
+    <a-form-item
+      label="Username"
+      name="username"
+      :rules="[{ required: true, message: 'Please input your username!' }]"
+    >
+      <a-input v-model:value="formState.username" />
+    </a-form-item>
+
+    <a-form-item
+      label="Nickname"
+      name="nickname"
+      :rules="[{ required: formState.checkNick, message: 'Please input your nickname!' }]"
+    >
+      <a-input v-model:value="formState.nickname" />
+    </a-form-item>
+
+    <a-form-item name="checkNick" v-bind="formTailLayout">
+      <a-checkbox v-model:checked="formState.checkNick">Nickname is required</a-checkbox>
+    </a-form-item>
+
+    <a-form-item v-bind="formTailLayout">
+      <a-button type="primary" @click="onCheck">Check</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, ref, watch } from 'vue';
+import type { FormInstance } from 'ant-design-vue';
+
+interface FormState {
+  username: string;
+  nickname: string;
+  checkNick: boolean;
+}
+const formRef = ref<FormInstance>();
+const formState = reactive<FormState>({
+  username: '',
+  nickname: '',
+  checkNick: false,
+});
+watch(
+  () => formState.checkNick,
+  () => {
+    formRef.value.validateFields(['nickname']);
+  },
+  { flush: 'post' },
+);
+const onCheck = async () => {
+  try {
+    const values = await formRef.value.validateFields();
+    console.log('Success:', values);
+  } catch (errorInfo) {
+    console.log('Failed:', errorInfo);
+  }
+};
+const formItemLayout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 8 },
+};
+const formTailLayout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 8, offset: 4 },
+};
+</script>
+Group NameUser List (  No user yet. ) SubmitAdd User多表单联动本例子中，Modal 的确认按钮在 Form 之外，通过 form.submit 方法调用表单提交功能。反之，则推荐使用 <Button htmlType="submit" /> 调用 web 原生提交逻辑。TS<template>
+  <a-form ref="formRef" :model="formState" name="form_context" v-bind="layout" @finish="onFinish">
+    <a-form-item
+      name="group"
+      label="Group Name"
+      :rules="[{ required: true, message: 'Please input group name!' }]"
+    >
+      <a-input v-model:value="formState.group" />
+    </a-form-item>
+
+    <a-form-item label="User List">
+      <template v-if="formState.users.length">
+        <ul>
+          <template v-for="user in formState.users" :key="user.key">
+            <li class="user">
+              <a-avatar>
+                <template #icon><UserOutlined /></template>
+              </a-avatar>
+              {{ user.name }} - {{ user.age }}
+            </li>
+          </template>
+        </ul>
+      </template>
+      <template v-else>
+        <a-typography-text class="ant-form-text" type="secondary">
+          (
+          <SmileOutlined />
+          No user yet. )
+        </a-typography-text>
+      </template>
+    </a-form-item>
+
+    <a-form-item v-bind="tailLayout">
+      <a-button html-type="submit" type="primary">Submit</a-button>
+      <a-button html-type="button" style="margin: 0 8px" @click="visible = true">Add User</a-button>
+    </a-form-item>
+  </a-form>
+  <a-modal v-model:open="visible" title="Basic Drawer" @ok="onOk">
+    <a-form ref="modalFormRef" :model="modalFormState" layout="vertical" name="userForm">
+      <a-form-item name="name" label="User Name" :rules="[{ required: true }]">
+        <a-input v-model:value="modalFormState.name" />
+      </a-form-item>
+      <a-form-item name="age" label="User Age" :rules="[{ required: true }]">
+        <a-input-number v-model:value="modalFormState.age" />
+      </a-form-item>
+    </a-form>
+  </a-modal>
+</template>
+<script lang="ts" setup>
+import { reactive, ref, watch, toRaw } from 'vue';
+import type { FormInstance } from 'ant-design-vue';
+import { SmileOutlined, UserOutlined } from '@ant-design/icons-vue';
+
+interface UserType {
+  name?: string;
+  age?: number;
+  key?: number;
+}
+
+interface FormState {
+  group: string;
+  users: UserType[];
+}
+
+const formRef = ref<FormInstance>();
+const modalFormRef = ref<FormInstance>();
+const visible = ref(false);
+const formState = reactive<FormState>({
+  group: '',
+  users: [],
+});
+const modalFormState = ref<UserType>({});
+
+watch(
+  visible,
+  () => {
+    modalFormState.value = {};
+  },
+  { flush: 'post' },
+);
+
+const onOk = () => {
+  modalFormRef.value.validateFields().then(() => {
+    formState.users.push({ ...modalFormState.value, key: Date.now() });
+    visible.value = false;
+  });
+};
+const onFinish = () => {
+  console.log('Finish:', toRaw(formState));
+};
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+</script>
+<style scoped>
+#components-form-demo-form-context .user {
+  margin-bottom: 8px;
+}
+
+#components-form-demo-form-context .user .ant-avatar {
+  margin-right: 8px;
+}
+
+.ant-row-rtl #components-form-demo-form-context .user .ant-avatar {
+  margin-right: 0;
+  margin-left: 8px;
+}
+</style>
+New Collection弹出层中的新建表单当用户访问一个展示了某个列表的页面，想新建一项但又不想跳转页面时，可以用 Modal 弹出一个表单，用户填写必要信息后创建新的项。TS<template>
+  <div>
+    <a-button type="primary" @click="visible = true">New Collection</a-button>
+    <a-modal
+      v-model:open="visible"
+      title="Create a new collection"
+      ok-text="Create"
+      cancel-text="Cancel"
+      @ok="onOk"
+    >
+      <a-form ref="formRef" :model="formState" layout="vertical" name="form_in_modal">
+        <a-form-item
+          name="title"
+          label="Title"
+          :rules="[{ required: true, message: 'Please input the title of collection!' }]"
+        >
+          <a-input v-model:value="formState.title" />
+        </a-form-item>
+        <a-form-item name="description" label="Description">
+          <a-textarea v-model:value="formState.description" />
+        </a-form-item>
+        <a-form-item name="modifier" class="collection-create-form_last-form-item">
+          <a-radio-group v-model:value="formState.modifier">
+            <a-radio value="public">Public</a-radio>
+            <a-radio value="private">Private</a-radio>
+          </a-radio-group>
+        </a-form-item>
+      </a-form>
+    </a-modal>
+  </div>
+</template>
+<script lang="ts" setup>
+import { reactive, ref, toRaw } from 'vue';
+import type { FormInstance } from 'ant-design-vue';
+
+interface Values {
+  title: string;
+  description: string;
+  modifier: string;
+}
+
+const formRef = ref<FormInstance>();
+const visible = ref(false);
+const formState = reactive<Values>({
+  title: '',
+  description: '',
+  modifier: 'public',
+});
+
+const onOk = () => {
+  formRef.value
+    .validateFields()
+    .then(values => {
+      console.log('Received values of form: ', values);
+      console.log('formState: ', toRaw(formState));
+      visible.value = false;
+      formRef.value.resetFields();
+      console.log('reset formState: ', toRaw(formState));
+    })
+    .catch(info => {
+      console.log('Validate Failed:', info);
+    });
+};
+</script>
+<style scoped>
+.collection-create-form_last-form-item {
+  margin-bottom: 0;
+}
+</style>
+DatePickerDatePicker[showTime]MonthPickerRangePickerRangePicker[showTime]TimePickerSubmit时间类控件时间类组件的 value 类型为 dayjs 对象，所以在提交服务器前需要预处理。
+或者使用 valueFormat 组件内部会自动处理。TS<template>
+  <a-form
+    :model="formState"
+    name="time_related_controls"
+    v-bind="formItemLayout"
+    @finish="onFinish"
+    @finishFailed="onFinishFailed"
+  >
+    <a-form-item name="date-picker" label="DatePicker" v-bind="config">
+      <a-date-picker v-model:value="formState['date-picker']" value-format="YYYY-MM-DD" />
+    </a-form-item>
+    <a-form-item name="date-time-picker" label="DatePicker[showTime]" v-bind="config">
+      <a-date-picker
+        v-model:value="formState['date-time-picker']"
+        show-time
+        format="YYYY-MM-DD HH:mm:ss"
+        value-format="YYYY-MM-DD HH:mm:ss"
+      />
+    </a-form-item>
+    <a-form-item name="month-picker" label="MonthPicker" v-bind="config">
+      <a-date-picker
+        v-model:value="formState['month-picker']"
+        value-format="YYYY-MM"
+        picker="month"
+      />
+    </a-form-item>
+    <a-form-item name="range-picker" label="RangePicker" v-bind="rangeConfig">
+      <a-range-picker v-model:value="formState['range-picker']" value-format="YYYY-MM-DD" />
+    </a-form-item>
+    <a-form-item name="range-time-picker" label="RangePicker[showTime]" v-bind="rangeConfig">
+      <a-range-picker
+        v-model:value="formState['range-time-picker']"
+        show-time
+        format="YYYY-MM-DD HH:mm:ss"
+        value-format="YYYY-MM-DD HH:mm:ss"
+      />
+    </a-form-item>
+    <a-form-item name="time-picker" label="TimePicker" v-bind="config">
+      <a-time-picker
+        v-model:value="formState['time-picker']"
+        format="HH:mm:ss"
+        value-format="HH:mm:ss"
+      />
+    </a-form-item>
+    <a-form-item
+      :wrapper-col="{
+        xs: { span: 24, offset: 0 },
+        sm: { span: 16, offset: 8 },
+      }"
+    >
+      <a-button type="primary" html-type="submit">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+
+interface FormState {
+  'date-picker': string;
+  'date-time-picker': string;
+  'month-picker': string;
+  'range-picker': [string, string];
+  'range-time-picker': [string, string];
+  'time-picker': string;
+}
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
+const config = {
+  rules: [{ type: 'string' as const, required: true, message: 'Please select time!' }],
+};
+const rangeConfig = {
+  rules: [{ type: 'array' as const, required: true, message: 'Please select time!' }],
+};
+const formState = reactive({} as FormState);
+const onFinish = (values: any) => {
+  console.log('Success:', values, formState);
+};
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log('Failed:', errorInfo);
+};
+</script>
+Plain TextChinaSelectPlease select a countrySelect[multiple] Please select favourite colorsInputNumbermachinesSwitchSliderABCDEFRadio.Groupitem 1item 2item 3Radio.Buttonitem 1item 2item 3Checkbox.GroupABCDEFRateUploadClick to uploadlongggggggggggggggggggggggggggggggggggDraggerClick or drag file to this area to uploadSupport for a single or bulk upload.Submit校验其他组件以上演示没有出现的表单控件对应的校验演示。TS<template>
+  <a-form
+    :model="formState"
+    name="validate_other"
+    v-bind="formItemLayout"
+    @finishFailed="onFinishFailed"
+    @finish="onFinish"
+  >
+    <a-form-item label="Plain Text">
+      <span class="ant-form-text">China</span>
+    </a-form-item>
+    <a-form-item
+      name="select"
+      label="Select"
+      has-feedback
+      :rules="[{ required: true, message: 'Please select your country!' }]"
+    >
+      <a-select v-model:value="formState.select" placeholder="Please select a country">
+        <a-select-option value="china">China</a-select-option>
+        <a-select-option value="usa">U.S.A</a-select-option>
+      </a-select>
+    </a-form-item>
+
+    <a-form-item
+      name="select-multiple"
+      label="Select[multiple]"
+      :rules="[{ required: true, message: 'Please select your favourite colors!', type: 'array' }]"
+    >
+      <a-select
+        v-model:value="formState['select-multiple']"
+        mode="multiple"
+        placeholder="Please select favourite colors"
+      >
+        <a-select-option value="red">Red</a-select-option>
+        <a-select-option value="green">Green</a-select-option>
+        <a-select-option value="blue">Blue</a-select-option>
+      </a-select>
+    </a-form-item>
+
+    <a-form-item label="InputNumber">
+      <a-form-item name="input-number" no-style>
+        <a-input-number v-model:value="formState['input-number']" :min="1" :max="10" />
+      </a-form-item>
+      <span class="ant-form-text">machines</span>
+    </a-form-item>
+
+    <a-form-item name="switch" label="Switch">
+      <a-switch v-model:checked="formState.switch" />
+    </a-form-item>
+
+    <a-form-item name="slider" label="Slider">
+      <a-slider
+        v-model:value="formState.slider"
+        :marks="{
+          0: 'A',
+          20: 'B',
+          40: 'C',
+          60: 'D',
+          80: 'E',
+          100: 'F',
+        }"
+      />
+    </a-form-item>
+
+    <a-form-item name="radio-group" label="Radio.Group">
+      <a-radio-group v-model:value="formState['radio-group']">
+        <a-radio value="a">item 1</a-radio>
+        <a-radio value="b">item 2</a-radio>
+        <a-radio value="c">item 3</a-radio>
+      </a-radio-group>
+    </a-form-item>
+
+    <a-form-item
+      name="radio-button"
+      label="Radio.Button"
+      :rules="[{ required: true, message: 'Please pick an item!' }]"
+    >
+      <a-radio-group v-model:value="formState['radio-button']">
+        <a-radio-button value="a">item 1</a-radio-button>
+        <a-radio-button value="b">item 2</a-radio-button>
+        <a-radio-button value="c">item 3</a-radio-button>
+      </a-radio-group>
+    </a-form-item>
+
+    <a-form-item name="checkbox-group" label="Checkbox.Group">
+      <a-checkbox-group v-model:value="formState['checkbox-group']">
+        <a-row>
+          <a-col :span="8">
+            <a-checkbox value="A" style="line-height: 32px">A</a-checkbox>
+          </a-col>
+          <a-col :span="8">
+            <a-checkbox value="B" style="line-height: 32px" disabled>B</a-checkbox>
+          </a-col>
+          <a-col :span="8">
+            <a-checkbox value="C" style="line-height: 32px">C</a-checkbox>
+          </a-col>
+          <a-col :span="8">
+            <a-checkbox value="D" style="line-height: 32px">D</a-checkbox>
+          </a-col>
+          <a-col :span="8">
+            <a-checkbox value="E" style="line-height: 32px">E</a-checkbox>
+          </a-col>
+          <a-col :span="8">
+            <a-checkbox value="F" style="line-height: 32px">F</a-checkbox>
+          </a-col>
+        </a-row>
+      </a-checkbox-group>
+    </a-form-item>
+
+    <a-form-item name="rate" label="Rate">
+      <a-rate v-model:value="formState.rate" allow-half />
+    </a-form-item>
+
+    <a-form-item name="upload" label="Upload" extra="longgggggggggggggggggggggggggggggggggg">
+      <a-upload
+        v-model:fileList="formState.upload"
+        name="logo"
+        action="/upload.do"
+        list-type="picture"
+      >
+        <a-button>
+          <template #icon><UploadOutlined /></template>
+          Click to upload
+        </a-button>
+      </a-upload>
+    </a-form-item>
+
+    <a-form-item label="Dragger">
+      <a-form-item name="dragger" no-style>
+        <a-upload-dragger v-model:fileList="formState.dragger" name="files" action="/upload.do">
+          <p class="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p class="ant-upload-text">Click or drag file to this area to upload</p>
+          <p class="ant-upload-hint">Support for a single or bulk upload.</p>
+        </a-upload-dragger>
+      </a-form-item>
+    </a-form-item>
+
+    <a-form-item :wrapper-col="{ span: 12, offset: 6 }">
+      <a-button type="primary" html-type="submit">Submit</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive } from 'vue';
+import { UploadOutlined, InboxOutlined } from '@ant-design/icons-vue';
+
+const formItemLayout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 14 },
+};
+
+const formState = reactive<Record<string, any>>({
+  'input-number': 3,
+  'checkbox-group': ['A', 'B'],
+  rate: 3.5,
+});
+const onFinish = (values: any) => {
+  console.log('Success:', values);
+};
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log('Failed:', errorInfo);
+};
+</script>
+FailShould be combination of numbers & alphabetsWarningValidatingThe information is being validated...SuccessWarningFailShould be combination of numbers & alphabetsSuccessWarningErrorErrorI'm SelectValidatingI'm CascaderSomething breaks the rule.WarningI'm TreeSelectNeed to be checkedinlinePlease select right date - SuccessSuccessWarningErrorFailFailShould have something自定义校验我们提供了 validateStatus help hasFeedback 等属性，你可以不通过 Form 自己定义校验的时机和内容。
+
+validateStatus: 校验状态，可选 'success', 'warning', 'error', 'validating'。
+hasFeedback：用于给输入框添加反馈图标。
+help：设置校验文案。
+TS<template>
+  <a-form v-bind="formItemLayout">
+    <a-form-item
+      label="Fail"
+      validate-status="error"
+      help="Should be combination of numbers & alphabets"
+    >
+      <a-input id="error" placeholder="unavailable choice" />
+    </a-form-item>
+
+    <a-form-item label="Warning" validate-status="warning">
+      <a-input id="warning" placeholder="Warning">
+        <template #prefix><smile-outlined /></template>
+      </a-input>
+    </a-form-item>
+
+    <a-form-item
+      label="Validating"
+      has-feedback
+      validate-status="validating"
+      help="The information is being validated..."
+    >
+      <a-input id="validating" placeholder="I'm the content is being validated" />
+    </a-form-item>
+
+    <a-form-item label="Success" has-feedback validate-status="success">
+      <a-input id="success" placeholder="I'm the content" />
+    </a-form-item>
+
+    <a-form-item label="Warning" has-feedback validate-status="warning">
+      <a-input id="warning2" placeholder="Warning" />
+    </a-form-item>
+
+    <a-form-item
+      label="Fail"
+      has-feedback
+      validate-status="error"
+      help="Should be combination of numbers & alphabets"
+    >
+      <a-input id="error2" placeholder="unavailable choice" />
+    </a-form-item>
+
+    <a-form-item label="Success" has-feedback validate-status="success">
+      <a-date-picker style="width: 100%" />
+    </a-form-item>
+
+    <a-form-item label="Warning" has-feedback validate-status="warning">
+      <a-time-picker style="width: 100%" />
+    </a-form-item>
+
+    <a-form-item label="Error" has-feedback validate-status="error">
+      <a-range-picker style="width: 100%" />
+    </a-form-item>
+
+    <a-form-item label="Error" has-feedback validate-status="error">
+      <a-select placeholder="I'm Select" allow-clear>
+        <a-select-option value="1">Option 1</a-select-option>
+        <a-select-option value="2">Option 2</a-select-option>
+        <a-select-option value="3">Option 3</a-select-option>
+      </a-select>
+    </a-form-item>
+
+    <a-form-item
+      label="Validating"
+      has-feedback
+      validate-status="error"
+      help="Something breaks the rule."
+    >
+      <a-cascader
+        placeholder="I'm Cascader"
+        :options="[{ value: 'xx', label: 'xx' }]"
+        allow-clear
+      />
+    </a-form-item>
+
+    <a-form-item label="Warning" has-feedback validate-status="warning" help="Need to be checked">
+      <a-tree-select
+        placeholder="I'm TreeSelect"
+        :tree-data="[{ value: 'xx', label: 'xx' }]"
+        allow-clear
+      />
+    </a-form-item>
+
+    <a-form-item label="inline" style="margin-bottom: 0px">
+      <a-form-item
+        validate-status="error"
+        help="Please select right date"
+        style="display: inline-block; width: calc(50% - 12px)"
+      >
+        <a-date-picker />
+      </a-form-item>
+      <span style="display: inline-block, width: 24px; line-height:32px; text-align: center">
+        -
+      </span>
+      <a-form-item style="display: inline-block; width: calc(50% - 12px)">
+        <a-date-picker />
+      </a-form-item>
+    </a-form-item>
+
+    <a-form-item label="Success" has-feedback validate-status="success">
+      <a-inputNumber style="width: 100%" />
+    </a-form-item>
+
+    <a-form-item label="Success" has-feedback validate-status="success">
+      <a-input allow-clear placeholder="with allowClear" />
+    </a-form-item>
+
+    <a-form-item label="Warning" has-feedback validate-status="warning">
+      <a-input-password placeholder="with input password" />
+    </a-form-item>
+
+    <a-form-item label="Error" has-feedback validate-status="error">
+      <a-input-password allow-clear placeholder="with input password and allowClear" />
+    </a-form-item>
+
+    <a-form-item label="Fail" validate-status="error" has-feedback>
+      <a-mentions />
+    </a-form-item>
+
+    <a-form-item label="Fail" validate-status="error" has-feedback help="Should have something">
+      <a-textarea allow-clear show-count />
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { SmileOutlined } from '@ant-design/icons-vue';
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 14 },
+  },
+};
+</script>
+Activity nameActivity zoneplease select your zoneActivity typeOnlinePromotionOfflineCreateResetuseForm 基本表单通过 Form.useForm 更加灵活的使用表单组件。TS<template>
+  <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-item label="Activity name" v-bind="validateInfos.name">
+      <a-input v-model:value="modelRef.name" />
+    </a-form-item>
+    <a-form-item label="Activity zone" v-bind="validateInfos.region">
+      <a-select v-model:value="modelRef.region" placeholder="please select your zone">
+        <a-select-option value="shanghai">Zone one</a-select-option>
+        <a-select-option value="beijing">Zone two</a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item label="Activity type" v-bind="validateInfos.type">
+      <a-checkbox-group v-model:value="modelRef.type">
+        <a-checkbox value="1" name="type">Online</a-checkbox>
+        <a-checkbox value="2" name="type">Promotion</a-checkbox>
+        <a-checkbox value="3" name="type">Offline</a-checkbox>
+      </a-checkbox-group>
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click.prevent="onSubmit">Create</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, toRaw } from 'vue';
+import { Form } from 'ant-design-vue';
+
+const useForm = Form.useForm;
+
+const labelCol = { span: 4 };
+const wrapperCol = { span: 14 };
+const modelRef = reactive({
+  name: '',
+  region: undefined,
+  type: [],
+});
+const rulesRef = reactive({
+  name: [
+    {
+      required: true,
+      message: 'Please input name',
+    },
+  ],
+  region: [
+    {
+      required: true,
+      message: 'Please select region',
+    },
+  ],
+  type: [
+    {
+      required: true,
+      message: 'Please select type',
+      type: 'array',
+    },
+  ],
+});
+const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef, {
+  onValidate: (...args) => console.log(...args),
+});
+const onSubmit = () => {
+  validate()
+    .then(() => {
+      console.log(toRaw(modelRef));
+    })
+    .catch(err => {
+      console.log('error', err);
+    });
+};
+</script>
+Activity nameSub nameCreateResetuseForm 嵌套表单通过 Form.useForm  使用点字符串拼接进行嵌套数据校验。TS<template>
+  <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-item label="Activity name" v-bind="validateInfos.name">
+      <a-input v-model:value="modelRef.name" />
+    </a-form-item>
+    <a-form-item label="Sub name" v-bind="validateInfos['sub.name']">
+      <a-input v-model:value="modelRef.sub.name" />
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click.prevent="onSubmit">Create</a-button>
+      <a-button style="margin-left: 10px" @click="reset">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, toRaw } from 'vue';
+import { Form } from 'ant-design-vue';
+
+const useForm = Form.useForm;
+
+const labelCol = { span: 4 };
+const wrapperCol = { span: 14 };
+
+const modelRef = reactive({
+  name: '',
+  sub: {
+    name: '',
+  },
+});
+const { resetFields, validate, validateInfos } = useForm(
+  modelRef,
+  reactive({
+    name: [
+      {
+        required: true,
+        message: 'Please input name',
+      },
+    ],
+    'sub.name': [
+      {
+        required: true,
+        message: 'Please input sub name',
+      },
+    ],
+  }),
+);
+const onSubmit = () => {
+  validate()
+    .then(res => {
+      console.log(res, toRaw(modelRef));
+    })
+    .catch(err => {
+      console.log('error', err);
+    });
+};
+const reset = () => {
+  resetFields();
+};
+</script>
+Activity nameActivity zoneplease select your zoneCreateResetuseForm 自定义触发时机通过 Form.useForm 自定义触发校验时机TS<template>
+  <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-item label="Activity name" v-bind="validateInfos.name">
+      <a-input
+        v-model:value="modelRef.name"
+        @blur="validate('name', { trigger: 'blur' }).catch(() => {})"
+      />
+    </a-form-item>
+    <a-form-item label="Activity zone" v-bind="validateInfos.region">
+      <a-select v-model:value="modelRef.region" placeholder="please select your zone">
+        <a-select-option value="shanghai">Zone one</a-select-option>
+        <a-select-option value="beijing">Zone two</a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+      <a-button type="primary" @click.prevent="onSubmit">Create</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, toRaw } from 'vue';
+import { Form } from 'ant-design-vue';
+
+const useForm = Form.useForm;
+
+const labelCol = { span: 4 };
+const wrapperCol = { span: 14 };
+const modelRef = reactive({
+  name: '',
+  region: undefined,
+});
+const rulesRef = reactive({
+  name: [
+    {
+      required: true,
+      message: 'Please input Activity name',
+    },
+    {
+      min: 3,
+      max: 5,
+      message: 'Length should be 3 to 5',
+      trigger: 'blur',
+    },
+  ],
+  region: [
+    {
+      required: true,
+      message: 'Please select region',
+    },
+  ],
+});
+const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+const onSubmit = () => {
+  validate()
+    .then(() => {
+      console.log(toRaw(modelRef));
+    })
+    .catch(err => {
+      console.log('error', err);
+    });
+};
+</script>
+Activity nameActivity zoneplease select your zoneActivity typeOnlinePromotionOfflineCreateResetuseForm 合并错误信息通过 Form.useForm  合并展示表单校验信息。TS<template>
+  <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-item label="Activity name" required>
+      <a-input v-model:value="modelRef.name" />
+    </a-form-item>
+    <a-form-item label="Activity zone" required>
+      <a-select v-model:value="modelRef.region" placeholder="please select your zone">
+        <a-select-option value="shanghai">Zone one</a-select-option>
+        <a-select-option value="beijing">Zone two</a-select-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item label="Activity type" required>
+      <a-checkbox-group v-model:value="modelRef.type">
+        <a-checkbox value="1" name="type">Online</a-checkbox>
+        <a-checkbox value="2" name="type">Promotion</a-checkbox>
+        <a-checkbox value="3" name="type">Offline</a-checkbox>
+      </a-checkbox-group>
+    </a-form-item>
+    <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }" v-bind="errorInfos">
+      <a-button type="primary" @click.prevent="onSubmit">Create</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
+    </a-form-item>
+  </a-form>
+</template>
+<script lang="ts" setup>
+import { reactive, toRaw, computed } from 'vue';
+import { toArray } from 'lodash-es';
+import { Form } from 'ant-design-vue';
+
+const useForm = Form.useForm;
+
+const labelCol = { span: 4 };
+const wrapperCol = { span: 14 };
+const modelRef = reactive({
+  name: '',
+  region: undefined,
+  type: [],
+});
+const rulesRef = reactive({
+  name: [
+    {
+      required: true,
+      message: 'Please input name',
+    },
+  ],
+  region: [
+    {
+      required: true,
+      message: 'Please select region',
+    },
+  ],
+  type: [
+    {
+      required: true,
+      message: 'Please select type',
+      type: 'array',
+    },
+  ],
+});
+const { resetFields, validate, validateInfos, mergeValidateInfo } = useForm(modelRef, rulesRef);
+const onSubmit = () => {
+  validate()
+    .then(() => {
+      console.log(toRaw(modelRef));
+    })
+    .catch(err => {
+      console.log('error', err);
+    });
+};
+const errorInfos = computed(() => {
+  return mergeValidateInfo(toArray(validateInfos));
+});
+</script>
+<style scoped>
+.error-infos :deep(.ant-form-explain) {
+  white-space: pre-line;
+}
+</style>
+
+      API#
+      
+          #
+        
+Form 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+colon
+配置 Form.Item 的 colon 的默认值 (只有在属性 layout 为 horizontal 时有效)
+boolean
+true
+
+
+
+disabled
+设置表单组件禁用，仅对 antdv 组件有效
+boolean
+false
+4.0
+
+
+hideRequiredMark
+隐藏所有表单项的必选标记
+Boolean
+false
+
+
+
+labelAlign
+label 标签的文本对齐方式
+'left' | 'right'
+'right'
+
+
+
+labelCol
+label 标签布局，同 <Col> 组件，设置 span offset 值，如 {span: 3, offset: 12} 或 sm: {span: 3, offset: 12}
+object
+
+
+
+
+labelWrap
+label 标签的文本换行方式
+boolean
+false
+3.0
+
+
+layout
+表单布局
+'horizontal'|'vertical'|'inline'
+'horizontal'
+
+
+
+model
+表单数据对象
+object
+
+
+
+
+name
+表单名称，会作为表单字段 id 前缀使用
+string
+-
+2.0.0
+
+
+noStyle
+为 true 时不带样式，作为纯字段控件使用
+boolean
+false
+3.0
+
+
+rules
+表单验证规则
+object
+
+
+
+
+scrollToFirstError
+提交失败自动滚动到第一个错误字段
+boolean | options
+false
+2.0.0
+
+
+validateOnRuleChange
+是否在 rules 属性改变后立即触发一次验证
+boolean
+true
+
+
+
+validateTrigger
+统一设置字段校验规则
+string | string[]
+change
+2.0.0
+
+
+wrapperCol
+需要为输入控件设置布局样式时，使用该属性，用法同 labelCol
+object
+
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+
+finish
+提交表单且数据验证成功后回调事件
+function(values)
+-
+2.0.0
+
+
+finishFailed
+提交表单且数据验证失败后回调事件
+function({ values, errorFields, outOfDate })
+-
+2.0.0
+
+
+submit
+数据验证成功后回调事件
+Function(e:Event)
+｜
+
+
+
+validate
+任一表单项被校验后触发
+Function(name, status, errorMsgs)
+
+
+
+
+
+方法 
+          #
+        
+
+
+
+方法名
+说明
+参数
+版本
+
+
+
+
+clearValidate
+移除表单项的校验结果。传入待移除的表单项的 name 属性或者 name 组成的数组，如不传则移除整个表单的校验结果
+(nameList?: NamePath[]) => void
+
+
+
+resetFields
+对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
+(nameList?: NamePath[]) => void
+
+
+
+scrollToField
+滚动到对应字段位置
+(name: NamePath, options: [ScrollOptions]) => void
+
+
+
+validate
+触发表单验证, 同 validateFields
+(nameList?: NamePath[]) => Promise
+
+
+
+validateFields
+触发表单验证
+(nameList?: NamePath[]) => Promise
+
+
+
+
+NamePath 
+          #
+        
+string | number | (string | number)[]
+Form.Item 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+autoLink
+是否自动关联表单域，对于大部分情况都可以使用自动关联，如果不满足自动关联的条件，可以手动关联，参见下方注意事项
+boolean
+true
+
+
+
+colon
+配合 label 属性使用，表示是否显示 label 后面的冒号
+boolean
+true
+
+
+
+extra
+额外的提示信息，和 help 类似，当需要错误信息和提示文案同时出现时，可以使用这个。
+string|slot
+
+
+
+
+hasFeedback
+配合 validateStatus 属性使用，展示校验状态图标，建议只配合 Input 组件使用
+boolean
+false
+
+
+
+help
+提示信息，如不设置，则会根据校验规则自动生成
+string|slot
+
+
+
+
+htmlFor
+设置子元素 label htmlFor 属性
+string
+
+
+
+
+label
+label 标签的文本
+string|slot
+
+
+
+
+labelAlign
+标签文本对齐方式
+'left' | 'right'
+'right'
+
+
+
+labelCol
+label 标签布局，同 <Col> 组件，设置 span offset 值，如 {span: 3, offset: 12} 或 sm: {span: 3, offset: 12}
+object
+
+
+
+
+name
+表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
+NamePath
+
+
+
+
+required
+是否必填，如不设置，则会根据校验规则自动生成
+boolean
+false
+
+
+
+rules
+表单验证规则
+object | array
+
+
+
+
+tooltip
+配置提示信息
+string | slot
+
+4.0.4
+
+
+validateFirst
+当某一规则校验不通过时，是否停止剩下的规则的校验。
+boolean
+false
+2.0.0
+
+
+validateStatus
+校验状态，如不设置，则会根据校验规则自动生成，可选：'success' 'warning' 'error' 'validating'
+string
+
+
+
+
+validateTrigger
+设置字段校验的时机
+string | string[]
+change
+2.0.0
+
+
+wrapperCol
+需要为输入控件设置布局样式时，使用该属性，用法同 labelCol
+object
+
+
+
+
+
+注意： 
+          #
+        
+3.x 
+          #
+        
+自 3.0 版本以后，Form.Item 不再劫持子元素，而是通过 provider / inject 依赖注入的方式进行自动校验，这种方式可以提高组件性能，子元素也不会限制个数，同样子元素也可以是进一步封装的高级组件。你可以参考自定义表单控件示例
+但它同样会有一些缺点：
+1、自定义组件如果希望 Form.Item 进行校验展示，你需要 const {id, onFieldChange, onFieldBlur} = useInjectFormItemContext() 注入，并调用相应的方法。
+2、一个 Form.Item 只能收集一个表单项的数据，如果有多个表单项，会导致收集错乱，例如，
+<a-form-item>
+  <a-input name="a"></a-input>
+  <a-input name="b"></a-input>
+</a-form-item>
+
+如上 Form.Item 并不知道需要收集 name="a" 还是 name="b"，你可以通过如下三种方式去解决此类问题：
+第一种，使用多个 a-form-item:
+<a-form-item>
+  <a-input name="a"></a-input>
+  <a-form-item><a-input name="b"></a-input></a-form-item>
+</a-form-item>
+
+第二种，使用自定义组件包裹，并在自定义组件中调用 useInjectFormItemContext，相当于把多个表单项合并成了一个
+<script>
+  // 自定义组件
+  import { Form } from 'ant-design-vue';
+  export default {
+    setup() {
+      const formItemContext = Form.useInjectFormItemContext();
+    },
+  };
+</script>
+
+<a-form-item>
+  <custom-com>
+    <a-input name="a"></a-input>
+    <a-input name="b"></a-input>
+  </custom-com>
+</a-form-item>
+
+第三种，组件库提供了一个 a-form-item-rest 组件，它会阻止数据的收集，你可以将不需要收集校验的表单项放到这个组件中即可，它和第一种方式很类似，但它不会产生额外的 dom 节点。
+<a-form-item>
+  <a-input name="a"></a-input>
+  <a-form-item-rest><a-input name="b"></a-input></a-form-item-rest>
+</a-form-item>
+
+2.x 
+          #
+        
+Form.Item 会对唯一子元素进行劫持，并监听 blur 和 change 事件，来达到自动校验的目的，所以请确保表单域没有其它元素包裹。如果有多个子元素，将只会监听第一个子元素的变化。
+如果要监听的表单域不满足自动监听的条件，可以通过如下方式关联表单域：
+<a-form-item name="form.name" ref="name" :autoLink="false">
+  <a-input v-model:value="other" />
+  <span>hahha</span>
+  <div>
+    <a-input
+      v-model:value="form.name"
+      @blur="() => {$refs.name.onFieldBlur()}"
+      @change="() => {$refs.name.onFieldChange()}"
+    />
+  </div>
+</a-form-item>
+
+校验规则 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+enum
+枚举类型
+string
+-
+
+
+len
+字段长度
+number
+-
+
+
+max
+最大长度
+number
+-
+
+
+message
+校验文案
+string
+-
+
+
+min
+最小长度
+number
+-
+
+
+pattern
+正则表达式校验
+RegExp
+-
+
+
+required
+是否必选
+boolean
+false
+
+
+transform
+校验前转换字段值
+function(value) => transformedValue:any
+-
+
+
+trigger
+校验触发的时机
+'blur' | 'change' | ['change', 'blur']
+-
+
+
+type
+内建校验类型，可选项
+string
+'string'
+
+
+validator
+自定义校验（注意，callback 必须被调用）
+function(rule, value, callback)
+-
+
+
+whitespace
+必选时，空格是否会被视为错误
+boolean
+false
+
+
+
+更多高级用法可研究 async-validator。
+useForm (v2.2) 
+          #
+        
+useForm 是一个可以独立 Form 组件运行的方法，它使用 Vue 响应式机制进行数据的监听和校验，并将校验结果返回，你可以将校验结果绑定到任何组件上，Form.Item 也仅仅是将结果展示。
+2.2 以下版本需要需要 @ant-design-vue/use 库单独提供，不建议继续使用，你应该尽快升级到 2.2+ 版本
+import { Form } from 'ant-design-vue';
+const useForm = Form.useForm;
+
+useForm(modelRef, ruleRef, [options]);
+
+参数说明：
+/*
+ `modelRef`, `ruleRef` 必须是响应式数据
+*/
+
+interface Props {
+  [key: string]: any;
+}
+function useForm(
+  modelRef: Props | Ref<Props>,
+  rulesRef?: Props | Ref<Props>,
+  options?: {
+    immediate?: boolean;
+    deep?: boolean;
+    validateOnRuleChange?: boolean;
+    debounce?: DebounceSettings;
+  },
+): {
+  modelRef: Props | Ref<Props>;
+  rulesRef: Props | Ref<Props>;
+  initialModel: Props;
+  validateInfos: validateInfos;
+  resetFields: (newValues?: Props) => void;
+  validate: <T = any>(names?: namesType, option?: validateOptions) => Promise<T>;
+  validateField: (
+    name?: string,
+    value?: any,
+    rules?: [Record<string, unknown>],
+    option?: validateOptions,
+  ) => Promise<RuleError[]>;
+  mergeValidateInfo: (items: ValidateInfo | ValidateInfo[]) => ValidateInfo;
+  clearValidate: (names?: namesType) => void;
+  onValidate?: (
+    name: string | number | string[] | number[],
+    status: boolean,
+    errorMsgs: string[] | null,
+  ) => void;
+};
+
+
+      最后更新 : 2024/06/04悬浮按钮栅格Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

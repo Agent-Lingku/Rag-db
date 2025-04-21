@@ -1,0 +1,866 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 省略号 可交互 文本与超链接组件 后缀 标题组件 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Typography 排版文本的基本格式。
+何时使用 
+          #
+        
+
+当需要展示标题、段落、列表内容时使用，如文章/博客/日志的文本样式。
+当需要一列基于文本的基础操作时，如拷贝/省略/可编辑。
+
+代码演示Introduction In the process of internal desktop applications development, many different design specs and implementations would be involved, which might cause designers and developers difficulties and duplication and reduce the efficiency of development.  After massive project practice and summaries, Ant Design, a design language for background applications, is refined by Ant UED Team, which aims to  uniform the user interface specs for internal background projects, lower the unnecessary cost of design differences and implementation and liberate the resources of design and front-end development. Guidelines and Resources We supply a series of design principles, practical patterns and high quality design resources ( Sketch and Axure ), to help people create their product prototypes beautifully and efficiently. Resource Download Press Esc to exit... 介绍 蚂蚁的企业级产品是一个庞大且复杂的体系。这类产品不仅量级巨大且功能复杂，而且变动和并发频繁，常常需要设计与开发能够快速的做出响应。同时这类产品中有存在很多类似的页面以及组件，可以通过抽象得到一些稳定且高复用性的内容。  随着商业化的趋势，越来越多的企业级产品对更好的用户体验有了进一步的要求。带着这样的一个终极目标，我们（蚂蚁金服体验技术部）经过大量的项目实践和总结，逐步打磨出一个服务于企业级产品的设计体系 Ant Design。基于 『确定』和『自然』 的设计价值观，通过模块化的解决方案，降低冗余的生产成本，让设计者专注于 更好的用户体验 。 设计资源 我们提供完善的设计原则、最佳实践和设计资源文件（ Sketch 和 Axure ），来帮助业务快速设计出高质量的产品原型。 设计资源AntV 是蚂蚁金服全新一代数据可视化解决方案，致力于提供一套简单方便、专业可靠、不限可能的数据可视化最佳实践。得益于丰富的业务场景和用户需求挑战，AntV 经历多年积累与不断打磨，已支撑整个阿里集团内外 20000+ 业务系统，通过了日均千万级 UV 产品的严苛考验。
+我们正在基础图表，图分析，图编辑，地理空间可视化，智能可视化等各个可视化的领域耕耘，欢迎同路人一起前行。AntV 是蚂蚁金服全新一代数据可视化解决方案，致力于提供一套简单方便、专业可靠、不限可能的数据可视化最佳实践。得益于丰富的业务场景和用户需求挑战，AntV 经历多年积累与不断打磨，已支撑整个阿里集团内外 20000+ 业务系统，通过了日均千万级 UV 产品的严苛考验。
+我们正在基础图表，图分析，图编辑，地理空间可视化，智能可视化等各个可视化的领域耕耘，欢迎同路人一起前行。 按 Esc 键退出阅读…… 基本展示文档样例。TS<template>
+  <a-typography>
+    <a-typography-title>Introduction</a-typography-title>
+    <a-typography-paragraph>
+      In the process of internal desktop applications development, many different design specs and
+      implementations would be involved, which might cause designers and developers difficulties and
+      duplication and reduce the efficiency of development.
+    </a-typography-paragraph>
+    <a-typography-paragraph>
+      After massive project practice and summaries, Ant Design, a design language for background
+      applications, is refined by Ant UED Team, which aims to
+      <a-typography-text strong>
+        uniform the user interface specs for internal background projects, lower the unnecessary
+        cost of design differences and implementation and liberate the resources of design and
+        front-end development.
+      </a-typography-text>
+    </a-typography-paragraph>
+    <a-typography-title :level="2">Guidelines and Resources</a-typography-title>
+    <a-typography-paragraph>
+      We supply a series of design principles, practical patterns and high quality design resources
+      (
+      <a-typography-text code>Sketch</a-typography-text>
+      and
+      <a-typography-text code>Axure</a-typography-text>
+      ), to help people create their product prototypes beautifully and efficiently.
+    </a-typography-paragraph>
+
+    <a-typography-paragraph>
+      <ul>
+        <li>
+          <a-typography-link href="/docs/resources">Resource Download</a-typography-link>
+        </li>
+      </ul>
+    </a-typography-paragraph>
+
+    <a-typography-paragraph>
+      Press
+      <a-typography-text keyboard>Esc</a-typography-text>
+      to exit...
+    </a-typography-paragraph>
+
+    <a-divider />
+
+    <a-typography-title>介绍</a-typography-title>
+    <a-typography-paragraph>
+      蚂蚁的企业级产品是一个庞大且复杂的体系。这类产品不仅量级巨大且功能复杂，而且变动和并发频繁，常常需要设计与开发能够快速的做出响应。同时这类产品中有存在很多类似的页面以及组件，可以通过抽象得到一些稳定且高复用性的内容。
+    </a-typography-paragraph>
+    <a-typography-paragraph>
+      随着商业化的趋势，越来越多的企业级产品对更好的用户体验有了进一步的要求。带着这样的一个终极目标，我们（蚂蚁金服体验技术部）经过大量的项目实践和总结，逐步打磨出一个服务于企业级产品的设计体系
+      Ant Design。基于
+      <a-typography-text mark>『确定』和『自然』</a-typography-text>
+      的设计价值观，通过模块化的解决方案，降低冗余的生产成本，让设计者专注于
+      <a-typography-text strong>更好的用户体验</a-typography-text>
+      。
+    </a-typography-paragraph>
+    <a-typography-title :level="2">设计资源</a-typography-title>
+    <a-typography-paragraph>
+      我们提供完善的设计原则、最佳实践和设计资源文件（
+      <a-typography-text code>Sketch</a-typography-text>
+      和
+      <a-typography-text code>Axure</a-typography-text>
+      ），来帮助业务快速设计出高质量的产品原型。
+    </a-typography-paragraph>
+
+    <a-typography-paragraph>
+      <ul>
+        <li>
+          <a-typography-link href="/docs/resources-cn">设计资源</a-typography-link>
+        </li>
+      </ul>
+    </a-typography-paragraph>
+
+    <a-typography-paragraph>
+      <blockquote>{{ blockContent }}</blockquote>
+      <pre>{{ blockContent }}</pre>
+    </a-typography-paragraph>
+
+    <a-typography-paragraph>
+      按
+      <a-typography-text keyboard>Esc</a-typography-text>
+      键退出阅读……
+    </a-typography-paragraph>
+  </a-typography>
+</template>
+<script lang="ts" setup>
+const blockContent = `AntV 是蚂蚁金服全新一代数据可视化解决方案，致力于提供一套简单方便、专业可靠、不限可能的数据可视化最佳实践。得益于丰富的业务场景和用户需求挑战，AntV 经历多年积累与不断打磨，已支撑整个阿里集团内外 20000+ 业务系统，通过了日均千万级 UV 产品的严苛考验。
+我们正在基础图表，图分析，图编辑，地理空间可视化，智能可视化等各个可视化的领域耕耘，欢迎同路人一起前行。`;
+</script>
+ Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team.Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for backgrou...moreAnt Design, a ...省略号多行文本省略。你可以通过 tooltip 属性配置省略展示内容，大量文本时推荐优先使用 expandable。TS<template>
+  <a-switch v-model:checked="ellipsis" />
+  <a-typography-paragraph
+    :ellipsis="ellipsis"
+    content=" Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team."
+  />
+
+  <a-typography-paragraph
+    :ellipsis="ellipsis ? { rows: 2, expandable: true, symbol: 'more' } : false"
+    content="Ant Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team. Ant
+    Design, a design language for background applications, is refined by Ant UED Team."
+  />
+
+  <a-typography-text
+    :style="ellipsis ? { width: '100px' } : {}"
+    :ellipsis="ellipsis ? { tooltip: 'I am ellipsis now!' } : false"
+    content="Ant Design, a design language for background applications, is refined by Ant UED Team."
+  />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const ellipsis = ref(true);
+</script>
+This is an editable text.Custom Edit icon and replace tooltip text. Trigger edit with:   icontextbothText or icon as trigger - click to start editing.Editable text with a custom enter icon in edit field.Editable text with no enter icon in edit field.Hide Edit tooltip.This is an editable text with limited length.This is a copyable text. Replace copy text. Custom Copy icon and replace tooltips text. Hide Copy tooltips. 可交互提供可编辑和可复制等额外的交互能力。TS<template>
+  <a-typography-paragraph v-model:content="editableStr" editable />
+  <a-typography-paragraph v-model:content="customIconStr" editable>
+    <template #editableIcon><HighlightOutlined /></template>
+    <template #editableTooltip>click to edit text</template>
+  </a-typography-paragraph>
+  Trigger edit with:&nbsp;&nbsp;
+  <a-radio-group
+    :value="stateToRadio()"
+    @change="e => (chooseTrigger = radioToState(e.target.value))"
+  >
+    <a-radio value="icon">icon</a-radio>
+    <a-radio value="text">text</a-radio>
+    <a-radio value="both">both</a-radio>
+  </a-radio-group>
+  <a-typography-paragraph
+    v-model:content="clickTriggerStr"
+    :editable="{ triggerType: chooseTrigger }"
+  >
+    <template #editableTooltip>click to edit text</template>
+  </a-typography-paragraph>
+  <a-typography-paragraph v-model:content="customEnterIconStr" editable>
+    <template #editableIcon><HighlightOutlined /></template>
+    <template #editableTooltip>click to edit text</template>
+    <template #editableEnterIcon="{ className }">
+      <CheckOutlined :class="className" />
+    </template>
+  </a-typography-paragraph>
+  <a-typography-paragraph v-model:content="noEnterIconStr" editable>
+    <template #editableIcon><HighlightOutlined /></template>
+    <template #editableTooltip>click to edit text</template>
+    <template #editableEnterIcon>{{ null }}</template>
+  </a-typography-paragraph>
+  <a-typography-paragraph v-model:content="hideTooltipStr" :editable="{ tooltip: false }" />
+  <a-typography-paragraph
+    v-model:content="lengthLimitedStr"
+    :editable="{ maxlength: 50, autoSize: { maxRows: 5, minRows: 3 } }"
+  />
+
+  <a-typography-paragraph copyable>This is a copyable text.</a-typography-paragraph>
+  <a-typography-paragraph :copyable="{ text: 'Hello, Ant Design!' }">
+    Replace copy text.
+  </a-typography-paragraph>
+  <a-typography-paragraph copyable content="Custom Copy icon and replace tooltips text.">
+    <template #copyableIcon="{ copied }">
+      <SmileOutlined v-if="!copied" key="copy-icon" />
+      <SmileFilled v-else key="copied-icon" />
+    </template>
+    <template #copyableTooltip="{ copied }">
+      <span v-if="!copied" key="copy-tooltip">click here</span>
+      <span v-else key="copied-tooltip">you clicked!!</span>
+    </template>
+  </a-typography-paragraph>
+  <a-typography-paragraph :copyable="{ tooltip: false }">
+    Hide Copy tooltips.
+  </a-typography-paragraph>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+import {
+  HighlightOutlined,
+  SmileOutlined,
+  SmileFilled,
+  CheckOutlined,
+} from '@ant-design/icons-vue';
+
+const editableStr = ref('This is an editable text.');
+watch(editableStr, () => {
+  console.log('editableStr', editableStr.value);
+});
+const chooseTrigger = ref<('icon' | 'text')[]>(['icon']);
+
+const radioToState = (input: string): ('icon' | 'text')[] => {
+  switch (input) {
+    case 'text':
+      return ['text'];
+    case 'both':
+      return ['icon', 'text'];
+    case 'icon':
+    default:
+      return ['icon'];
+  }
+};
+
+const stateToRadio = () => {
+  if (chooseTrigger.value.indexOf('text') !== -1) {
+    return chooseTrigger.value.indexOf('icon') !== -1 ? 'both' : 'text';
+  }
+  return 'icon';
+};
+const customIconStr = ref('Custom Edit icon and replace tooltip text.');
+const hideTooltipStr = ref('Hide Edit tooltip.');
+const lengthLimitedStr = ref('This is an editable text with limited length.');
+const clickTriggerStr = ref('Text or icon as trigger - click to start editing.');
+const customEnterIconStr = ref('Editable text with a custom enter icon in edit field.');
+const noEnterIconStr = ref('Editable text with no enter icon in edit field.');
+</script>
+Ant Design Vue (default)Ant Design Vue (secondary)Ant Design Vue (success)Ant Design Vue (warning)Ant Design Vue (danger)Ant Design Vue (disabled)Ant Design Vue (mark)Ant Design Vue (code)Ant Design Vue (keyboard)Ant Design Vue (underline)Ant Design Vue (delete)Ant Design Vue (strong) Ant Design Vue (Link) 文本与超链接组件内置不同样式的文本以及超链接组件。TS<template>
+  <a-space direction="vertical">
+    <a-typography-text>Ant Design Vue (default)</a-typography-text>
+    <a-typography-text type="secondary">Ant Design Vue (secondary)</a-typography-text>
+    <a-typography-text type="success">Ant Design Vue (success)</a-typography-text>
+    <a-typography-text type="warning">Ant Design Vue (warning)</a-typography-text>
+    <a-typography-text type="danger">Ant Design Vue (danger)</a-typography-text>
+    <a-typography-text disabled>Ant Design Vue (disabled)</a-typography-text>
+    <a-typography-text mark>Ant Design Vue (mark)</a-typography-text>
+    <a-typography-text code>Ant Design Vue (code)</a-typography-text>
+    <a-typography-text keyboard>Ant Design Vue (keyboard)</a-typography-text>
+    <a-typography-text underline>Ant Design Vue (underline)</a-typography-text>
+    <a-typography-text delete>Ant Design Vue (delete)</a-typography-text>
+    <a-typography-text strong>Ant Design Vue (strong)</a-typography-text>
+    <a-typography-link href="https://antdv.com" target="_blank">
+      Ant Design Vue (Link)
+    </a-typography-link>
+  </a-space>
+</template>
+To be, or not to be, that is a question: Whether it is nobler in the mind to suffer. The slings...--William Shakespeare展开后缀添加后缀的省略。TS<template>
+  <a-slider v-model:value="rows" :min="1" :max="10" />
+  <a-typography-paragraph
+    :ellipsis="ellipsis"
+    :title="`${article}--William Shakespeare`"
+    :content="article"
+  ></a-typography-paragraph>
+</template>
+<script lang="ts" setup>
+import { computed, ref } from 'vue';
+const rows = ref(1);
+const ellipsis = computed(() => {
+  return {
+    rows: rows.value,
+    expandable: true,
+    suffix: '--William Shakespeare',
+    onEllipsis: (ellipsis: boolean) => {
+      console.log('Ellipsis changed:', ellipsis);
+    },
+  };
+});
+
+const article =
+  "To be, or not to be, that is a question: Whether it is nobler in the mind to suffer. The slings and arrows of outrageous fortune Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; No more; and by a sleep to say we end The heart-ache and the thousand natural shocks That flesh is heir to, 'tis a consummation Devoutly to be wish'd. To die, to sleep To sleep- perchance to dream: ay, there's the rub! For in that sleep of death what dreams may come When we have shuffled off this mortal coil, Must give us pause. There 's the respect That makes calamity of so long life";
+</script>
+h1. Ant Design Vueh2. Ant Design Vueh3. Ant Design Vueh4. Ant Design Vueh5. Ant Design Vue标题组件展示不同级别的标题。TS<template>
+  <a-typography-title>h1. Ant Design Vue</a-typography-title>
+  <a-typography-title :level="2">h2. Ant Design Vue</a-typography-title>
+  <a-typography-title :level="3">h3. Ant Design Vue</a-typography-title>
+  <a-typography-title :level="4">h4. Ant Design Vue</a-typography-title>
+  <a-typography-title :level="5">h5. Ant Design Vue</a-typography-title>
+</template>
+
+      API#
+      
+          #
+        
+Typography.Text 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+code
+添加代码样式
+boolean
+false
+
+
+
+content(v-model)
+当使用 ellipsis 或 editable 时，使用 content 代替 children
+string
+-
+
+
+
+copyable
+是否可拷贝，为对象时可进行各种自定义
+boolean | copyable
+false
+copyable
+
+
+delete
+添加删除线样式
+boolean
+false
+
+
+
+disabled
+禁用文本
+boolean
+false
+
+
+
+editable
+是否可编辑，为对象时可对编辑进行控制
+boolean | editable
+false
+editable
+
+
+ellipsis
+自动溢出省略
+boolean
+false
+
+
+
+keyboard
+添加键盘样式
+boolean
+false
+
+
+
+mark
+添加标记样式
+boolean
+false
+
+
+
+strong
+是否加粗
+boolean
+false
+
+
+
+type
+文本类型
+secondary | success | warning | danger
+-
+
+
+
+underline
+添加下划线样式
+boolean
+false
+
+
+
+
+Typography.Title 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+code
+添加代码样式
+boolean
+false
+
+
+
+content(v-model)
+当使用 ellipsis 或 editable 时，使用 content 代替 children
+string
+-
+
+
+
+copyable
+是否可拷贝，为对象时可进行各种自定义
+boolean | copyable
+false
+copyable
+
+
+delete
+添加删除线样式
+boolean
+false
+
+
+
+disabled
+禁用文本
+boolean
+false
+
+
+
+editable
+是否可编辑，为对象时可对编辑进行控制
+boolean | editable
+false
+editable
+
+
+ellipsis
+自动溢出省略，为对象时可设置省略行数、是否可展开、添加后缀等
+boolean | ellipsis
+false
+ellipsis
+
+
+level
+重要程度，相当于 h1、h2、h3、h4、h5
+number: 1, 2, 3, 4, 5
+1
+
+
+
+mark
+添加标记样式
+boolean
+false
+
+
+
+type
+文本类型
+secondary | success | warning | danger
+-
+
+
+
+underline
+添加下划线样式
+boolean
+false
+
+
+
+
+Typography.Paragraph 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+code
+添加代码样式
+boolean
+false
+
+
+
+content(v-model)
+当使用 ellipsis 或 editable 时，使用 content 代替 children
+string
+-
+
+
+
+copyable
+是否可拷贝，为对象时可进行各种自定义
+boolean | copyable
+false
+copyable
+
+
+delete
+添加删除线样式
+boolean
+false
+
+
+
+disabled
+禁用文本
+boolean
+false
+
+
+
+editable
+是否可编辑，为对象时可对编辑进行控制
+boolean | editable
+false
+editable
+
+
+ellipsis
+自动溢出省略，为对象时可设置省略行数、是否可展开、添加后缀等
+boolean | ellipsis
+false
+ellipsis
+
+
+mark
+添加标记样式
+boolean
+false
+
+
+
+strong
+是否加粗
+boolean
+false
+
+
+
+type
+文本类型
+secondary | success | warning | danger
+-
+
+
+
+underline
+添加下划线样式
+boolean
+false
+
+
+
+
+slots 
+          #
+        
+
+
+
+名称
+说明
+参数
+默认值
+版本
+
+
+
+
+copyableIcon
+自定义拷贝图标
+{ copied: boolean }
+copied ? <CheckOutlined /> : <CopyOutlined />
+
+
+
+copyableTooltip
+自定义提示文案，当 copyable.tooltip = false 时关闭
+{ copied: boolean }
+copied ? '复制成功' : '复制'
+
+
+
+editableIcon
+自定义编辑图标
+-
+<EditOutlined />
+
+
+
+editableTooltip
+自定义提示文本，当 editable.tooltip = false 时关闭
+-
+编辑
+
+
+
+ellipsisSymbol
+自定义展开描述文案
+-
+-
+
+
+
+ellipsisTooltip
+省略时，展示提示信息
+-
+-
+
+
+
+enterEnterIcon
+在编辑段中自定义“enter”图标
+{className: string}
+<EnterOutlined />
+3.0
+
+
+
+copyable 
+          #
+        
+  {
+    text: string,
+    onCopy: function(event),
+    tooltip: false,
+  }
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+text
+拷贝到剪切板里的文本
+string
+-
+
+
+
+tooltip
+是否展示提示文本
+boolean
+true
+
+
+
+onCopy
+拷贝成功的回调函数
+function
+-
+
+
+
+
+editable 
+          #
+        
+  {
+    tooltip: boolean,
+    editing: boolean,
+    maxlength: number,
+    autoSize: boolean | { minRows: number, maxRows: number },
+    onStart: function,
+    onChange: function(string),
+    onCancel: function,
+    onEnd: function,
+    triggerType: ('icon' | 'text')[],
+  }
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+autoSize
+自动 resize 文本域
+boolean | { minRows: number, maxRows: number }
+-
+
+
+
+editing
+控制是否是编辑中状态
+boolean
+false
+
+
+
+maxlength
+编辑中文本域最大长度
+number
+-
+
+
+
+tooltip
+是否展示提示文本
+boolean
+true
+
+
+
+triggerType
+编辑模式触发器类型，图标、文本或者两者都设置（不设置图标作为触发器时它会隐藏）
+Array<icon|text>
+[icon]
+
+
+
+onCancel
+按 ESC 退出编辑状态时触发
+function
+-
+
+
+
+onChange
+文本域编辑时触发
+function(event)
+-
+
+
+
+onEnd
+按 ENTER 结束编辑状态时触发
+function
+-
+
+
+
+onStart
+进入编辑中状态时触发
+function
+-
+
+
+
+
+ellipsis 
+          #
+        
+  {
+    rows: number,
+    expandable: boolean,
+    suffix: string,
+    symbol: string,
+    tooltip: boolean,
+    onExpand: function(event),
+    onEllipsis: function(ellipsis),
+  }
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+expandable
+是否可展开
+boolean
+-
+
+
+
+rows
+最多显示的行数
+number
+-
+
+
+
+suffix
+自定义省略内容后缀
+string
+-
+
+
+
+symbol
+自定义展开描述文案
+string
+展开
+
+
+
+tooltip
+省略时，展示提示信息
+boolean | string
+-
+
+
+
+onEllipsis
+触发省略时的回调
+function(ellipsis)
+-
+
+
+
+onExpand
+点击展开时的回调
+function(event)
+-
+
+
+
+
+
+      最后更新 : 2024/06/04树选择上传Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    To be, or not to be, that is a question: Whether it is nobler in the mind to suffer. The slings...--William Shakespeare展开

@@ -1,0 +1,388 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 自定义 Icon 图标 条件触发 国际化 位置 基于 Promise 的异步关闭 (3.0+) APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Popconfirm 气泡确认框点击元素，弹出气泡式的确认框。
+何时使用 
+          #
+        
+目标元素的操作需要用户进一步的确认时，在目标元素附近弹出浮层提示，询问用户。和 'confirm' 弹出的全屏居中模态对话框相比，交互形式更轻量。
+代码演示Delete基本用法最简单的用法。TS<template>
+  <a-popconfirm
+    title="Are you sure delete this task?"
+    ok-text="Yes"
+    cancel-text="No"
+    @confirm="confirm"
+    @cancel="cancel"
+  >
+    <a href="#">Delete</a>
+  </a-popconfirm>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const confirm = (e: MouseEvent) => {
+  console.log(e);
+  message.success('Click on Yes');
+};
+
+const cancel = (e: MouseEvent) => {
+  console.log(e);
+  message.error('Click on No');
+};
+</script>
+Delete自定义 Icon 图标使用 icon 自定义提示 icon。TS<template>
+  <a-popconfirm title="Are you sure？">
+    <template #icon><question-circle-outlined style="color: red" /></template>
+    <a href="#">Delete</a>
+  </a-popconfirm>
+</template>
+<script lang="ts" setup>
+import { QuestionCircleOutlined } from '@ant-design/icons-vue';
+</script>
+Delete a task Whether directly execute： 条件触发可以判断是否需要弹出。TS<template>
+  <div>
+    <a-popconfirm
+      title="Are you sure delete this task?"
+      :open="visible"
+      ok-text="Yes"
+      cancel-text="No"
+      @openChange="handleVisibleChange"
+      @confirm="confirm"
+      @cancel="cancel"
+    >
+      <a href="#">Delete a task</a>
+    </a-popconfirm>
+    <br />
+    <br />
+    Whether directly execute：
+    <a-checkbox v-model:checked="condition" />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { message } from 'ant-design-vue';
+const visible = ref<boolean>(false);
+const condition = ref<boolean>(true);
+
+const confirm = () => {
+  visible.value = false;
+  message.success('Next step.');
+};
+
+const cancel = () => {
+  visible.value = false;
+  message.error('Click on cancel.');
+};
+
+const handleVisibleChange = (bool: boolean) => {
+  if (!bool) {
+    visible.value = false;
+    return;
+  }
+  // Determining condition before show the popconfirm.
+  console.log(condition.value);
+  if (condition.value) {
+    confirm(); // next step
+  } else {
+    visible.value = true;
+  }
+};
+</script>
+Delete国际化使用 okText 和 cancelText 自定义按钮文字。TS<template>
+  <a-popconfirm title="Are you sure？" ok-text="Yes" cancel-text="No">
+    <a href="#">Delete</a>
+  </a-popconfirm>
+</template>
+TLTopTRLTLeftLBRTRightRBBLBottomBR位置位置有十二个方向。如需箭头指向目标元素中心，可以设置 arrowPointAtCenter。TS<template>
+  <div id="components-a-popconfirm-demo-placement">
+    <div :style="{ marginLeft: `${buttonWidth}px`, whiteSpace: 'nowrap' }">
+      <a-popconfirm placement="topLeft" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>TL</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="top" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>Top</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="topRight" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>TR</a-button>
+      </a-popconfirm>
+    </div>
+    <div :style="{ width: `${buttonWidth}px`, float: 'left' }">
+      <a-popconfirm placement="leftTop" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>LT</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="left" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>Left</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="leftBottom" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>LB</a-button>
+      </a-popconfirm>
+    </div>
+    <div :style="{ width: `${buttonWidth}px`, marginLeft: `${buttonWidth * 4 + 24}px` }">
+      <a-popconfirm placement="rightTop" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>RT</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="right" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>Right</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="rightBottom" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>RB</a-button>
+      </a-popconfirm>
+    </div>
+    <div :style="{ marginLeft: `${buttonWidth}px`, clear: 'both', whiteSpace: 'nowrap' }">
+      <a-popconfirm placement="bottomLeft" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>BL</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="bottom" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>Bottom</a-button>
+      </a-popconfirm>
+      <a-popconfirm placement="bottomRight" ok-text="Yes" cancel-text="No" @confirm="confirm">
+        <template #title>
+          <p>{{ text }}</p>
+          <p>{{ text }}</p>
+        </template>
+        <a-button>BR</a-button>
+      </a-popconfirm>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const buttonWidth = 70;
+
+const text = 'Are you sure to delete this task?';
+
+const confirm = () => {
+  message.info('Clicked on Yes.');
+};
+</script>
+<style scoped>
+:deep(#components-a-popconfirm-demo-placement) .ant-btn {
+  width: 70px;
+  text-align: center;
+  padding: 0;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+</style>
+Open Popconfirm with Promise基于 Promise 的异步关闭 (3.0+)点击确定后异步关闭 Popconfirm，例如提交表单。TS<template>
+  <a-popconfirm title="Title" @confirm="confirm" @cancel="cancel">
+    <a-button type="primary">Open Popconfirm with Promise</a-button>
+  </a-popconfirm>
+</template>
+<script lang="ts" setup>
+import { message } from 'ant-design-vue';
+const confirm = (e: MouseEvent) => {
+  console.log(e);
+  return new Promise(resolve => {
+    setTimeout(() => resolve(true), 3000);
+  });
+};
+
+const cancel = (e: MouseEvent) => {
+  console.log(e);
+  message.error('Click on No');
+};
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+cancelButton
+完全自定义取消按钮
+slot
+-
+3.0
+
+
+cancelButtonProps
+cancel 按钮 props
+ButtonProps
+-
+
+
+
+cancelText
+取消按钮文字
+string|slot
+取消
+
+
+
+disabled
+点击 Popconfirm 子元素是否弹出气泡确认框
+boolean
+false
+
+
+
+icon
+自定义弹出气泡 Icon 图标
+vNode
+<Icon type="exclamation-circle" />
+
+
+
+okButton
+完全自定义确认按钮
+slot
+-
+3.0
+
+
+okButtonProps
+ok 按钮 props
+ButtonProps
+-
+
+
+
+okText
+确认按钮文字
+string|slot
+确定
+
+
+
+okType
+确认按钮类型
+string
+primary
+
+
+
+showCancel
+是否显示取消按钮
+boolean
+true
+3.0
+
+
+title
+确认框的描述
+string|slot
+-
+
+
+
+description
+确认内容的详细描述
+string|slot
+-
+4.0
+
+
+open (v-model)
+是否显示
+boolean
+-
+4.0
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+cancel
+点击取消的回调
+function(e)
+
+
+
+confirm
+点击确认的回调
+function(e)
+
+
+
+openChange
+显示隐藏的回调
+function(open)
+4.0
+
+
+
+更多属性请参考 Tooltip。
+注意 
+          #
+        
+请确保 Popconfirm 的子元素能接受 mouseenter、mouseleave、focus、click 事件。
+
+      分页气泡卡片Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

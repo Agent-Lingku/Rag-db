@@ -1,0 +1,445 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 形状 含有气泡卡片的悬浮按钮 菜单模式 徽标数 类型 描述 浮动按钮组 回到顶部 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中FloatButton 悬浮按钮悬浮按钮。自 4.0.0 版本开始提供该组件。
+何时使用 
+          #
+        
+
+用于网站上的全局功能；
+无论浏览到何处都可以看见的按钮。
+
+代码演示基本最简单的用法。TS<template>
+  <a-float-button @click="handleClick" />
+</template>
+<script lang="ts" setup>
+const handleClick = () => console.log('click');
+</script>
+形状最简单的用法。TS<template>
+  <a-float-button @click="handleClick" />
+
+  <a-float-button
+    shape="circle"
+    type="primary"
+    :style="{
+      right: '94px',
+    }"
+  >
+    <template #icon>
+      <CustomerServiceOutlined />
+    </template>
+  </a-float-button>
+
+  <a-float-button
+    shape="square"
+    type="primary"
+    :style="{
+      right: '24px',
+    }"
+  >
+    <template #icon>
+      <CustomerServiceOutlined />
+    </template>
+  </a-float-button>
+</template>
+<script lang="ts" setup>
+import { CustomerServiceOutlined } from '@ant-design/icons-vue';
+const handleClick = () => console.log('click');
+</script>
+含有气泡卡片的悬浮按钮设置 tooltip 属性，即可开启气泡卡片。TS<template>
+  <a-float-button
+    tooltip="HELP INFO"
+    :style="{
+      right: '24px',
+    }"
+  ></a-float-button>
+
+  <a-float-button
+    :style="{
+      right: '94px',
+    }"
+  >
+    <template #tooltip>
+      <div>Documents</div>
+    </template>
+  </a-float-button>
+</template>
+菜单模式设置 trigger 属性即可开启菜单模式。提供 hover 和 click 两种触发方式。TS<template>
+  <a-float-button-group trigger="click" type="primary" :style="{ right: '24px' }">
+    <template #icon>
+      <CustomerServiceOutlined />
+    </template>
+    <a-float-button />
+    <a-float-button>
+      <template #icon>
+        <CommentOutlined />
+      </template>
+    </a-float-button>
+  </a-float-button-group>
+  <a-float-button-group trigger="hover" type="primary" :style="{ right: '94px' }">
+    <template #icon>
+      <CustomerServiceOutlined />
+    </template>
+    <a-float-button />
+    <a-float-button>
+      <template #icon>
+        <CommentOutlined />
+      </template>
+    </a-float-button>
+  </a-float-button-group>
+</template>
+<script lang="ts" setup>
+import { CustomerServiceOutlined, CommentOutlined } from '@ant-design/icons-vue';
+</script>
+徽标数右上角附带圆形徽标数字的悬浮按钮。TS<template>
+  <a-float-button shape="circle" :badge="{ dot: true }" :style="{ right: '164px' }" />
+  <a-float-button-group shape="circle" :style="{ right: '94px' }">
+    <a-float-button :badge="{ count: 5, color: 'blue' }">
+      <template #tooltip>
+        <div>custom badge color</div>
+      </template>
+    </a-float-button>
+    <a-float-button :badge="{ count: 5 }"></a-float-button>
+  </a-float-button-group>
+  <a-float-button-group shape="circle">
+    <a-float-button :badge="{ count: 12 }">
+      <template #icon>
+        <QuestionCircleOutlined />
+      </template>
+    </a-float-button>
+    <a-float-button :badge="{ count: 123, overflowCount: 999 }"></a-float-button>
+    <a-back-top :visibility-height="0" />
+  </a-float-button-group>
+</template>
+<script setup>
+import { QuestionCircleOutlined } from '@ant-design/icons-vue';
+</script>
+类型通过 type 改变悬浮按钮的类型。TS<template>
+  <a-float-button
+    type="primary"
+    :style="{
+      right: '24px',
+    }"
+  >
+    <template #icon>
+      <QuestionCircleOutlined />
+    </template>
+  </a-float-button>
+
+  <a-float-button
+    type="default"
+    :style="{
+      right: '94px',
+    }"
+  >
+    <template #icon>
+      <QuestionCircleOutlined />
+    </template>
+  </a-float-button>
+</template>
+<script lang="ts" setup>
+import { QuestionCircleOutlined } from '@ant-design/icons-vue';
+</script>
+描述可以通过 description 设置文字内容。
+
+仅当 shape 属性为 square 时支持。由于空间较小，推荐使用比较精简的双数文字。
+TS<template>
+  <a-float-button
+    shape="square"
+    description="HELP INFO"
+    :style="{
+      right: '24px',
+    }"
+  >
+    <template #icon>
+      <FileTextOutlined />
+    </template>
+  </a-float-button>
+
+  <a-float-button
+    shape="square"
+    description="HELP INFO"
+    :style="{
+      right: '94px',
+    }"
+  ></a-float-button>
+
+  <a-float-button
+    shape="square"
+    description="HELP"
+    :style="{
+      right: '164px',
+    }"
+  >
+    <template #icon>
+      <FileTextOutlined />
+    </template>
+  </a-float-button>
+</template>
+<script lang="ts" setup>
+import { FileTextOutlined } from '@ant-design/icons-vue';
+</script>
+浮动按钮组按钮组合使用时，推荐使用 <FloatButton.Group />，并通过设置 shape 属性改变悬浮按钮组的形状。悬浮按钮组的 shape 会覆盖内部 FloatButton 的 shape 属性。TS<template>
+  <a-float-button-group shape="circle" :style="{ right: '24px' }">
+    <a-float-button>
+      <template #icon>
+        <QuestionCircleOutlined />
+      </template>
+    </a-float-button>
+    <a-float-button />
+    <a-back-top :visibility-height="0" />
+  </a-float-button-group>
+  <a-float-button-group shape="square" :style="{ right: '94px' }">
+    <a-float-button>
+      <template #icon>
+        <QuestionCircleOutlined />
+      </template>
+    </a-float-button>
+    <a-float-button />
+
+    <a-float-button>
+      <template #icon>
+        <SyncOutlined />
+      </template>
+    </a-float-button>
+    <a-back-top :visibility-height="0" />
+  </a-float-button-group>
+</template>
+<script lang="ts" setup>
+import { QuestionCircleOutlined, SyncOutlined } from '@ant-design/icons-vue';
+</script>
+回到顶部返回页面顶部的操作按钮。TS<template>
+  <div :style="{ height: '500vh', padding: '10px' }">
+    <div>Scroll to bottom</div>
+    <div>Scroll to bottom</div>
+    <div>Scroll to bottom</div>
+    <div>Scroll to bottom</div>
+    <div>Scroll to bottom</div>
+    <div>Scroll to bottom</div>
+    <div>Scroll to bottom</div>
+    <a-back-top />
+  </div>
+</template>
+
+      API#
+      
+          #
+        
+
+自 ant-design-vue@4.0.0 版本开始提供该组件。
+
+共同的 API 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+icon
+自定义图标
+slot
+-
+
+
+
+description
+文字及其它内容
+string | slot
+-
+
+
+
+tooltip
+气泡卡片的内容
+string | slot
+-
+
+
+
+type
+设置按钮类型
+default | primary
+default
+
+
+
+shape
+设置按钮形状
+circle | square
+circle
+
+
+
+onClick
+点击按钮时的回调
+(event) => void
+-
+
+
+
+href
+点击跳转的地址，指定此属性 button 的行为和 a 链接一致
+string
+-
+
+
+
+target
+相当于 a 标签的 target 属性，href 存在时生效
+string
+-
+
+
+
+badge
+带徽标数字的悬浮按钮（不支持 status 以及相关属性）
+BadgeProps
+-
+
+
+
+
+共同的事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+click
+设置处理 click 事件的处理器
+(event) => void
+-
+
+
+
+FloatButton.Group 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+shape
+设置包含的 FloatButton 按钮形状
+circle | square
+circle
+
+
+
+trigger
+触发方式（有触发方式为菜单模式）
+click | hover
+-
+
+
+
+open(v-model)
+受控展开
+boolean
+-
+
+
+
+
+FloatButton.Group 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+openChange
+展开收起时的回调
+(open: boolean) => void
+-
+
+
+
+FloatButton.BackTop 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+duration
+回到顶部所需时间（ms）
+number
+450
+
+
+
+target
+设置需要监听其滚动事件的元素
+() => HTMLElement
+() => window
+
+
+
+visibilityHeight
+滚动高度达到此参数值才出现 BackTop
+number
+400
+
+
+
+onClick
+点击按钮的回调函数
+() => void
+-
+
+
+
+
+
+      最后更新 : 2024/09/05弹性布局表单Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

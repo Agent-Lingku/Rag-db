@@ -1,0 +1,323 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 更多 改变 自定义下拉选项 跳转 迷你 简洁 总数 上一步和下一步 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Pagination 分页采用分页的形式分隔长列表，每次只加载一个页面。
+代码演示12345基本基础分页。TS<template>
+  <a-pagination v-model:current="current" :total="50" show-less-items />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref(2);
+</script>
+1•••45678•••5010 条/页更多更多分页。TS<template>
+  <a-pagination v-model:current="current" :total="500" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref(6);
+</script>
+12345•••2520 条/页123456•••5010 条/页改变改变每页显示条目数。TS<template>
+  <div>
+    <a-pagination
+      v-model:current="current1"
+      v-model:pageSize="pageSize"
+      show-size-changer
+      :total="500"
+      @showSizeChange="onShowSizeChange"
+    />
+    <br />
+    <a-pagination
+      v-model:current="current2"
+      show-size-changer
+      :total="500"
+      disabled
+      @showSizeChange="onShowSizeChange"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+const pageSize = ref(20);
+const current1 = ref(3);
+const current2 = ref(4);
+const onShowSizeChange = (current: number, pageSize: number) => {
+  console.log(current, pageSize);
+};
+watch(pageSize, () => {
+  console.log('pageSize', pageSize.value);
+});
+watch(current1, () => {
+  console.log('current', current1.value);
+});
+</script>
+1234510条/页自定义下拉选项自定义下拉选项，例如添加全部选项TS<template>
+  <a-pagination
+    v-model:current="current"
+    v-model:page-size="pageSizeRef"
+    :page-size-options="pageSizeOptions"
+    :total="total"
+    show-size-changer
+    @showSizeChange="onShowSizeChange"
+  >
+    <template #buildOptionText="props">
+      <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
+      <span v-else>全部</span>
+    </template>
+  </a-pagination>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const pageSizeOptions = ref<string[]>(['10', '20', '30', '40', '50']);
+const current = ref(1);
+const pageSizeRef = ref(10);
+const total = ref(50);
+const onShowSizeChange = (current: number, pageSize: number) => {
+  console.log(current, pageSize);
+  pageSizeRef.value = pageSize;
+};
+</script>
+12345•••5010 条/页跳至页123•••5010 条/页跳至页跳转快速跳转到某一页。TS<template>
+  <div>
+    <a-pagination v-model:current="current1" show-quick-jumper :total="500" @change="onChange" />
+    <br />
+    <a-pagination
+      v-model:current="current2"
+      show-quick-jumper
+      :total="500"
+      disabled
+      show-less-items
+      @change="onChange"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current1 = ref<number>(1);
+const current2 = ref<number>(2);
+const onChange = (pageNumber: number) => {
+  console.log('Page: ', pageNumber);
+};
+</script>
+123451234510 条/页跳至页Total 50 items12345迷你迷你版本。TS<template>
+  <div id="components-pagination-demo-mini">
+    <a-pagination size="small" :total="50" />
+    <a-pagination size="small" :total="50" show-size-changer show-quick-jumper />
+    <a-pagination size="small" :total="50" :show-total="total => `Total ${total} items`" />
+  </div>
+</template>
+
+<style scoped>
+#components-pagination-demo-mini .ant-pagination:not(:last-child) {
+  margin-bottom: 24px;
+}
+</style>
+／5简洁简单的翻页。TS<template>
+  <a-pagination v-model:current="current" simple :total="50" />
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref<number>(2);
+</script>
+Total 85 items1234520 条/页21-40 of 85 items1234520 条/页总数通过设置 showTotal 展示总共有多少数据。TS<template>
+  <div>
+    <a-pagination
+      v-model:current="current1"
+      v-model:page-size="pageSize1"
+      :total="85"
+      :show-total="total => `Total ${total} items`"
+    />
+    <br />
+    <a-pagination
+      v-model:current="current2"
+      v-model:page-size="pageSize2"
+      :total="85"
+      :show-total="(total, range) => `${range[0]}-${range[1]} of ${total} items`"
+    />
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current1 = ref<number>(1);
+const current2 = ref<number>(2);
+const pageSize1 = ref<number>(20);
+const pageSize2 = ref<number>(20);
+</script>
+Previous12345•••50Next10 条/页上一步和下一步修改上一步和下一步为文字链接。TS<template>
+  <a-pagination v-model:current="current" :total="500">
+    <template #itemRender="{ type, originalElement }">
+      <a v-if="type === 'prev'">Previous</a>
+      <a v-else-if="type === 'next'">Next</a>
+      <component :is="originalElement" v-else></component>
+    </template>
+  </a-pagination>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const current = ref(1);
+</script>
+
+      API#
+      
+          #
+        
+<a-pagination @change="onChange" :total="50" />
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+current(v-model)
+当前页数
+number
+-
+
+
+
+defaultPageSize
+默认的每页条数
+number
+10
+
+
+
+disabled
+禁用分页
+boolean
+-
+1.5.0
+
+
+hideOnSinglePage
+只有一页时是否隐藏分页器
+boolean
+false
+
+
+
+itemRender
+用于自定义页码的结构，可用于优化 SEO
+({page, type: 'page' | 'prev' | 'next', originalElement}) => vNode | v-slot
+-
+
+
+
+pageSize(v-model)
+每页条数
+number
+-
+
+
+
+pageSizeOptions
+指定每页可以显示多少条
+string[] | number[]
+['10', '20', '50', '100']
+
+
+
+responsive
+当 size 未指定时，根据屏幕宽度自动调整尺寸
+boolean
+-
+3.1
+
+
+showLessItems
+是否显示较少页面内容
+boolean
+false
+1.5.0
+
+
+showQuickJumper
+是否可以快速跳转至某页
+boolean
+false
+
+
+
+showSizeChanger
+是否展示 pageSize 切换器，当 total 大于 50 时默认为 true
+boolean
+-
+
+
+
+showTotal
+用于显示数据总量和当前数据顺序
+Function(total, range)
+-
+
+
+
+simple
+当添加该属性时，显示为简单分页
+boolean
+-
+
+
+
+size
+当为「small」时，是小尺寸分页
+string
+""
+
+
+
+total
+数据总数
+number
+0
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+
+change
+页码或 pageSize 改变的回调，参数是改变后的页码及每页条数
+Function(page, pageSize)
+noop
+
+
+showSizeChange
+pageSize 变化的回调
+Function(current, size)
+noop
+
+
+
+
+      最后更新 : 2023/10/16页头气泡确认框Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

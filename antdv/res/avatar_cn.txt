@@ -1,0 +1,367 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 自动调整字符大小 Avatar.Group 类型 带徽标的头像 响应式尺寸 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Avatar 头像用来代表用户或事物，支持图片、图标或字符展示。
+设计师专属 
+          #
+        
+安装 Kitchen Sketch 插件 💎，一键填充高逼格头像和文本。
+代码演示基本头像有三种尺寸，两种形状可选。TS<template>
+  <a-space direction="vertical" :size="32">
+    <a-space wrap :size="16">
+      <a-avatar :size="64">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+      <a-avatar size="large">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+      <a-avatar>
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+      <a-avatar size="small">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-space>
+    <a-space wrap :size="16">
+      <a-avatar shape="square" :size="64">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+      <a-avatar shape="square" size="large">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+      <a-avatar shape="square">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+      <a-avatar shape="square" size="small">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-space>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { UserOutlined } from '@ant-design/icons-vue';
+</script>
+UChangeUserChangeGap自动调整字符大小对于字符型的头像，当字符串较长时，字体大小可以根据头像宽度自动调整。也可使用 `gap`` 来设置字符距离左右两侧边界单位像素。TS<template>
+  <a-avatar size="large" :style="{ backgroundColor: color, verticalAlign: 'middle' }" :gap="gap">
+    {{ avatarValue }}
+  </a-avatar>
+  <a-button size="small" :style="{ margin: '0 16px', verticalAlign: 'middle' }" @click="changeUser">
+    ChangeUser
+  </a-button>
+  <a-button size="small" :style="{ verticalAlign: 'middle' }" @click="changeGap">
+    ChangeGap
+  </a-button>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const UserList = ['U', 'Lucy', 'Tom', 'Edward'];
+const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
+const avatarValue = ref(UserList[0]);
+const color = ref(colorList[0]);
+const changeUser = () => {
+  const index = UserList.indexOf(avatarValue.value);
+  avatarValue.value = index < UserList.length - 1 ? UserList[index + 1] : UserList[0];
+  color.value = index < colorList.length - 1 ? colorList[index + 1] : colorList[0];
+};
+
+const GapList = [4, 3, 2, 1];
+const gap = ref(GapList[0]);
+const changeGap = () => {
+  const index = GapList.indexOf(gap.value);
+  gap.value = index < GapList.length - 1 ? GapList[index + 1] : GapList[0];
+};
+</script>
+KK+2K+2K+2AKAvatar.Group头像组合展现。TS<template>
+  <a-avatar-group>
+    <a-avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+    <a href="https://www.antdv.com">
+      <a-avatar style="background-color: #f56a00">K</a-avatar>
+    </a>
+    <a-tooltip title="Ant User" placement="top">
+      <a-avatar style="background-color: #87d068">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-tooltip>
+    <a-avatar style="background-color: #1890ff">
+      <template #icon><AntDesignOutlined /></template>
+    </a-avatar>
+  </a-avatar-group>
+  <a-divider />
+  <a-avatar-group :max-count="2" :max-style="{ color: '#f56a00', backgroundColor: '#fde3cf' }">
+    <a-avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />
+    <a-avatar style="background-color: #1890ff">K</a-avatar>
+    <a-tooltip title="Ant User" placement="top">
+      <a-avatar style="background-color: #87d068">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-tooltip>
+    <a-avatar style="background-color: #1890ff">
+      <template #icon><AntDesignOutlined /></template>
+    </a-avatar>
+  </a-avatar-group>
+  <a-divider />
+  <a-avatar-group
+    :max-count="2"
+    size="large"
+    :max-style="{
+      color: '#f56a00',
+      backgroundColor: '#fde3cf',
+    }"
+  >
+    <a-avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=3" />
+    <a-avatar style="background-color: #1890ff">K</a-avatar>
+    <a-tooltip title="Ant User" placement="top">
+      <a-avatar style="background-color: #87d068">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-tooltip>
+    <a-avatar style="background-color: #1890ff">
+      <template #icon><AntDesignOutlined /></template>
+    </a-avatar>
+  </a-avatar-group>
+  <a-divider />
+  <a-avatar-group
+    :max-count="2"
+    max-popover-trigger="click"
+    size="large"
+    :max-style="{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }"
+  >
+    <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+    <a-avatar style="background-color: #f56a00">K</a-avatar>
+    <a-tooltip title="Ant User" placement="top">
+      <a-avatar style="background-color: #87d068">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-tooltip>
+    <a-avatar style="background-color: #1890ff">
+      <template #icon><AntDesignOutlined /></template>
+    </a-avatar>
+  </a-avatar-group>
+  <a-divider />
+  <a-avatar-group shape="square">
+    <a-avatar style="background-color: #fde3cf">A</a-avatar>
+    <a-avatar style="background-color: #f56a00">K</a-avatar>
+    <a-tooltip title="Ant User" placement="top">
+      <a-avatar style="background-color: #87d068">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-tooltip>
+    <a-avatar style="background-color: #1890ff">
+      <template #icon><AntDesignOutlined /></template>
+    </a-avatar>
+  </a-avatar-group>
+</template>
+<script lang="ts" setup>
+import { UserOutlined, AntDesignOutlined } from '@ant-design/icons-vue';
+</script>
+UUSERU类型支持三种类型：图片、Icon 以及字符，其中 Icon 和字符型可以自定义图标颜色及背景色。TS<template>
+  <a-space :size="16" wrap>
+    <a-avatar>
+      <template #icon>
+        <UserOutlined />
+      </template>
+    </a-avatar>
+    <a-avatar>U</a-avatar>
+    <a-avatar :size="40">USER</a-avatar>
+    <a-avatar src="https://www.antdv.com/assets/logo.1ef800a8.svg" />
+    <a-avatar style="color: #f56a00; background-color: #fde3cf">U</a-avatar>
+    <a-avatar style="background-color: #87d068">
+      <template #icon>
+        <UserOutlined />
+      </template>
+    </a-avatar>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { UserOutlined } from '@ant-design/icons-vue';
+</script>
+1带徽标的头像通常用于消息提示。TS<template>
+  <a-space :size="24">
+    <a-badge :count="1">
+      <a-avatar shape="square">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-badge>
+    <a-badge dot>
+      <a-avatar shape="square">
+        <template #icon><UserOutlined /></template>
+      </a-avatar>
+    </a-badge>
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { UserOutlined } from '@ant-design/icons-vue';
+</script>
+响应式尺寸头像大小可以根据屏幕大小自动调整。TS<template>
+  <a-avatar :size="{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }">
+    <template #icon>
+      <AntDesignOutlined />
+    </template>
+  </a-avatar>
+</template>
+<script lang="ts" setup>
+import { AntDesignOutlined } from '@ant-design/icons-vue';
+</script>
+
+      API#
+      
+          #
+        
+Avatar 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+alt
+图像无法显示时的替代文本
+string
+-
+
+
+
+crossOrigin
+cors 属性设置
+'anonymous' | 'use-credentials' | ''
+-
+3.0
+
+
+draggable
+图片是否允许拖动
+boolean | 'true' | 'false'
+-
+2.2.0
+
+
+gap
+字符类型距离左右两侧边界单位像素
+number
+4
+2.2.0
+
+
+icon
+设置头像的图标类型，可设为 Icon 的 type 或 VNode
+VNode | slot
+-
+
+
+
+loadError
+图片加载失败的事件，返回 false 会关闭组件默认的 fallback 行为
+() => boolean
+-
+
+
+
+shape
+指定头像的形状
+circle | square
+circle
+
+
+
+size
+设置头像的大小
+number | large | small | default | { xs: number, sm: number, ...}
+default
+2.2.0
+
+
+src
+图片类头像的资源地址
+string
+-
+
+
+
+srcset
+设置图片类头像响应式资源地址
+string
+-
+
+
+
+
+Avatar.Group (2.2.0) 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+maxCount
+显示的最大头像个数
+number
+-
+
+
+
+maxPopoverPlacement
+多余头像气泡弹出位置
+top | bottom
+top
+
+
+
+maxPopoverTrigger
+设置多余头像 Popover 的触发方式
+hover | focus | click
+hover
+3.0
+
+
+maxStyle
+多余头像样式
+CSSProperties
+-
+
+
+
+size
+设置头像的大小
+number | large | small | default | { xs: number, sm: number, ...}
+default
+
+
+
+shape
+设置头像的形状
+circle | square
+circle
+4.0
+
+
+
+
+      最后更新 : 2023/08/18徽标数面包屑Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

@@ -1,0 +1,368 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 按钮样式 RadioGroup 垂直 单选组合 - 配合 name 使用 大小 不可用 填底的按钮样式 RadioGroup 组合 - 配置方式 单选组合 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Radio 单选框单选框。
+何时使用 
+          #
+        
+
+用于在多个备选项中选中单个状态。
+和 Select 的区别是，Radio 所有选项默认可见，方便用户在比较中选择，因此选项不宜过多。
+
+代码演示Radio基本用法最简单的用法。TS<template>
+  <a-radio v-model:checked="checked">Radio</a-radio>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const checked = ref<boolean>(false);
+</script>
+HangzhouShanghaiBeijingChengduHangzhouShanghaiBeijingChengduHangzhouShanghaiBeijingChengdu按钮样式按钮样式的单选组合。TS<template>
+  <div>
+    <div>
+      <a-radio-group v-model:value="value1">
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b">Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+    <div :style="{ marginTop: '16px' }">
+      <a-radio-group v-model:value="value2">
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b" disabled>Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+    <div :style="{ marginTop: '16px' }">
+      <a-radio-group v-model:value="value3" disabled>
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b">Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const value1 = ref<string>('a');
+const value2 = ref<string>('a');
+const value3 = ref<string>('a');
+</script>
+Option AOption BOption C More... RadioGroup 垂直垂直的 RadioGroup，配合更多输入框选项。TS<template>
+  <a-radio-group v-model:value="value">
+    <a-radio :style="radioStyle" :value="1">Option A</a-radio>
+    <a-radio :style="radioStyle" :value="2">Option B</a-radio>
+    <a-radio :style="radioStyle" :value="3">Option C</a-radio>
+    <a-radio :style="radioStyle" :value="4">
+      More...
+      <a-input v-if="value === 4" style="width: 100px; margin-left: 10px" />
+    </a-radio>
+  </a-radio-group>
+</template>
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
+const value = ref<number>(1);
+const radioStyle = reactive({
+  display: 'flex',
+  height: '30px',
+  lineHeight: '30px',
+});
+</script>
+ABCD单选组合 - 配合 name 使用可以为 Radio.Group 配置 name 参数，为组合内的 input 元素赋予相同的 name 属性，使浏览器把 Radio.Group 下的 Radio 真正看作是一组（例如可以通过方向键始终在同一组内更改选项）。TS<template>
+  <a-radio-group v-model:value="value" name="radioGroup">
+    <a-radio value="1">A</a-radio>
+    <a-radio value="2">B</a-radio>
+    <a-radio value="3">C</a-radio>
+    <a-radio value="4">D</a-radio>
+  </a-radio-group>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<string>('1');
+</script>
+HangzhouShanghaiBeijingChengduHangzhouShanghaiBeijingChengduHangzhouShanghaiBeijingChengdu大小大中小三种组合，可以和表单输入框进行对应配合。TS<template>
+  <div>
+    <div>
+      <a-radio-group v-model:value="value1" size="large">
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b">Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+    <div :style="{ marginTop: '16px' }">
+      <a-radio-group v-model:value="value2">
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b">Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+    <div :style="{ marginTop: '16px' }">
+      <a-radio-group v-model:value="value3" size="small">
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b">Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const value1 = ref<string>('a');
+const value2 = ref<string>('a');
+const value3 = ref<string>('a');
+</script>
+DisabledDisabledToggle disabled不可用Radio 不可用。TS<template>
+  <div>
+    <a-radio v-model:checked="checked1" :disabled="disabled">Disabled</a-radio>
+    <a-radio v-model:checked="checked2" :disabled="disabled">Disabled</a-radio>
+    <br />
+    <div style="margin-top: 16px">
+      <a-button type="primary" @click="toggleDisabled">Toggle disabled</a-button>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const disabled = ref<boolean>(true);
+const checked1 = ref<boolean>(true);
+const checked2 = ref<boolean>(false);
+
+const toggleDisabled = () => {
+  disabled.value = !disabled.value;
+};
+</script>
+HangzhouShanghaiBeijingChengduHangzhouShanghaiBeijingChengdu填底的按钮样式实色填底的单选按钮样式。TS<template>
+  <div>
+    <div>
+      <a-radio-group v-model:value="value1" button-style="solid">
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b">Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+    <div :style="{ marginTop: '16px' }">
+      <a-radio-group v-model:value="value2" button-style="solid">
+        <a-radio-button value="a">Hangzhou</a-radio-button>
+        <a-radio-button value="b" disabled>Shanghai</a-radio-button>
+        <a-radio-button value="c">Beijing</a-radio-button>
+        <a-radio-button value="d">Chengdu</a-radio-button>
+      </a-radio-group>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value1 = ref<string>('a');
+const value2 = ref<string>('c');
+</script>
+ApplePearOrangeApplePearOrangeApplePearOrangeApplePearOrangeApplePearOrangeApplePearOrangeRadioGroup 组合 - 配置方式通过配置 options 参数来渲染单选框。TS<template>
+  <a-space direction="vertical">
+    <a-radio-group v-model:value="value1" :options="plainOptions" />
+    <a-radio-group v-model:value="value2" :options="optionsWithDisabled" />
+    <a-radio-group v-model:value="value3" :options="plainOptions" disabled />
+    <a-radio-group v-model:value="value1" option-type="button" :options="plainOptions" />
+    <a-radio-group v-model:value="value2" option-type="button" :options="optionsWithDisabled" />
+    <a-radio-group v-model:value="value3" option-type="button" :options="plainOptions" disabled />
+  </a-space>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { RadioGroupProps } from 'ant-design-vue';
+const plainOptions = ['Apple', 'Pear', 'Orange'];
+const optionsWithDisabled: RadioGroupProps['options'] = [
+  { label: 'Apple', value: 'Apple' },
+  { label: 'Pear', value: 'Pear' },
+  { label: 'Orange', value: 'Orange', disabled: true },
+];
+const value1 = ref<string>('Apple');
+const value2 = ref<string>('Apple');
+const value3 = ref<string>('Apple');
+</script>
+ABCD单选组合一组互斥的 Radio 配合使用。TS<template>
+  <div>
+    <a-radio-group v-model:value="value">
+      <a-radio :value="1">A</a-radio>
+      <a-radio :value="2">B</a-radio>
+      <a-radio :value="3">C</a-radio>
+      <a-radio :value="4">D</a-radio>
+    </a-radio-group>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const value = ref<number>(1);
+</script>
+
+      API#
+      
+          #
+        
+Radio/Radio.Button 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+autofocus
+自动获取焦点
+boolean
+false
+
+
+checked(v-model)
+指定当前是否选中
+boolean
+false
+
+
+disabled
+禁用 Radio
+boolean
+false
+
+
+value
+根据 value 进行比较，判断是否选中
+any
+-
+
+
+
+RadioGroup 
+          #
+        
+单选框组合，用于包裹一组 Radio。
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+buttonStyle
+RadioButton 的风格样式，目前有描边和填色两种风格
+outline | solid
+outline
+
+
+
+disabled
+禁选所有子单选器
+boolean
+false
+
+
+
+name
+RadioGroup 下所有 input[type="radio"] 的 name 属性
+string
+-
+
+
+
+options
+以配置形式设置子元素
+string[] | number[] | Array<{ label: string value: string disabled?: boolean }>
+-
+
+
+
+optionType
+用于设置 Radio options 类型
+default | button
+default
+3.0.0
+
+
+size
+大小，只对按钮样式生效
+large | default | small
+default
+
+
+
+value(v-model)
+用于设置当前选中的值
+any
+-
+
+
+
+
+RadioGroup 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+change
+选项变化时的回调函数
+Function(e:Event)
+
+
+
+方法 
+          #
+        
+Radio 
+          #
+        
+
+
+
+名称
+描述
+
+
+
+
+blur()
+移除焦点
+
+
+focus()
+获取焦点
+
+
+
+
+      最后更新 : 2023/07/14二维码评分Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

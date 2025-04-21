@@ -1,0 +1,136 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 滚动容器 固定状态改变的回调 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Affix 固钉将页面元素钉在可视范围。
+何时使用 
+          #
+        
+当内容区域比较长，需要滚动页面时，这部分内容对应的操作或者导航需要在滚动范围内始终展现。常用于侧边菜单和按钮组合。
+页面可视范围过小时，慎用此功能以免遮挡页面内容。
+代码演示Affix topAffix bottom基本最简单的用法。TS<template>
+  <a-affix :offset-top="top">
+    <a-button type="primary" @click="top += 10">Affix top</a-button>
+  </a-affix>
+  <br />
+  <a-affix :offset-bottom="bottom">
+    <a-button type="primary" @click="bottom += 10">Affix bottom</a-button>
+  </a-affix>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const top = ref<number>(10);
+const bottom = ref<number>(10);
+</script>
+Fixed at the top of container滚动容器用 target 设置 Affix 需要监听其滚动事件的元素，默认为 window。TS<template>
+  <div id="components-affix-demo-target" ref="containerRef" class="scrollable-container">
+    <div class="background">
+      <a-affix :target="() => containerRef">
+        <a-button type="primary">Fixed at the top of container</a-button>
+      </a-affix>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const containerRef = ref();
+</script>
+<style scoped>
+#components-affix-demo-target.scrollable-container {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+#components-affix-demo-target .background {
+  padding-top: 60px;
+  height: 300px;
+  background-image: url('https://zos.alipayobjects.com/rmsportal/RmjwQiJorKyobvI.jpg');
+}
+</style>
+120px to affix top固定状态改变的回调可以获得是否固定的状态。TS<template>
+  <a-affix :offset-top="120" @change="change">
+    <a-button>120px to affix top</a-button>
+  </a-affix>
+</template>
+<script lang="ts" setup>
+const change = (affixed: boolean) => {
+  console.log(affixed);
+};
+</script>
+
+      API#
+      
+          #
+        
+
+
+
+成员
+说明
+类型
+默认值
+版本
+
+
+
+
+offsetBottom
+距离窗口底部达到指定偏移量后触发
+number
+
+
+
+
+offsetTop
+距离窗口顶部达到指定偏移量后触发
+number
+0
+
+
+
+target
+设置 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数
+() => HTMLElement
+() => window
+
+
+
+
+事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+版本
+
+
+
+
+
+change
+固定状态改变时触发的回调函数
+(affixed?: boolean) => void
+-
+
+
+
+
+注意：Affix 内的元素不要使用绝对定位，如需要绝对定位的效果，可以直接设置 Affix 为绝对定位：
+<a-affix :style="{ position: 'absolute', top: y, left: x}">...</a-affix>
+
+FAQ 
+          #
+        
+Affix 使用 target 绑定容器时，元素会跑到容器外。 
+          #
+        
+从性能角度考虑，我们只监听容器滚动事件。如果希望任意滚动，你可以在窗体添加滚动监听, 参考 react 版本示例 https://codesandbox.io/s/2xyj5zr85p
+相关 issue：#3938 #5642 #16120
+Affix 在水平滚动容器中使用时， 元素 left 位置不正确。 
+          #
+        
+Affix 一般只适用于单向滚动的区域，只支持在垂直滚动容器中使用。如果希望在水平容器中使用，你可以考虑使用 原生 position: sticky 实现。
+相关 issue: #29108
+
+      包裹组件Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161

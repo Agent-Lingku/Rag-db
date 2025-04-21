@@ -1,0 +1,538 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 Hooks 调用（推荐） 自动关闭的延时 自定义图标 自定义样式 更新消息内容 基本用法 带有图标的通知提醒框 自定义按钮 位置 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Notification 通知提醒框全局展示通知提醒信息。
+何时使用 
+          #
+        
+在系统四个角显示通知提醒信息。经常用于以下情况：
+
+较为复杂的通知内容。
+带有交互的通知，给出用户下一步的行动点。
+系统主动推送。
+
+代码演示topLefttopRightbottomLeftbottomRightHooks 调用（推荐）通过 notification.useNotification 创建支持读取 context 的 contextHolder。请注意，我们推荐通过顶层注册的方式代替 notification 静态方法，因为静态方法无法消费上下文，因而 ConfigProvider 的数据也不会生效。TS<template>
+  <a-space>
+    <a-button type="primary" @click="() => open('topLeft')">
+      <RadiusUpleftOutlined />
+      topLeft
+    </a-button>
+    <a-button type="primary" @click="() => open('topRight')">
+      <RadiusUprightOutlined />
+      topRight
+    </a-button>
+  </a-space>
+  <a-divider />
+  <a-space>
+    <a-button type="primary" @click="() => open('bottomLeft')">
+      <RadiusBottomleftOutlined />
+      bottomLeft
+    </a-button>
+    <a-button type="primary" @click="() => open('bottomRight')">
+      <RadiusBottomrightOutlined />
+      bottomRight
+    </a-button>
+  </a-space>
+  <contextHolder />
+</template>
+<script lang="ts" setup>
+import {
+  RadiusBottomleftOutlined,
+  RadiusBottomrightOutlined,
+  RadiusUpleftOutlined,
+  RadiusUprightOutlined,
+} from '@ant-design/icons-vue';
+import { NotificationPlacement, notification } from 'ant-design-vue';
+const [api, contextHolder] = notification.useNotification();
+const open = (placement: NotificationPlacement) => openNotification(placement);
+const openNotification = (placement: NotificationPlacement) => {
+  api.info({
+    message: `Notification ${placement}`,
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    placement,
+  });
+};
+</script>
+Open the notification box自动关闭的延时自定义通知框自动关闭的延时，默认 4.5s，取消自动关闭只要将该值设为 0 即可。TS<template>
+  <a-button type="primary" @click="openNotification">Open the notification box</a-button>
+</template>
+<script lang="ts" setup>
+import { notification } from 'ant-design-vue';
+const openNotification = () => {
+  notification.open({
+    message: 'Notification Title',
+    description:
+      'I will never close automatically. I will be close automatically. I will never close automatically.',
+    duration: 0,
+  });
+};
+</script>
+Open the notification box自定义图标图标可以被自定义。TS<template>
+  <a-button type="primary" @click="openNotification">Open the notification box</a-button>
+</template>
+<script lang="ts" setup>
+import { SmileOutlined } from '@ant-design/icons-vue';
+import { notification } from 'ant-design-vue';
+import { h } from 'vue';
+
+const openNotification = () => {
+  notification.open({
+    message: 'Notification Title',
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    icon: () => h(SmileOutlined, { style: 'color: #108ee9' }),
+  });
+};
+</script>
+Open the notification box自定义样式使用 style 和 class 来定义样式。TS<template>
+  <a-button type="primary" @click="openNotification">Open the notification box</a-button>
+</template>
+<script>
+import { notification } from 'ant-design-vue';
+import { defineComponent } from 'vue';
+export default defineComponent({
+  setup() {
+    const openNotification = () => {
+      notification.open({
+        message: 'Notification Title',
+        description:
+          'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+        style: {
+          width: '600px',
+          marginLeft: `${335 - 600}px`,
+        },
+        class: 'notification-custom-class',
+      });
+    };
+    return {
+      openNotification,
+    };
+  },
+});
+</script>
+<style scoped>
+.notification-custom-class {
+  color: red;
+}
+</style>
+Open the notification box (update by key)Open the notification box (update by reactive)更新消息内容可以通过唯一的 key 来更新内容, 或者通过响应式数据更新。TS<template>
+  <a-button type="primary" @click="openNotification">
+    Open the notification box (update by key)
+  </a-button>
+  <br />
+  <br />
+  <a-button type="primary" @click="openNotification2">
+    Open the notification box (update by reactive)
+  </a-button>
+</template>
+<script lang="ts" setup>
+import { notification } from 'ant-design-vue';
+import { ref } from 'vue';
+const key = 'updatable';
+const openNotification = () => {
+  notification.open({
+    key,
+    message: 'Notification Title',
+    description: 'description.',
+  });
+  setTimeout(() => {
+    notification.open({
+      key,
+      message: 'New Title',
+      description: 'New description.',
+    });
+  }, 1000);
+};
+const message = ref('Notification Title');
+const description = ref('description');
+const openNotification2 = () => {
+  // content must use function
+  notification.open({
+    message: () => message.value,
+    description: () => description.value,
+  });
+  setTimeout(() => {
+    message.value = 'New Title';
+    description.value = 'New description.';
+  }, 1000);
+};
+</script>
+Open the notification box基本用法最简单的用法，4.5 秒后自动关闭。TS<template>
+  <a-button type="primary" @click="openNotification">Open the notification box</a-button>
+</template>
+<script lang="ts" setup>
+import { notification } from 'ant-design-vue';
+const openNotification = () => {
+  notification.open({
+    message: 'Notification Title',
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
+};
+</script>
+SuccessInfoWarningError带有图标的通知提醒框通知提醒框左侧有图标。TS<template>
+  <div>
+    <a-button @click="() => openNotificationWithIcon('success')">Success</a-button>
+    <a-button @click="() => openNotificationWithIcon('info')">Info</a-button>
+    <a-button @click="() => openNotificationWithIcon('warning')">Warning</a-button>
+    <a-button @click="() => openNotificationWithIcon('error')">Error</a-button>
+  </div>
+</template>
+<script lang="ts" setup>
+import { notification } from 'ant-design-vue';
+const openNotificationWithIcon = (type: string) => {
+  notification[type]({
+    message: 'Notification Title',
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+  });
+};
+</script>
+Open the notification box自定义按钮自定义关闭按钮的样式和文字。TS<template>
+  <a-button type="primary" @click="openNotification">Open the notification box</a-button>
+</template>
+<script lang="ts" setup>
+import { notification, Button } from 'ant-design-vue';
+import { h } from 'vue';
+
+const close = () => {
+  console.log(
+    'Notification was closed. Either the close button was clicked or duration time elapsed.',
+  );
+};
+const openNotification = () => {
+  const key = `open${Date.now()}`;
+  notification.open({
+    message: 'Notification Title',
+    description:
+      'A function will be be called after the notification is closed (automatically after the "duration" time of manually).',
+    btn: () =>
+      h(
+        Button,
+        {
+          type: 'primary',
+          size: 'small',
+          onClick: () => notification.close(key),
+        },
+        { default: () => 'Confirm' },
+      ),
+    key,
+    onClose: close,
+  });
+};
+</script>
+topbottomtopLefttopRightbottomLeftbottomRight位置使用 placement 可以配置通知从右上角、右下角、左下角、左上角弹出。TS<template>
+  <div>
+    <a-button type="primary" @click="openNotification('top')">
+      <template #icon><BorderTopOutlined /></template>
+      top
+    </a-button>
+    <a-button type="primary" @click="openNotification('bottom')">
+      <template #icon><BorderBottomOutlined /></template>
+      bottom
+    </a-button>
+    <a-button type="primary" @click="openNotification('topLeft')">
+      <template #icon><radius-upleft-outlined /></template>
+      topLeft
+    </a-button>
+    <a-button type="primary" @click="openNotification('topRight')">
+      <template #icon><radius-upright-outlined /></template>
+      topRight
+    </a-button>
+    <a-divider />
+    <a-button type="primary" @click="openNotification('bottomLeft')">
+      <template #icon><radius-bottomleft-outlined /></template>
+      bottomLeft
+    </a-button>
+    <a-button type="primary" @click="openNotification('bottomRight')">
+      <template #icon><radius-bottomright-outlined /></template>
+      bottomRight
+    </a-button>
+  </div>
+</template>
+<script lang="ts" setup>
+import {
+  RadiusUpleftOutlined,
+  RadiusUprightOutlined,
+  RadiusBottomleftOutlined,
+  RadiusBottomrightOutlined,
+  BorderTopOutlined,
+  BorderBottomOutlined,
+} from '@ant-design/icons-vue';
+import { notification } from 'ant-design-vue';
+import type { NotificationPlacement } from 'ant-design-vue';
+const openNotification = (placement: NotificationPlacement) => {
+  notification.open({
+    message: `Notification ${placement}`,
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    placement,
+  });
+};
+</script>
+
+      API#
+      
+          #
+        
+
+notification.success(config)
+notification.error(config)
+notification.info(config)
+notification.warning(config)
+notification.warn(config)
+notification.open(config)
+notification.close(key: String)
+notification.destroy()
+notification.useNotification()
+
+config 参数如下：
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+bottom
+消息从底部弹出时，距离底部的位置，单位像素。
+string
+24px
+
+
+
+btn
+自定义关闭按钮
+VNode | () => VNode
+-
+
+
+
+class
+自定义 CSS class
+string
+-
+
+
+
+closeIcon
+自定义关闭图标
+VNode | () => VNode
+-
+
+
+
+description
+通知提醒内容，必选
+string | VNode | () => VNode
+-
+
+
+
+duration
+默认 4.5 秒后自动关闭，配置为 null 则不自动关闭
+number
+4.5
+
+
+
+getContainer
+配置渲染节点的输出位置
+() => HTMLNode
+() => document.body
+
+
+
+icon
+自定义图标
+VNode | () => VNode
+-
+
+
+
+key
+当前通知唯一标志
+string
+-
+
+
+
+message
+通知提醒标题，必选
+string | VNode | () => VNode
+-
+
+
+
+placement
+弹出位置，可选 top topLeft topRight bottom bottomLeft bottomRight
+string
+topRight
+top bottom 3.3.0
+
+
+style
+自定义内联样式
+Object | string
+-
+
+
+
+top
+消息从顶部弹出时，距离顶部的位置，单位像素。
+string
+24px
+
+
+
+onClick
+点击通知时触发的回调函数
+Function
+-
+
+
+
+onClose
+点击默认关闭按钮时触发的回调函数
+Function
+-
+
+
+
+
+还提供了一个全局配置方法，在调用前提前配置，全局一次生效。
+
+
+notification.config(options)
+
+当你使用 ConfigProvider 进行全局化配置时，系统会默认自动开启 RTL 模式。(3.0+)
+当你想单独使用，可通过如下设置开启 RTL 模式。
+
+
+
+notification.config({
+  placement: 'bottomRight',
+  bottom: '50px',
+  duration: 3,
+  rtl: true,
+});
+
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+bottom
+消息从底部弹出时，距离底部的位置，单位像素。
+string
+24px
+
+
+
+closeIcon
+自定义关闭图标
+VNode | () => VNode
+-
+
+
+
+duration
+默认自动关闭延时，单位秒
+number
+4.5
+
+
+
+getContainer
+配置渲染节点的输出位置
+() => HTMLNode
+() => document.body
+
+
+
+maxCount
+最大显示数, 超过限制时，最早的消息会被自动关闭
+number
+-
+3.0
+
+
+placement
+弹出位置，可选 topLeft topRight bottomLeft bottomRight
+string
+topRight
+
+
+
+rtl
+是否开启 RTL 模式
+boolean
+false
+3.0
+
+
+top
+消息从顶部弹出时，距离顶部的位置，单位像素。
+string
+24px
+
+
+
+
+FAQ 
+          #
+        
+为什么 notification 不能获取 context、Pinia 的内容和 ConfigProvider 的 locale/prefixCls/theme 等配置？ 
+          #
+        
+直接调用 notification 方法，antdv 会通过 Vue.render 动态创建新的 Vue 实体。其 context 与当前代码所在 context 并不相同，因而无法获取 context 信息。
+当你需要 context 信息（例如 ConfigProvider 配置的内容）时，可以通过 notification.useNotification 方法会返回 api 实体以及 contextHolder 节点。将其插入到你需要获取 context 位置即可：
+<template>
+  <contextHolder />
+  <!-- <component :is='contextHolder'/> -->
+</template>
+<script setup>
+  import { notification } from 'ant-design-vue';
+  const [notificationApi, contextHolder] = notification.useNotification();
+  notificationApi.open({
+    // ...
+  });
+</script>
+
+异同：通过 hooks 创建的 contextHolder 必须插入到子元素节点中才会生效，当你不需要上下文信息时请直接调用。
+
+可通过 App 包裹组件 简化 useNotification 等方法需要手动植入 contextHolder 的问题。
+
+静态方法如何设置 prefixCls ？ 
+          #
+        
+你可以通过 ConfigProvider.config 进行设置。
+
+      对话框页头Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

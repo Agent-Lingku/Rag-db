@@ -1,0 +1,347 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本 位置 渐显 自动切换 自定义分页 自定义箭头 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Carousel 走马灯旋转木马，一组轮播的区域。
+何时使用 
+          #
+        
+
+当有一组平级的内容。
+当内容空间不足时，可以用走马灯的形式进行收纳，进行轮播展现。
+常用于一组图片或卡片轮播。
+
+代码演示4123412341234基本最简单的用法。TS<template>
+  <a-carousel :after-change="onChange">
+    <div><h3>1</h3></div>
+    <div><h3>2</h3></div>
+    <div><h3>3</h3></div>
+    <div><h3>4</h3></div>
+  </a-carousel>
+</template>
+<script lang="ts" setup>
+const onChange = (current: number) => {
+  console.log(current);
+};
+</script>
+<style scoped>
+/* For demo */
+:deep(.slick-slide) {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+:deep(.slick-slide h3) {
+  color: #fff;
+}
+</style>
+TopBottomLeftRight4123412341234位置位置有 4 个方向。TS<template>
+  <a-radio-group v-model:value="dotPosition" style="margin-bottom: 8px">
+    <a-radio-button value="top">Top</a-radio-button>
+    <a-radio-button value="bottom">Bottom</a-radio-button>
+    <a-radio-button value="left">Left</a-radio-button>
+    <a-radio-button value="right">Right</a-radio-button>
+  </a-radio-group>
+  <a-carousel :dot-position="dotPosition">
+    <div><h3>1</h3></div>
+    <div><h3>2</h3></div>
+    <div><h3>3</h3></div>
+    <div><h3>4</h3></div>
+  </a-carousel>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { CarouselProps } from 'ant-design-vue';
+const dotPosition = ref<CarouselProps['dotPosition']>('top');
+</script>
+<style scoped>
+/* For demo */
+:deep(.slick-slide) {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+:deep(.slick-slide h3) {
+  color: #fff;
+}
+</style>
+12341234渐显切换效果为渐显。TS<template>
+  <a-carousel effect="fade">
+    <div><h3>1</h3></div>
+    <div><h3>2</h3></div>
+    <div><h3>3</h3></div>
+    <div><h3>4</h3></div>
+  </a-carousel>
+</template>
+
+<style scoped>
+/* For demo */
+:deep(.slick-slide) {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+:deep(.slick-slide h3) {
+  color: #fff;
+}
+</style>
+4123412341234自动切换定时切换下一张。TS<template>
+  <a-carousel autoplay>
+    <div><h3>1</h3></div>
+    <div><h3>2</h3></div>
+    <div><h3>3</h3></div>
+    <div><h3>4</h3></div>
+  </a-carousel>
+</template>
+
+<style scoped>
+/* For demo */
+:deep(.slick-slide) {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+:deep(.slick-slide h3) {
+  color: #fff;
+}
+</style>
+ Previous Next自定义分页自定义分页展示。TS<template>
+  <a-carousel arrows dots-class="slick-dots slick-thumb">
+    <template #customPaging="props">
+      <a>
+        <img :src="getImgUrl(props.i)" />
+      </a>
+    </template>
+    <div v-for="item in 4" :key="item">
+      <img :src="getImgUrl(item - 1)" />
+    </div>
+  </a-carousel>
+</template>
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+const baseUrl =
+  'https://raw.githubusercontent.com/vueComponent/ant-design-vue/main/components/carousel/demo/';
+export default defineComponent({
+  setup() {
+    const getImgUrl = (i: number) => {
+      return `${baseUrl}abstract0${i + 1}.jpg`;
+    };
+    return {
+      getImgUrl,
+    };
+  },
+});
+</script>
+<style scoped>
+/* For demo */
+:deep(.slick-dots) {
+  position: relative;
+  height: auto;
+}
+:deep(.slick-slide img) {
+  border: 5px solid #fff;
+  display: block;
+  margin: auto;
+  max-width: 80%;
+}
+:deep(.slick-arrow) {
+  display: none !important;
+}
+:deep(.slick-thumb) {
+  bottom: 0px;
+}
+:deep(.slick-thumb li) {
+  width: 60px;
+  height: 45px;
+}
+:deep(.slick-thumb li img) {
+  width: 100%;
+  height: 100%;
+  filter: grayscale(100%);
+  display: block;
+}
+:deep .slick-thumb li.slick-active img {
+  filter: grayscale(0%);
+}
+</style>
+4123412341234自定义箭头自定义箭头展示。TS<template>
+  <a-carousel arrows>
+    <template #prevArrow>
+      <div class="custom-slick-arrow" style="left: 10px; z-index: 1">
+        <left-circle-outlined />
+      </div>
+    </template>
+    <template #nextArrow>
+      <div class="custom-slick-arrow" style="right: 10px">
+        <right-circle-outlined />
+      </div>
+    </template>
+    <div><h3>1</h3></div>
+    <div><h3>2</h3></div>
+    <div><h3>3</h3></div>
+    <div><h3>4</h3></div>
+  </a-carousel>
+</template>
+<script lang="ts" setup>
+import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons-vue';
+</script>
+<style scoped>
+/* For demo */
+:deep(.slick-slide) {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+:deep(.slick-arrow.custom-slick-arrow) {
+  width: 25px;
+  height: 25px;
+  font-size: 25px;
+  color: #fff;
+  background-color: rgba(31, 45, 61, 0.11);
+  transition: ease all 0.3s;
+  opacity: 0.3;
+  z-index: 1;
+}
+:deep(.slick-arrow.custom-slick-arrow:before) {
+  display: none;
+}
+:deep(.slick-arrow.custom-slick-arrow:hover) {
+  color: #fff;
+  opacity: 0.5;
+}
+
+:deep(.slick-slide h3) {
+  color: #fff;
+}
+</style>
+
+      API#
+      
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+autoplay
+是否自动切换
+boolean
+false
+
+
+
+dotPosition
+面板指示点位置，可选 top bottom left right
+string
+bottom
+1.5.0
+
+
+dots
+是否显示面板指示点
+boolean
+true
+
+
+
+dotsClass
+面板指示点类名
+string
+slick-dots
+
+
+
+easing
+动画效果
+string
+linear
+
+
+
+effect
+动画效果函数
+scrollx | fade
+scrollx
+
+
+
+afterChange
+切换面板的回调
+function(current)
+-
+
+
+
+beforeChange
+切换面板的回调
+function(from, to)
+-
+
+
+
+
+方法 
+          #
+        
+
+
+
+名称
+描述
+版本
+
+
+
+
+goTo(slideNumber, dontAnimate)
+切换到指定面板, dontAnimate = true 时，不使用动画
+
+
+
+next()
+切换到下一面板
+
+
+
+prev()
+切换到上一面板
+
+
+
+
+更多属性可参考源码：carousel props
+
+      最后更新 : 2023/07/14锚点级联选择Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    

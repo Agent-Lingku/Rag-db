@@ -1,0 +1,621 @@
+
+     Surely Form AI 助手内测开放申请    立即申请 Ant Design Vue 文档组件 高级组件 商店 实战课程 4.2.6English更多 基本用法 禁用 居中 图标 滑动 附加内容 大小 位置 卡片式页签 新增和关闭页签 卡片式页签容器 自定义新增页签触发器 自定义页签头 APISurely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 雪梨表单、为您定制 专属的调研，投票、NPS、报名等系统 Surely Table 构建更快的网站  更快的构建网站 12组件总览高级组件 Surely Table  Surely Form 其他Affix固钉ConfigProvider全局化配置FloatButton悬浮按钮NewWatermark水印New其它App包裹组件New通用Button按钮Icon图标Typography排版布局Divider分割线Flex弹性布局NewGrid栅格Layout布局Space间距导航Anchor锚点Breadcrumb面包屑Dropdown下拉菜单Menu导航菜单PageHeader页头Pagination分页Steps步骤条数据录入AutoComplete自动完成Cascader级联选择Checkbox多选框DatePicker日期选择框Form表单Input输入框InputNumber数字输入框Mentions提及Radio单选框Rate评分Select选择器Slider滑动输入条Switch开关TimePicker时间选择框Transfer穿梭框TreeSelect树选择Upload上传数据展示Avatar头像Badge徽标数Calendar日历Card卡片Carousel走马灯Collapse折叠面板Comment评论Descriptions描述列表Empty空状态Image图片List列表Popover气泡卡片QRCode二维码NewSegmented分段控制器NewStatistic统计数值Table表格Tabs标签页Tag标签Timeline时间轴Tooltip文字提示Tour漫游式引导NewTree树形控件反馈Alert警告提示Drawer抽屉Message全局提示Modal对话框Notification通知提醒框Popconfirm气泡确认框Progress进度条Result结果Skeleton骨架屏Spin加载中Tabs 标签页选项卡切换组件。
+何时使用 
+          #
+        
+提供平级的区域将大块内容进行收纳和展现，保持界面整洁。
+Ant Design 依次提供了三级选项卡，分别用于不同的场景。
+
+卡片式的页签，提供可关闭的样式，常用于容器顶部。
+标准线条式页签，用于容器内部的主功能切换，这是最常用的 Tabs。
+RadioButton 可作为更次级的页签来使用。
+
+代码演示Tab 1Tab 2Tab 3Content of Tab Pane 1Content of Tab Pane 2基本用法默认选中第一项。TS<template>
+  <a-tabs v-model:activeKey="activeKey">
+    <a-tab-pane key="1" tab="Tab 1">Content of Tab Pane 1</a-tab-pane>
+    <a-tab-pane key="2" tab="Tab 2" force-render>Content of Tab Pane 2</a-tab-pane>
+    <a-tab-pane key="3" tab="Tab 3">Content of Tab Pane 3</a-tab-pane>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref('1');
+</script>
+Tab 1Tab 2Tab 3Tab 1禁用禁用某一项。TS<template>
+  <a-tabs v-model:activeKey="activeKey">
+    <a-tab-pane key="1" tab="Tab 1">Tab 1</a-tab-pane>
+    <a-tab-pane key="2" tab="Tab 2" disabled>Tab 2</a-tab-pane>
+    <a-tab-pane key="3" tab="Tab 3">Tab 3</a-tab-pane>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref('1');
+</script>
+Tab 1Tab 2Tab 3Content of Tab Pane 1Content of Tab Pane 2居中标签居中展示。TS<template>
+  <a-tabs v-model:activeKey="activeKey" centered>
+    <a-tab-pane key="1" tab="Tab 1">Content of Tab Pane 1</a-tab-pane>
+    <a-tab-pane key="2" tab="Tab 2" force-render>Content of Tab Pane 2</a-tab-pane>
+    <a-tab-pane key="3" tab="Tab 3">Content of Tab Pane 3</a-tab-pane>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref('1');
+</script>
+ Tab 1  Tab 2  Tab 1 图标有图标的标签。TS<template>
+  <a-tabs v-model:activeKey="activeKey">
+    <a-tab-pane key="1">
+      <template #tab>
+        <span>
+          <apple-outlined />
+          Tab 1
+        </span>
+      </template>
+      Tab 1
+    </a-tab-pane>
+    <a-tab-pane key="2">
+      <template #tab>
+        <span>
+          <android-outlined />
+          Tab 2
+        </span>
+      </template>
+      Tab 2
+    </a-tab-pane>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { AppleOutlined, AndroidOutlined } from '@ant-design/icons-vue';
+import { ref } from 'vue';
+const activeKey = ref('1');
+</script>
+HorizontalVerticalTab-1Tab-2Tab-3Tab-4Tab-5Tab-6Tab-7Tab-8Tab-9Tab-10Tab-11Tab-12Tab-13Tab-14Tab-15Tab-16Tab-17Tab-18Tab-19Tab-20Tab-21Tab-22Tab-23Tab-24Tab-25Tab-26Tab-27Tab-28Tab-29Tab-30Content of tab 1滑动可以左右、上下滑动，容纳更多标签。TS<template>
+  <div>
+    <a-radio-group v-model:value="mode" :style="{ marginBottom: '8px' }">
+      <a-radio-button value="top">Horizontal</a-radio-button>
+      <a-radio-button value="left">Vertical</a-radio-button>
+    </a-radio-group>
+    <a-tabs
+      v-model:activeKey="activeKey"
+      :tab-position="mode"
+      :style="{ height: '200px' }"
+      @tabScroll="callback"
+    >
+      <a-tab-pane v-for="i in 30" :key="i" :tab="`Tab-${i}`">Content of tab {{ i }}</a-tab-pane>
+    </a-tabs>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { TabsProps } from 'ant-design-vue';
+const mode = ref<TabsProps['tabPosition']>('top');
+const activeKey = ref(1);
+const callback: TabsProps['onTabScroll'] = val => {
+  console.log(val);
+};
+</script>
+Left Extra ActionTab 1Tab 2Tab 3Right Extra ActionContent of tab 1附加内容可以在页签右边添加附加操作。TS<template>
+  <a-tabs v-model:activeKey="activeKey">
+    <a-tab-pane key="1" tab="Tab 1">Content of tab 1</a-tab-pane>
+    <a-tab-pane key="2" tab="Tab 2">Content of tab 2</a-tab-pane>
+    <a-tab-pane key="3" tab="Tab 3">Content of tab 3</a-tab-pane>
+    <template #leftExtra>
+      <a-button class="tabs-extra-demo-button">Left Extra Action</a-button>
+    </template>
+    <template #rightExtra>
+      <a-button>Right Extra Action</a-button>
+    </template>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref('1');
+</script>
+<style scoped>
+.tabs-extra-demo-button {
+  margin-right: 16px;
+}
+
+.ant-row-rtl .tabs-extra-demo-button {
+  margin-right: 0;
+  margin-left: 16px;
+}
+</style>
+SmallDefaultLargeTab 1Tab 2Tab 3Content of tab 1大小大号页签用在页头区域，小号用在弹出框等较狭窄的容器内。TS<template>
+  <div>
+    <a-radio-group v-model:value="size" style="margin-bottom: 16px">
+      <a-radio-button value="small">Small</a-radio-button>
+      <a-radio-button value="default">Default</a-radio-button>
+      <a-radio-button value="large">Large</a-radio-button>
+    </a-radio-group>
+    <a-tabs v-model:activeKey="activeKey" :size="size">
+      <a-tab-pane key="1" tab="Tab 1">Content of tab 1</a-tab-pane>
+      <a-tab-pane key="2" tab="Tab 2">Content of tab 2</a-tab-pane>
+      <a-tab-pane key="3" tab="Tab 3">Content of tab 3</a-tab-pane>
+    </a-tabs>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import type { TabsProps } from 'ant-design-vue';
+const size = ref<TabsProps['size']>('small');
+const activeKey = ref('1');
+</script>
+topbottomleftrightTab 1Tab 2Tab 3Content of Tab 1位置有四个位置，tabPosition="left|right|top|bottom"。在移动端下，bottom|right 会自动切换成 top。TS<template>
+  <a-radio-group v-model:value="tabPosition" style="margin: 8px">
+    <a-radio-button value="top">top</a-radio-button>
+    <a-radio-button value="bottom">bottom</a-radio-button>
+    <a-radio-button value="left">left</a-radio-button>
+    <a-radio-button value="right">right</a-radio-button>
+  </a-radio-group>
+  <a-tabs v-model:activeKey="activeKey" :tab-position="tabPosition" animated>
+    <a-tab-pane key="1" tab="Tab 1">Content of Tab 1</a-tab-pane>
+    <a-tab-pane key="2" tab="Tab 2">Content of Tab 2</a-tab-pane>
+    <a-tab-pane key="3" tab="Tab 3">Content of Tab 3</a-tab-pane>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { TabsProps } from 'ant-design-vue/es/tabs';
+const tabPosition = ref<TabsProps['tabPosition']>('top');
+const activeKey = ref('1');
+</script>
+Tab 1Tab 2Tab 3Content of Tab Pane 1卡片式页签另一种样式的页签，不提供对应的垂直样式。TS<template>
+  <a-tabs v-model:activeKey="activeKey" type="card">
+    <a-tab-pane key="1" tab="Tab 1">Content of Tab Pane 1</a-tab-pane>
+    <a-tab-pane key="2" tab="Tab 2">Content of Tab Pane 2</a-tab-pane>
+    <a-tab-pane key="3" tab="Tab 3">Content of Tab Pane 3</a-tab-pane>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref('1');
+</script>
+Tab 1Tab 2Tab 3Content of Tab 1新增和关闭页签只有卡片样式的页签支持新增和关闭选项。
+使用 :closable="false" 禁止关闭。TS<template>
+  <a-tabs v-model:activeKey="activeKey" type="editable-card" @edit="onEdit">
+    <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
+      {{ pane.content }}
+    </a-tab-pane>
+  </a-tabs>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const panes = ref<{ title: string; content: string; key: string; closable?: boolean }[]>([
+  { title: 'Tab 1', content: 'Content of Tab 1', key: '1' },
+  { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
+  { title: 'Tab 3', content: 'Content of Tab 3', key: '3', closable: false },
+]);
+
+const activeKey = ref(panes.value[0].key);
+
+const newTabIndex = ref(0);
+
+const add = () => {
+  activeKey.value = `newTab${++newTabIndex.value}`;
+  panes.value.push({ title: 'New Tab', content: 'Content of new Tab', key: activeKey.value });
+};
+
+const remove = (targetKey: string) => {
+  let lastIndex = 0;
+  panes.value.forEach((pane, i) => {
+    if (pane.key === targetKey) {
+      lastIndex = i - 1;
+    }
+  });
+  panes.value = panes.value.filter(pane => pane.key !== targetKey);
+  if (panes.value.length && activeKey.value === targetKey) {
+    if (lastIndex >= 0) {
+      activeKey.value = panes.value[lastIndex].key;
+    } else {
+      activeKey.value = panes.value[0].key;
+    }
+  }
+};
+
+const onEdit = (targetKey: string | MouseEvent, action: string) => {
+  if (action === 'add') {
+    add();
+  } else {
+    remove(targetKey as string);
+  }
+};
+</script>
+Tab Title 1Tab Title 2Tab Title 3Content of Tab Pane 2Content of Tab Pane 2Content of Tab Pane 2卡片式页签容器用于容器顶部，需要一点额外的样式覆盖。TS<template>
+  <div class="card-container">
+    <a-tabs v-model:activeKey="activeKey" type="card">
+      <a-tab-pane key="1" tab="Tab Title 1">
+        <p>Content of Tab Pane 1</p>
+        <p>Content of Tab Pane 1</p>
+        <p>Content of Tab Pane 1</p>
+      </a-tab-pane>
+      <a-tab-pane key="2" tab="Tab Title 2">
+        <p>Content of Tab Pane 2</p>
+        <p>Content of Tab Pane 2</p>
+        <p>Content of Tab Pane 2</p>
+      </a-tab-pane>
+      <a-tab-pane key="3" tab="Tab Title 3">
+        <p>Content of Tab Pane 3</p>
+        <p>Content of Tab Pane 3</p>
+        <p>Content of Tab Pane 3</p>
+      </a-tab-pane>
+    </a-tabs>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref('2');
+</script>
+<style scoped>
+.card-container p {
+  margin: 0;
+}
+.card-container > .ant-tabs-card .ant-tabs-content {
+  height: 120px;
+  margin-top: -16px;
+}
+.card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
+  padding: 16px;
+  background: #fff;
+}
+.card-container > .ant-tabs-card > .ant-tabs-nav::before {
+  display: none;
+}
+.card-container > .ant-tabs-card .ant-tabs-tab,
+[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab {
+  background: transparent;
+  border-color: transparent;
+}
+.card-container > .ant-tabs-card .ant-tabs-tab-active,
+[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab-active {
+  background: #fff;
+  border-color: #fff;
+}
+#components-tabs-demo-card-top .code-box-demo {
+  padding: 24px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-content {
+  height: 120px;
+  margin-top: -8px;
+}
+[data-theme='dark'] .card-container > .ant-tabs-card .ant-tabs-tab {
+  background: transparent;
+  border-color: transparent;
+}
+[data-theme='dark'] #components-tabs-demo-card-top .code-box-demo {
+  background: #000;
+}
+[data-theme='dark'] .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
+  background: #141414;
+}
+[data-theme='dark'] .card-container > .ant-tabs-card .ant-tabs-tab-active {
+  background: #141414;
+  border-color: #141414;
+}
+</style>
+ADDTab 1Tab 2Content of Tab Pane 1自定义新增页签触发器隐藏默认的页签增加图标，给自定义触发器绑定事件。TS<template>
+  <div>
+    <div :style="{ marginBottom: '16px' }">
+      <a-button @click="add">ADD</a-button>
+    </div>
+    <a-tabs v-model:activeKey="activeKey" hide-add type="editable-card" @edit="onEdit">
+      <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
+        {{ pane.content }}
+      </a-tab-pane>
+    </a-tabs>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const panes = ref<{ title: string; content: string; key: string; closable?: boolean }[]>(
+  new Array(2).fill(null).map((_, index) => {
+    const id = String(index + 1);
+    return { title: `Tab ${id}`, content: `Content of Tab Pane ${id}`, key: id };
+  }),
+);
+const activeKey = ref(panes.value[0].key);
+const newTabIndex = ref(0);
+
+const add = () => {
+  activeKey.value = `newTab${newTabIndex.value++}`;
+  panes.value.push({
+    title: `New Tab ${activeKey.value}`,
+    content: `Content of new Tab ${activeKey.value}`,
+    key: activeKey.value,
+  });
+};
+
+const remove = (targetKey: string) => {
+  let lastIndex = 0;
+  panes.value.forEach((pane, i) => {
+    if (pane.key === targetKey) {
+      lastIndex = i - 1;
+    }
+  });
+  panes.value = panes.value.filter(pane => pane.key !== targetKey);
+  if (panes.value.length && activeKey.value === targetKey) {
+    if (lastIndex >= 0) {
+      activeKey.value = panes.value[lastIndex].key;
+    } else {
+      activeKey.value = panes.value[0].key;
+    }
+  }
+};
+
+const onEdit = (targetKey: string) => {
+  remove(targetKey);
+};
+</script>
+Tab 1Tab 2Tab 3Content of Tab Pane 1Content of Tab Pane 2自定义页签头自定义页签头TS<template>
+  <div>
+    <a-tabs v-model:activeKey="activeKey">
+      <a-tab-pane key="1" tab="Tab 1" style="height: 200px">Content of Tab Pane 1</a-tab-pane>
+      <a-tab-pane key="2" tab="Tab 2" force-render>Content of Tab Pane 2</a-tab-pane>
+      <a-tab-pane key="3" tab="Tab 3">Content of Tab Pane 3</a-tab-pane>
+      <template #renderTabBar="{ DefaultTabBar, ...props }">
+        <component :is="DefaultTabBar" v-bind="props" :style="{ opacity: 0.5 }" />
+      </template>
+    </a-tabs>
+  </div>
+</template>
+<script lang="ts" setup>
+import { ref } from 'vue';
+const activeKey = ref('1');
+</script>
+
+      API#
+      
+          #
+        
+Tabs 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+版本
+
+
+
+
+
+activeKey(v-model)
+当前激活 tab 面板的 key
+string
+-
+
+
+
+
+animated
+是否使用动画切换 Tabs，在 tabPosition="top" | "bottom" 时有效
+boolean | {inkBar:boolean, tabPane:boolean}
+true, 当 type="card" 时为 false
+
+
+
+
+centered
+标签居中展示
+boolean
+false
+3.0
+
+
+
+destroyInactiveTabPane
+被隐藏时是否销毁 DOM 结构
+boolean
+false
+
+
+
+
+hideAdd
+是否隐藏加号图标，在 type="editable-card" 时有效
+boolean
+false
+
+
+
+
+size
+大小，提供 large middle 和 small 三种大小
+string
+middle
+
+
+
+
+tabBarGutter
+tabs 之间的间隙
+number
+-
+
+
+
+
+tabBarStyle
+tab bar 的样式对象
+CSSProperties
+-
+
+
+
+
+tabPosition
+页签位置，可选值有 top right bottom left
+string
+top
+
+
+
+
+type
+页签的基本样式，可选 line、card editable-card 类型
+string
+line
+
+
+
+
+
+Tabs 插槽 
+          #
+        
+
+
+
+插槽名称
+说明
+参数
+
+
+
+
+
+addIcon
+自定义添加按钮
+-
+-
+
+
+leftExtra
+tab bar 上左侧额外的元素
+-
+-
+
+
+moreIcon
+自定义折叠 icon
+-
+-
+
+
+renderTabBar
+替换 TabBar，用于二次封装标签头
+{ DefaultTabBar }
+
+
+
+rightExtra
+tab bar 上右侧额外的元素
+-
+-
+
+
+
+Tabs 事件 
+          #
+        
+
+
+
+事件名称
+说明
+回调参数
+
+
+
+
+change
+切换面板的回调
+Function(activeKey) {}
+
+
+edit
+新增和删除页签的回调，在 type="editable-card" 时有效
+(action === 'add' ? event : targetKey, action): void
+
+
+tabClick
+tab 被点击的回调
+Function
+
+
+tabScroll
+滚动 TabBar 时触发
+{ direction: 'left' | 'right' | 'top' | 'bottom' }
+
+
+
+Tabs.TabPane 
+          #
+        
+
+
+
+参数
+说明
+类型
+默认值
+
+
+
+
+forceRender
+被隐藏时是否渲染 DOM 结构
+boolean
+false
+
+
+key
+对应 activeKey
+string
+-
+
+
+tab
+选项卡头显示文字
+string|slot
+-
+
+
+
+Tabs.TabPane 插槽 
+          #
+        
+
+
+
+插槽名称
+说明
+参数
+
+
+
+
+closeIcon
+自定义关闭图标，在 type="editable-card"时有效
+-
+
+
+tab
+选项卡头显示文字
+-
+
+
+
+
+      表格标签Ant DesignGitHubAnt Design-ReactAnt Design-AngularAwesome Ant Design AntD Library CommunityChange LogBug ReportLinksVueVue CLIVite@formily/antdvMore ProductsAntV-Data VisualizationEgg-Enterprise Node Framework 备案号： 浙ICP备19034671号     增值电信业务经营许可证： 浙B2-20220161
+    
+    
+    
+    
+    
+
+    
+    
+    
+  
+
+
+    
